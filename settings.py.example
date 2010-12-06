@@ -12,7 +12,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '/home/benedict/coding/research/db/meditime.db',                      # Or path to database file if using sqlite3.
+        'NAME': '/path/to/database_file',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -59,6 +59,7 @@ ADMIN_MEDIA_PREFIX = '/media/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'v800ubq95d0b&=+y$oktum@5^27kfc2c6o45v6so-f@#95l-kd'
+SESSION_COOKIE_NAME = 'meditime_sessionid'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -94,3 +95,8 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
+
+import scm_info
+REVISION = scm_info.REVISION
+REPOSITORY_URL = scm_info.REPOSITORY_URL
+

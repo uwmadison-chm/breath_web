@@ -50,7 +50,6 @@ namespace :deploy do
     needed_links.each do |fname|
       run "ln -sf #{File.join(shared_path, fname)} #{File.join(release_path, fname)}"
     end
-    run "chmod g+w #{File.join(shared_path, "db", "*")}"
     
     # And create a file with the current revision... (used in the models)
     scmfile = File.join(release_path, 'scm_info.py')

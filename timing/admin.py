@@ -1,4 +1,4 @@
-from timing.models import Run
+from models import Run
 from django.contrib import admin
 
 class RunAdmin(admin.ModelAdmin):

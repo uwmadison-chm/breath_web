@@ -1,0 +1,54 @@
+{% extends "timing/base.html" %}
+
+{% block js %}
+<script type="text/javascript">
+  var times = new Array();
+  var keys = new Array();
+  var startTime;
+  
+  function waitForStart() {
+    document.onkeydown = function(event){ 
+    if(event.keyCode == 65)
+      startTimer(); 
+    }
+  }
+  
+  function startTimer() {
+    startTime = (new Date).getTime();
+    document.getElementById('status').innerHTML = "Game is running...";
+    setTimeout("stopTimer()", 5000);
+    document.onkeydown = function(event){ markTimer(event); }
+  }
+  
+  function markTimer(event) {
+    var newTime = (new Date).getTime();
+    newTime -= startTime;
+    times.push(newTime);
+    keys.push(event.keyCode);
+  }
+  
+  function stopTimer() {
+    document.getElementById('status').innerHTML = "Game has finished.";
+    var timesString = '';
+    for(var i=0; i < times.length; i++){
+      timesString += (keys[i] + ' ' + times[i] + '     \n');
+    }
+    document.timingform.timing.value = timesString;
+    document.getElementById('timingform').submit();
+  }
+</script>
+{% endblock %}
+
+{% block body %}
+<body onload="waitForStart()">
+  <h1 id="Title">Game</h1>
+  <div id="Content">
+  
+  <p id="status">Hit the 'a' key to begin...</p>
+  <form id="timingform" name="timingform" action="/submit/" method="post">
+    <input type="hidden" name="user" value="{{ user }}"/>
+    <input type="hidden" name="timing"/>
+  </form>
+  </div>
+</body>
+{% endblock %}

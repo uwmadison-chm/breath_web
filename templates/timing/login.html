@@ -1,0 +1,15 @@
+{% block body %}
+<body>
+  <div id="Content">
+    <form name="login" action="/login/" method="post">
+      Please enter your e-mail address to get started...
+    <br/><br/>
+      <input id="e-mail" type="text" name="user"> 
+      <input type="submit" value="Start!">
+    </form>
+
+    <p><font color="red">
+    {{ errors }}
+    </font></p>
+  </div>
+</body>

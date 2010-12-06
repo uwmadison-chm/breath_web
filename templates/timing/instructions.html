@@ -1,0 +1,48 @@
+{% extends "timing/base.html" %}
+
+{% block js %}
+
+<script type="text/javascript">
+  var currInstruction = 0;
+  var instructionArray = new Array();
+  instructionArray[0] = "Before we begin, make sure that you close all other browser windows,<br/> turn off your cell phone, and minimize all potential distractions.<br/><br/> Click on the text in this window and hit SPACEBAR to continue";
+  instructionArray[1] = "In this task, we would like you to be aware of the breath. <br /> <br />You may be aware of the rising and falling of your belly or chest<br/> or the movement of breath in and out near your nose. <br /> <br />There's no need to control the breath. <br />Just breath normally.<br /><br />Press \"a\" to continue.";
+  instructionArray[2] = "Please count your breaths silently.<br/><br/>Start with 1 on the 1st exhale,<br/>and continue up to 9 for the 9th exhale.<br/><br/>At the beginning of each exhale, press the \"a\".<br/><br/>When you get to 9, though, press \"f\".<br/><br/>Then with the next breath start counting again at 1.<br/>Press the \"a\" as usual at the beginning of each exhale.<br/><br/>Press \"f\" to continue.";
+  instructionArray[3] = "If you realize you have lost count, that's ok.<br/>Press the SPACEBAR button, and<br/>gently bring the attention back to your breath.<br/>Then, start your count over at 1 with the next exhale.<br/><br/>As usual, you'll press the \"a\" at the beginning of every exhale<br/>except when you reach the number 9 and press \"f\".<br/><br/>Press the SPACEBAR to continue";
+  instructionArray[4] = "As you count your breaths, keep your fingers on the \"a\" and \"f\" keys.<br/><br/>What's very IMPORTANT is that:<br/><br/>(1) EVERY TIME you begin to breath out, you press the \"a\"<br/>(2) EVERY TIME your count reaches 9, you press \"f\", and then you start back at 1<br/>(3) EVERY TIME you lose track of your count, press the SPACEBAR.<br/><br/>Press the letter \"a\" to continue.";
+  instructionArray[5] = "On the next screen, we'll start to practice.<br/><br/>There's no need to look at anything in particular while you're counting.<br/><br/>Place the attention on the breath.<br/><br/>Press \"a\" to continue to the practice screen";
+
+  var instructionKeys = [32, 65, 70, 32, 65, 65, 65];
+
+  function init() {
+    document.getElementById('instructions').innerHTML = instructionArray[currInstruction];
+    document.onkeydown = function(event){ processKey(event); }
+  }
+
+  function processKey(event) {
+    if(event.keyCode == instructionKeys[currInstruction]) {
+      currInstruction++;
+      if(currInstruction == 6)
+        document.getElementById('practice').submit();
+      else
+        document.getElementById('instructions').innerHTML = instructionArray[currInstruction];
+    }
+  }
+
+</script>
+
+{% endblock %}
+
+{% block body %}
+<body onload="init()">
+
+<h1 id="Title">Instructions</h1>
+<div id="Content">
+  <p align="center" id="instructions" ></p>
+  <form id="practice" name="practice" action="/practice/" method="post">
+    <input type="hidden" name="user" value="{{ user }}"/>
+  </form>
+</div>
+
+</body>
+{% endblock %}

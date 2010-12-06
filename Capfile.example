@@ -1,0 +1,73 @@
+load 'deploy'
+
+# Probably do need to change these
+# set :user, "username"
+set :application, "meditime"
+set :repository, "svn+ssh://tezpur.keck.waisman.wisc.edu/home/vack/svn/meditime/trunk"
+
+# Probably don't need to change these
+role :app, "kava.keck.waisman.wisc.edu"
+set :use_sudo, false
+set :gateway, "tezpur.keck.waisman.wisc.edu"
+set :deploy_via, :export
+set :ssh_options , {:forward_agent => true}
+set :deploy_to, "/var/www/deploy/#{application}"
+set :shared_children, %w(db apache)
+set :apps_path, "/var/www/apps"
+set :current_path, File.join(apps_path, fetch(:application))
+
+task :info do
+  puts "application: #{application}"
+  puts "repository: #{repository}"
+  puts "releases_path: #{releases_path}"
+  puts "shared_path: #{shared_path}"
+  puts "deploy_to: #{deploy_to}"
+  puts "current_path: #{current_path}"
+end
+
+namespace :deploy do
+  desc <<-DESC
+    Creates the directory structure needed for deployment. Also 
+  DESC
+  task :setup do
+    paths_to_make = 
+      [releases_path] + 
+      shared_children.map {|d| File.join(shared_path, d)}
+    run "mkdir -p #{paths_to_make.join(' ')}"
+    
+    if releases.empty?
+      update_code
+      symlink
+    end
+    puts "Put settings.py and apache/dispatch.wsgi in #{shared_path} and run manage.py syncdb"
+  end
+  
+  desc <<-DESC
+    Links database, settings.py, and dispatch
+  DESC
+  task :finalize_update do
+    needed_links = %w(settings.py db apache/dispatch.wsgi)
+    needed_links.each do |fname|
+      run "ln -sf #{File.join(shared_path, fname)} #{File.join(release_path, fname)}"
+    end
+    run "chmod g+w #{File.join(shared_path, "db", "*")}"
+    
+    # And create a file with the current revision... (used in the models)
+    scmfile = File.join(release_path, 'scm_info.py')
+    full_url = "#{repository}@#{latest_revision}"
+    run "echo \"REVISION=#{latest_revision}\" > #{scmfile}"
+    run "echo \"REPOSITORY_URL=\\\"#{full_url}\\\"\" >> #{scmfile}"
+  end
+  
+  task :symlink do
+    run "ln -sfn #{release_path} #{current_path}"
+  end
+  
+  task :restart do
+    run "touch #{shared_path}/apache/dispatch.wsgi"
+    run "touch #{current_path}/apache/dispatch.wsgi"
+  end
+
+end
+
+after :deploy, "deploy:cleanup"

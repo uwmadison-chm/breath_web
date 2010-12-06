@@ -3,12 +3,14 @@ from django.conf.urls.defaults import *
 from django.contrib import admin
 admin.autodiscover()
 
+from .timing import views
+
 urlpatterns = patterns('',
-    (r'^$', 'timing.views.instructions'),
-    (r'^login/', 'timing.views.login'),
-    (r'^run/', 'timing.views.run'),
-    (r'^practice/', 'timing.views.practice'),
-    (r'^submit/', 'timing.views.submit'),
-    (r'^instructions/', 'timing.views.instructions'),
+    (r'^$', views.instructions),
+    (r'^login/', views.login),
+    (r'^run/', views.run),
+    (r'^practice/', views.practice),
+    (r'^submit/', views.submit),
+    (r'^instructions/', views.instructions),
     (r'^admin/', include(admin.site.urls))
 )

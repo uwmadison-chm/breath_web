@@ -32,7 +32,7 @@ def practice(request):
         user = request.POST['user']
         return render_to_response('timing/practice.html', {'user':user})
     else:
-        return redirect('/instructions/')
+        return redirect('/apps/meditime/instructions/')
 
 def run(request):
     if request.method == 'POST':

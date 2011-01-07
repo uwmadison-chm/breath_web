@@ -30,7 +30,7 @@ def instructions(request):
 def practice(request):
     if request.method == 'POST':
         user = request.POST['user']
-        return render_to_response('timing/practice.html', {'user':user})
+        return render_to_response('/apps/meditime/practice.html', {'user':user})
     else:
         return redirect('/apps/meditime/instructions/')
 

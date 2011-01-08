@@ -12,7 +12,6 @@
     document.onkeydown = function(event){ 
       if(event.keyCode == 65){
         startTimer(event); 
-
       }
     }
   }
@@ -53,7 +52,7 @@
         }
       }
       else if(keys[i] != 65) {
-          document.getElementById('status').innerHTML = "You didn't press \'a\' key on all breaths excep the ninth breath. Make sure you press the \'a\' key during every exhale, and then press the \'f\' key on the ninth exhale. Try the practice again. <br/><br/>Press SPACEBAR to continue.";
+          document.getElementById('status').innerHTML = "You didn't press \'a\' key on all breaths except the ninth breath. Make sure you press the \'a\' key during every exhale, and then press the \'f\' key on the ninth exhale. Try the practice again. <br/><br/>Press SPACEBAR to continue.";
           document.onkeydown = function(event){ repractice(event); }
 	  passed = false;
       }
@@ -100,10 +99,10 @@
   <h1 id="Title">Practice</h1>
   <div id="Content">
   <p id="status">Press "a" as the first exhale begins and you count 1.</p>
-  <form id="run" name="run" action="apps/meditime/run/" method="post">
+  <form id="run" name="run" action="/apps/meditime/run/" method="post">
     <input type="hidden" name="user" value="{{ user }}"/>
   </form>
-  <form id="practice" name="practice" action="apps/meditime/practice/" method="post">
+  <form id="practice" name="practice" action="/apps/meditime/practice/" method="post">
     <input type="hidden" name="user" value="{{ user }}"/>
   </form>
   </div>

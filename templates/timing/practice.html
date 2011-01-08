@@ -58,7 +58,8 @@
       }
     }
 
-    if(totalTime > 300000 || totalTime < 14000) {
+    //Temporarily disabling min time limit for testing
+    if(totalTime > 300000) { // || totalTime < 14000) {
       document.getElementById('status').innerHTML = "You took an unusual amount of time to complete the practice run. Make sure you press the \'a\' key during every exhale, and then press the \'f\' key on the ninth exhale. Try the practice again. <br/><br/>Press SPACEBAR to continue.";
       document.onkeydown = function(event){ repractice(event); }
       passed = false;

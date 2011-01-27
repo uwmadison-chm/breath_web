@@ -50,10 +50,6 @@ def submit(request):
         newrun = Run(user=username, date=datetime.datetime.now(), keypresses=timing)
         newrun.save()
         
-        saveloc = '/home/benedict/coding/research/meditime/output/' + username + str(datetime.datetime.now())
-        f = open(saveloc, 'w')
-        f.write(timing)
-        f.close()
         return render_to_response('timing/thanks.html', {'timelist':timelist})
     else:
         return redirect('/instructions/')

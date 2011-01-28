@@ -6,7 +6,7 @@ admin.autodiscover()
 from timing import views
 
 urlpatterns = patterns('',
-    (r'^apps/meditime/$', views.base),
+    (r'^$', views.base),
     (r'login/', views.login),
     (r'instructions/', views.instructions),
     (r'practice/', views.practice),

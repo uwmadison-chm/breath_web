@@ -1,10 +1,12 @@
+{% extends "timing/base.html" %}
+
 {% block body %}
 <body>
   <div id="Content">
-    <form name="login" action="/login/" method="post">
+    <form name="login" action="/apps/meditime/login/" method="post">
       Please enter your e-mail address to get started...
-    <br/><br/>
-      <input id="e-mail" type="text" name="user"> 
+      <br/><br/>
+      <input id="id" type="text" name="id"> 
       <input type="submit" value="Start!">
     </form>
 
@@ -13,3 +15,4 @@
     </font></p>
   </div>
 </body>
+{% endblock %}

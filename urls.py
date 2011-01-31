@@ -12,5 +12,4 @@ urlpatterns = patterns('',
     (r'practice/', views.practice),
     (r'run/', views.run),
     (r'submit/', views.submit),
-    (r'^admin/', include(admin.site.urls))
 )

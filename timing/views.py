@@ -2,8 +2,8 @@ from django.shortcuts import render_to_response, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
-from models import Run
-import re, datetime
+from models import Login, Participant, Run, Keypresses
+import re, datetime, random
 
 import csv
 from django.http import HttpResponse
@@ -15,11 +15,25 @@ def base(request):
 
 def login(request):
     if request.method == 'POST':        
-        if "id" in request.session:
+        if "email" in request.session:
             return redirect('/apps/meditime/instructions')
         else:
-            if "id" in request.POST:
-                request.session['id'] = request.POST['id']
+            if "email" in request.POST:
+                email = request.POST['email']
+                idSet = Login.objects.filter(email__iexact=email)
+                ptcpID = 0
+
+                if idSet.count() == 0:
+                    rand = random.randint(100000, 999999)
+                    while Login.objects.filter(idNum=rand).count() > 0:
+                        rand = random.randint(100000, 999999)
+                    ptcpID = rand
+                    Login.objects.create(email=email, idNum=rand)
+                    Participant.objects.create(idNum=rand)
+                else:
+                    ptcpID = idSet[0]
+
+                request.session['id'] = ptcpID
                 return redirect('/apps/meditime/instructions')
             else:
                 return redirect('/apps/meditime/login')
@@ -46,14 +60,18 @@ def run(request):
 
 def submit(request):
     if request.method == 'POST':
-        username = request.session['id']
-        timing = request.POST['timing']
+        ptcpID = request.session['id']
+        pressTimings = request.POST['timing']
 
-        timelist = re.findall(r'\d+', timing)
-        newrun = Run(user=username, date=datetime.datetime.now(), keypresses=timing)
-        newrun.save()
+        ptcp = Participant.objects.get(idNum=ptcpID)
+        newRun = Run(ptcp, datetime.datetime.now())
+        newRun.save()
+        newKeypresses = Keypresses(newRun, pressTimings)
+        newKeypresses.save()
+        #newrun = Run(user=username, date=datetime.datetime.now(), keypresses=timing)
+        #newrun.save()
         
-        return render_to_response('timing/thanks.html', {'timelist':timelist})
+        return render_to_response('timing/thanks.html')
     else:
         return redirect('/apps/meditime/login/')
 

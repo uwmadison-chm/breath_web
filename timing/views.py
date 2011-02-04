@@ -21,19 +21,19 @@ def login(request):
             if "email" in request.POST:
                 email = request.POST['email']
                 idSet = Login.objects.filter(email__iexact=email)
-                ptcpID = 0
+                pptID = 0
 
                 if idSet.count() == 0:
                     rand = random.randint(100000, 999999)
-                    while Login.objects.filter(idNum=rand).count() > 0:
+                    while Login.objects.filter(pptID=rand).count() > 0:
                         rand = random.randint(100000, 999999)
-                    ptcpID = rand
-                    Login.objects.create(email=email, idNum=rand)
-                    Participant.objects.create(idNum=rand)
+                    pptID = rand
+                    Login.objects.create(email=email, pptID=rand)
+                    Participant.objects.create(pptID=rand)
                 else:
-                    ptcpID = idSet[0]
+                    pptID = idSet[0].pptID
 
-                request.session['id'] = ptcpID
+                request.session['id'] = pptID
                 return redirect('/apps/meditime/instructions')
             else:
                 return redirect('/apps/meditime/login')
@@ -60,13 +60,13 @@ def run(request):
 
 def submit(request):
     if request.method == 'POST':
-        ptcpID = request.session['id']
+        sessID = request.session['id']
         pressTimings = request.POST['timing']
 
-        ptcp = Participant.objects.get(idNum=ptcpID)
-        newRun = Run(ptcp, datetime.datetime.now())
+        participant = Participant.objects.get(pptID=sessID)
+        newRun = Run(ppt=participant, date=datetime.datetime.now())
         newRun.save()
-        newKeypresses = Keypresses(newRun, pressTimings)
+        newKeypresses = Keypresses(run=newRun, keypresses=pressTimings)
         newKeypresses.save()
         #newrun = Run(user=username, date=datetime.datetime.now(), keypresses=timing)
         #newrun.save()

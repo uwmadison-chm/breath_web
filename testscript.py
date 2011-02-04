@@ -1,8 +1,13 @@
 import sys, os, re
-sys.path.append("/home/benedict/coding/research/test/trunk/")
+
+# Will have to modify the system path if you are testing locally
+# For example, here is what I add:
+# sys.path.append("/home/benedict/coding/research/test/trunk/")
+sys.path.append("/var/www/lib/python2.5/site-packages/")
+sys.path.append("/var/www/apps/")
 
 from django.core.management import setup_environ
-import settings
+import meditime.settings
 
 setup_environ(settings)
 from timing.models import Participant, Run, Keypresses

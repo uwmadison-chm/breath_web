@@ -1,4 +1,4 @@
-{% extends "timing/base.html" %}
+{% extends "base.html" %}
 
 {% block js %}
 
@@ -39,7 +39,7 @@
 <h1 id="Title">Instructions</h1>
 <div id="Content">
   <p align="center" id="instructions" ></p>
-  <form id="practice" name="practice" action="/apps/meditime/practice/" method="post">
+  <form id="practice" name="practice" action="{% url timing.views.practice %}" method="post">
     <input type="hidden" name="user" value="{{ user }}"/>
   </form>
 </div>

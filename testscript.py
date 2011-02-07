@@ -1,14 +1,9 @@
 import sys, os, re
 
-# Will have to modify the system path if you are testing locally
-# For example, here is what I add:
-sys.path.append("/home/benedict/coding/research/test/trunk/")
-#sys.path.append("/var/www/lib/python2.5/site-packages/")
-#sys.path.append("/var/www/apps/")
+# Don't modify system path. Rely on the caller to correctly export PYTHONPATH
 
 from django.core.management import setup_environ
-#import meditime.settings
-import settings
+from meditime import settings
 
 setup_environ(settings)
 from timing.models import Participant, Run, Keypresses

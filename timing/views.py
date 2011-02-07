@@ -1,7 +1,4 @@
 from django.shortcuts import render_to_response, redirect
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
-from django.contrib.auth import login as auth_login
 from models import Login, Participant, Run, Keypresses
 import re, datetime, random
 
@@ -11,12 +8,12 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 
 def base(request):
-    return redirect('/apps/meditime/login')
+    return redirect(login)
 
 def login(request):
     if request.method == 'POST':        
         if "email" in request.session:
-            return redirect('/apps/meditime/instructions')
+            return redirect(instructions)
         else:
             if "email" in request.POST:
                 email = request.POST['email']
@@ -34,29 +31,29 @@ def login(request):
                     pptID = idSet[0].pptID
 
                 request.session['id'] = pptID
-                return redirect('/apps/meditime/instructions')
+                return redirect(instructions)
             else:
-                return redirect('/apps/meditime/login')
+                return redirect(login)
     else:
-        return render_to_response('timing/login.html')
+        return render_to_response('login.html')
 
 def instructions(request):
     if "id" in request.session:
-        return render_to_response('timing/instructions.html')
+        return render_to_response('instructions.html')
     else: 
-        return redirect('/apps/meditime/login/')
+        return redirect(login)
 
 def practice(request):
     if "id" in request.session:
-        return render_to_response('timing/practice.html')
+        return render_to_response('practice.html')
     else:
-        return redirect('/apps/meditime/login/')
+        return redirect(login)
 
 def run(request):
     if "id" in request.session:
-        return render_to_response('timing/timing.html')
+        return render_to_response('timing.html')
     else:
-        return redirect('/apps/meditime/login/')
+        return redirect(login)
 
 def submit(request):
     if request.method == 'POST':
@@ -71,8 +68,8 @@ def submit(request):
         #newrun = Run(user=username, date=datetime.datetime.now(), keypresses=timing)
         #newrun.save()
         
-        return render_to_response('timing/thanks.html')
+        return render_to_response('thanks.html')
     else:
-        return redirect('/apps/meditime/login/')
+        return redirect(login)
 
 

@@ -1,9 +1,9 @@
-{% extends "timing/base.html" %}
+{% extends "base.html" %}
 
 {% block body %}
 <body>
   <div id="Content">
-    <form name="login" action="/apps/meditime/login/" method="post">
+    <form name="login" action="{% url timing.views.login %}" method="post">
       Please enter your e-mail address to get started...
       <br/><br/>
       <input id="email" type="text" name="email"> 

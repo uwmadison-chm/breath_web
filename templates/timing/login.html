@@ -1,18 +1,14 @@
 {% extends "base.html" %}
 
 {% block body %}
-<body>
-  <div id="Content">
-    <form name="login" action="{% url timing.views.login %}" method="post">
-      Please enter your e-mail address to get started...
-      <br/><br/>
-      <input id="email" type="text" name="email"> 
-      <input type="submit" value="Start!">
-    </form>
+<form name="login" action="{% url timing.views.login %}" method="post">
+  Please enter your e-mail address to get started...
+  <br/><br/>
+  <input id="email" type="text" name="email"> 
+  <input type="submit" value="Start!">
+</form>
 
-    <p><font color="red">
-    {{ errors }}
-    </font></p>
-  </div>
-</body>
+<p><font color="red">
+{{ errors }}
+</font></p>
 {% endblock %}

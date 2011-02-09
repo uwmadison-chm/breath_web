@@ -2,37 +2,21 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
+  <title>Breath</title>
   <script type="text/javascript" src="{% js_prefix %}/jquery-1.5.min.js"> </script>
-  <style type="text/css" media="screen">
-    body {
-      margin:50px 0px; padding:0px;
-      text-align:center;
-    }
-
-    #Title {
-      width:730px;
-      margin:0px auto;
-      font-family:Tahoma, sans-serif;
-      text-align:left;
-      top:0;
-      left:0;
-    }
-    
-    #Content {
-      font-family: Tahoma, sans-serif;
-      width:700px;
-      margin:0px auto;
-      text-align:center;
-      padding:15px;
-      border:1px dashed #333;
-      background-color: #E9EAED;
-      color: #1F2E4C;
-    }
-  </style>
+  <link href="{% css_prefix %}/screen.css" rel="stylesheet" type="text/css" />
+  <!--[if lt IE 8]>
+      <link href="{% css_prefix %}/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
+  <![endif]-->
   
-  {% block js %}{% endblock %}  
+  {% block js %}{% endblock %}
 </head>
 
-{% block body %}{% endblock %}
-
+<body>
+  <div id="container" class="showgrid">
+    <div id="content" class="debug">
+      {% block body %}{% endblock %}
+    </div>
+  </div>
+</body>
 </html>

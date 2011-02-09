@@ -40,14 +40,12 @@
 {% endblock %}
 
 {% block body %}
-<body onload="waitForStart()">
-  <h1 id="Title">Game</h1>
-  <div id="Content">
-  
-  <p id="status">Hit the 'a' key to begin...</p>
-  <form id="timingform" name="timingform" action="{% url timing.views.submit %}" method="post">
-    <input type="hidden" name="timing"/>
-  </form>
-  </div>
-</body>
+<h1 id="Title">Game</h1>
+<div id="Content">
+
+<p id="status">Hit the 'a' key to begin...</p>
+<form id="timingform" name="timingform" action="{% url timing.views.submit %}" method="post">
+  <input type="hidden" name="timing"/>
+</form>
+</div>
 {% endblock %}

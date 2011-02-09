@@ -6,12 +6,13 @@ from django.contrib import admin
 from timing import views
 
 urlpatterns = patterns('',
-    (r'^$', views.base),
-    (r'login/', views.login),
-    (r'instructions/', views.instructions),
-    (r'practice/', views.practice),
-    (r'run/', views.run),
-    (r'submit/', views.submit),
+    (r'^$', views.welcome_consent),
+    (r'^login$', views.login),
+    (r'^demographics$', views.demographics),
+    (r'^instructions$', views.instructions),
+    (r'^practice$', views.practice),
+    (r'^run_task$', views.run_task),
+    (r'^thanks$', views.thanks),
 )
 
 if settings.DEBUG:

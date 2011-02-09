@@ -1,14 +1,10 @@
 {% extends "base.html" %}
 
 {% block body %}
-<form name="login" action="{% url timing.views.login %}" method="post">
-  Please enter your e-mail address to get started...
-  <br/><br/>
+<form action="{% url timing.views.demographics %}">
+  <p>Please enter your e-mail address to get started...</p>
   <input id="email" type="text" name="email"> 
   <input type="submit" value="Start!">
 </form>
 
-<p><font color="red">
-{{ errors }}
-</font></p>
 {% endblock %}

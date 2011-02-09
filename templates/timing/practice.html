@@ -97,9 +97,9 @@
 
 {% block body %}
 <h1 id="Title">Practice</h1>
-<div id="Content">
 <p id="status">Press "a" as the first exhale begins and you count 1.</p>
-<form id="run" name="run" action="{% url timing.views.run %}" method="post"></form>
-<form id="practice" name="practice" action="{% url timing.views.practice %}" method="post"></form>
-</div>
+
+<p><a href="{% url timing.views.run_task %}">On to the real thing</a>
+</p>
+
 {% endblock %}

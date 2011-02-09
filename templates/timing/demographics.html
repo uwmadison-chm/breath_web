@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block body %}
+<p>This is the demographics form. It'll only show if it hasn't yet for you.</p>
+
+<p>
+  <a href="{% url timing.views.instructions %}">On to instructions!</a>
+</p>
+{% endblock %}

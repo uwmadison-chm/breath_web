@@ -35,12 +35,9 @@
 
 {% block body %}
 
-<h1 id="Title">Instructions</h1>
-<div id="Content">
-  <p align="center" id="instructions" ></p>
-  <form id="practice" name="practice" action="{% url timing.views.practice %}" method="post">
-    <input type="hidden" name="user" value="{{ user }}"/>
-  </form>
-</div>
+<h1>Instructions</h1>
+
+<p><a href="{% url timing.views.practice %}">On to Practice</a>
+</p>
 
 {% endblock %}

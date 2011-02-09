@@ -41,7 +41,8 @@
 
 {% block body %}
 <p id="status">Hit the 'a' key to begin...</p>
-<form id="timingform" name="timingform" action="{% url timing.views.submit %}" method="post">
-  <input type="hidden" name="timing"/>
-</form>
+
+<p><a href="{% url timing.views.thanks %}">On to Thanks!</a>
+</p>
+
 {% endblock %}

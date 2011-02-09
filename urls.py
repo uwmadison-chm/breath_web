@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
+from django.conf import settings
 
 from django.contrib import admin
-#admin.autodiscover()
 
 from timing import views
 
@@ -13,3 +13,9 @@ urlpatterns = patterns('',
     (r'run/', views.run),
     (r'submit/', views.submit),
 )
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        (r'(?P<path>.*)$', 'django.views.static.serve', 
+            {'document_root' : settings.PUBLIC_DIR})
+    )

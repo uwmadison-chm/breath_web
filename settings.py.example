@@ -50,6 +50,13 @@ USE_L10N = True
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = ''
 
+URL_BASE = ""
+CSS_PREFIX = "%s/css" % URL_BASE
+JS_PREFIX = "%s/js" % URL_BASE
+IMG_PREFIX = "%s/img" % URL_BASE
+
+PUBLIC_DIR = "%s/public" % PROJECT_DIR
+
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
@@ -58,7 +65,7 @@ MEDIA_URL = ''
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+ADMIN_MEDIA_PREFIX = '%s/admin/' % URL_BASE
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'v800ubq95d0b&=+y$oktum@5^27kfc2c6o45v6so-f@#95l-kd'

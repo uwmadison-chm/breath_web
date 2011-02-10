@@ -1,3 +1,11 @@
+$(function() {
+   $('#instructions').instructions({'onfinish': function() {
+       window.location.href = practice_path;
+   }});
+   
+   
+});
+
 (function($) {
     $.fn.instructions = function(options) {
         var me = $(this);
@@ -50,8 +58,3 @@
     }
 })(jQuery);
 
-$(document).ready(function() {
-   $('#instructions').instructions({'onfinish': function() {
-       window.location.href = practice_path;
-   }});
-});

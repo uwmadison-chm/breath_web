@@ -3,7 +3,6 @@
 <html lang="en">
 <head>
   <title>Breath</title>
-  <script type="text/javascript" src="{% js_prefix %}/jquery-1.5.min.js"> </script>
   <link href="{% css_prefix %}/screen.css" rel="stylesheet" type="text/css" />
   <!--[if lt IE 8]>
       <link href="{% css_prefix %}/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
@@ -18,5 +17,7 @@
       {% block body %}{% endblock %}
     </div>
   </div>
+  <script type="text/javascript" src="{% js_prefix %}/jquery-1.5.min.js"> </script>
+  <script type="text/javascript" src="{% js_prefix %}/app.js"> </script>
 </body>
 </html>

@@ -23,3 +23,15 @@
 .debug {
   background: url('../img/grid.png') repeat;
 }
+
+#instructions {
+  list-style-type: none;
+}
+
+#instructions li {
+  display: none;
+}
+
+#instructions li li {
+  display: list-item;
+}

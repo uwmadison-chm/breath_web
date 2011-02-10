@@ -415,3 +415,18 @@ body.bp .removed {
 .debug {
   background: url("../img/grid.png") repeat;
 }
+
+/* line 27, ../../compass/scss/screen.scss */
+#instructions {
+  list-style-type: none;
+}
+
+/* line 31, ../../compass/scss/screen.scss */
+#instructions li {
+  display: none;
+}
+
+/* line 35, ../../compass/scss/screen.scss */
+#instructions li li {
+  display: list-item;
+}

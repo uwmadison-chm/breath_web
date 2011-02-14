@@ -430,3 +430,13 @@ body.bp .removed {
 #instructions li li {
   display: list-item;
 }
+
+/* line 39, ../../compass/scss/screen.scss */
+#practice div {
+  display: none;
+}
+
+/* line 43, ../../compass/scss/screen.scss */
+#meditime_run div {
+  display: none;
+}

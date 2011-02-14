@@ -13,11 +13,13 @@
 
   <div id="success">
     <p>Practice has finished. Well done!</p>
+    <p>Press <code>SPACEBAR</code> to continue.
   </div>
 
   <div id="err_wrong_key">
     <p>Please press only <code>a</code> and <code>f</code> during practice.
     </p>
+    <p>Press <code>SPACEBAR</code> to try again.
   </div>
 
   <div id="err_too_many">
@@ -46,5 +48,9 @@
 
 <p><a href="{% url timing.views.run_task %}">On to the real thing</a>
 </p>
+
+<script type="text/javascript">
+  var next_page = "{% url timing.views.run_task %}";
+</script>
 
 {% endblock %}

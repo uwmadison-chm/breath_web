@@ -1,11 +1,7 @@
-from django.shortcuts import render_to_response, redirect
-from models import Participant, Run
-import re, datetime, random
+import json
 
-import csv
+from django.shortcuts import render_to_response, redirect
 from django.http import HttpResponse
-from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
 
 def welcome_consent(request):
     return render_to_response('welcome_consent.html')
@@ -23,7 +19,10 @@ def practice(request):
     return render_to_response('practice.html')
 
 def run_task(request):
-    return render_to_response('run_task.html')
+    if request.method == "POST":
+        return HttpResponse(json.dumps({"result": "ok"}))
+    else:
+        return render_to_response('run_task.html')
 
 def thanks(request):
     return render_to_response('thanks.html')

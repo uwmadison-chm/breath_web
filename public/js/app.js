@@ -3,12 +3,110 @@ $(function() {
        window.location.href = practice_path;
    }});
    
-   $('#practice').meditime_practice();
+   $('#practice').meditime_practice({'onfinish': function() {
+       window.location.href = next_page;
+   }});
+   
+   $('#meditime_run').meditime_run();
 });
+
+(function($) {
+    $.fn.meditime_run = function(options) {
+        var me = $(this);
+        // Ensure we're not going to operate on non-matching pages.
+        if (me.size() !== 1) {
+            return;
+        }
+
+        var pvt = {};
+        pvt.settings = $.extend({
+            'save_path' : '',
+            'start_key' : 'A',
+            'run_ms' : (60*1000*15),
+            'onfinish' : function() {},
+            'status_container' : '#meditime_run'
+        });
+        pvt.settings.start_key = pvt.settings.start_key.toUpperCase();
+
+        pvt.reset = function() {
+            pvt.presses = new Array();
+            pvt.times = new Array();
+            pvt.save_queue = {};
+            pvt.run_state = 'stopped';
+            pvt.show_status('getready');
+        }
+
+        pvt.show_status = function(name) {
+            $(pvt.settings.status_container).children().hide();
+            $('#'+name).show();
+        }
+
+        pvt.start = function() {
+            pvt.run_state = 'running';
+            pvt.start_time = new Date();
+            pvt.show_status('running');
+        }
+
+        pvt.handle_key = function(key) {
+            var time = new Date() - pvt.start_time;
+            var idx = pvt.presses.length;
+            pvt.presses.push(key);
+            pvt.times.push(time);
+            pvt.save_queue[idx] = {
+                'num' : idx,
+                'key' : key,
+                'time' : time,
+                'finish' : false
+            };
+            if (time > pvt.settings.run_ms) {
+                pvt.save_queue[idx].finish = true;
+                pvt.run_state = 'finished';
+                pvt.onfinish();
+            }
+            $.ajax('', {
+                'type' : 'POST',
+                'data' : pvt.save_queue,
+                'dataType' : 'json'
+            }).success(function(a, b, c) {
+                console.log("I'm in success.")
+                console.log(a);
+            })
+            console.log(pvt.save_queue);
+        }
+
+        pvt.handle_response = function(resp) {
+            // Find out what IDs we should delete. Delete 'em.
+        }
+
+        pvt.reset();
+
+        $(document).keydown(function(evt) {
+            var keyChar = String.fromCharCode(evt.keyCode);
+            switch(pvt.run_state) {
+            case 'stopped':
+                if (keyChar === pvt.settings.start_key) {
+                    pvt.start();
+                    pvt.handle_key(keyChar);
+                }
+                break;
+            case 'running':
+                pvt.handle_key(keyChar);
+                break;
+            
+            default:
+                alert("Oops! I'm somehow in state: "+pvt.run_state);
+                break;
+            }
+        });
+    }
+})(jQuery);
 
 (function($) {
     $.fn.instructions = function(options) {
         var me = $(this);
+        if (me.size() !== 1) {
+            return;
+        }
         
         var settings = $.extend({
             'key_map' : {"SPACEBAR" : 32, "a" : 65, "f" : 70},
@@ -50,6 +148,7 @@ $(function() {
 
         // The main event! See if we can advance and do so.
         $(document).keydown(function(evt) {
+            console.log("hug");
             if (should_advance(evt.keyCode)) {
                 advance();
             }
@@ -61,6 +160,10 @@ $(function() {
 (function($) {
     $.fn.meditime_practice = function(options) {
         var me = this;
+        if (me.size() !== 1) {
+            return;
+        }
+        
         var pvt = {};
         pvt.settings = $.extend({
             'cycle_length': 9,
@@ -71,7 +174,8 @@ $(function() {
             'debounce_ms' : 300,
             'min_avg_ms' : 1500,
             'max_avg_ms' : 30000,
-            'status_container' : '#practice'
+            'status_container' : '#practice',
+            'onfinish' : function() {}
         }, options);
         // Keycodes get converted to upper-case strings.
         pvt.settings.count_key = pvt.settings.count_key.toUpperCase();
@@ -88,12 +192,16 @@ $(function() {
         }
         
         pvt.start = function() {
-            console.log("I'm in start")
             pvt.change_state('running');
             pvt.show_status('running');
         };
         
         pvt.finish = function() {
+            // Ensure our average time is OK...
+            if (pvt.fails_timing(pvt.times)) {
+                pvt.throw_error('err_timing');
+                return;
+            }
             pvt.change_state('finished');
             pvt.show_status('success');
         }
@@ -109,7 +217,6 @@ $(function() {
         }
         
         pvt.change_state = function(new_state) {
-            console.log("run_state: "+pvt.run_state+" -> "+new_state);
             pvt.run_state = new_state;
         }
         
@@ -120,6 +227,19 @@ $(function() {
             } else {
                 return pvt.settings.count_key;
             }
+        }
+        
+        pvt.fails_timing = function(times) {
+            var len = times.length;
+            var total_time = times[len-1] - times[0];
+            var avg_time = total_time / len;
+            if (avg_time < pvt.settings.min_avg_ms) {
+                return true;
+            }
+            if (avg_time > pvt.settings.max_avg_ms) {
+                return true;
+            }
+            return false;
         }
         
         pvt.fails_debounce = function(time_arr) {
@@ -137,8 +257,6 @@ $(function() {
             var ck = pvt.settings.count_key;
             var rk = pvt.settings.reset_key;
             
-            console.log("Handling "+key);
-            console.log("Target key: "+tk);
             
             if (tk === key) {
                 pvt.presses.push(key);
@@ -167,18 +285,16 @@ $(function() {
             }
             // Finally, if we've got enough, we have success!
             if (pvt.presses.length >= pvt.iters) {
-                pvt.change_state('finished');
-                pvt.show_status('success');
+                pvt.finish();
             }
-            // And we can just fall through.
+            // And we can just fall through. Overall timing errors will be
+            // caught in finish()
         }
         
         $(document).keydown(function(evt) {
             var keyChar = String.fromCharCode(evt.keyCode);
-            console.log("Handling key "+keyChar+" in state "+pvt.run_state);
             switch(pvt.run_state) {
             case 'stopped':
-                console.log("Looking for "+pvt.settings.count_key);
                 if (keyChar === pvt.settings.count_key) {
                     pvt.start();
                     pvt.handle_key_run(keyChar);
@@ -189,14 +305,16 @@ $(function() {
                 break;
             case 'error':
                 if (keyChar === pvt.settings.restart_key) {
-                    pvt.change_state("stopped");
-                    pvt.show_status("getready");
+                    pvt.reset();
                 }
                 break;
             case 'finished':
+                if (keyChar === pvt.settings.restart_key) {
+                    pvt.settings.onfinish();
+                }
                 break;
             default:
-                alert("Whoah! I'm somehow in state: "+pvt.run_state);
+                alert("Oops! I'm somehow in state: "+pvt.run_state);
             }
         });
         pvt.reset();

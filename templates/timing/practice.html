@@ -1,103 +1,48 @@
 {% extends "base.html" %}
 
-{% block js %}
-<script type="text/javascript">
-  var times = new Array();
-  var keys = new Array();
-  var startTime;
-  var totalTime;
-  var numPresses = 0;
-
-  function waitForStart() {
-    document.onkeydown = function(event){ 
-      if(event.keyCode == 65){
-        startTimer(event); 
-      }
-    }
-  }
-
-  function startTimer(event) {
-    startTime = (new Date).getTime();
-    times.push(startTime);
-    keys.push(event.keyCode);
-    document.getElementById('status').innerHTML = "Practice is running...";
-    document.onkeydown = function(event){ markTimer(event); }
-  }
-  
-  function markTimer(event) {
-    numPresses++;
-    var newTime = (new Date).getTime();
-    newTime -= startTime;
-    times.push(newTime);
-    keys.push(event.keyCode);
-    if(numPresses == 14)
-      stopTimer();
-  }
-    
-  function stopTimer() {
-    document.getElementById('status').innerHTML = "Practice has finished. Well done!";
-    totalTime = (new Date).getTime() - startTime;
-    analyzePractice();
-  }
-
-  function analyzePractice() {
-    var passed = true;
-
-    for(var i = 0; i < keys.length; i++) {
-      if(i == 8) {
-        if(keys[i] != 70){
-          document.getElementById('status').innerHTML = "You didn't press \'f\' on your ninth breath. Make sure you press the \'a\' key during every exhale, and then press the \'f\' key on the ninth exhale. Try the practice again. <br/><br/>Press SPACEBAR to continue.";
-          document.onkeydown = function(event){ repractice(event); }
-          passed = false;
-        }
-      }
-      else if(keys[i] != 65) {
-          document.getElementById('status').innerHTML = "You didn't press \'a\' key on all breaths except the ninth breath. Make sure you press the \'a\' key during every exhale, and then press the \'f\' key on the ninth exhale. Try the practice again. <br/><br/>Press SPACEBAR to continue.";
-          document.onkeydown = function(event){ repractice(event); }
-	  passed = false;
-      }
-    }
-
-    //Temporarily disabling min time limit for testing
-    if(totalTime > 300000) { // || totalTime < 14000) {
-      document.getElementById('status').innerHTML = "You took an unusual amount of time to complete the practice run. Make sure you press the \'a\' key during every exhale, and then press the \'f\' key on the ninth exhale. Try the practice again. <br/><br/>Press SPACEBAR to continue.";
-      document.onkeydown = function(event){ repractice(event); }
-      passed = false;
-    }
-
-    if(passed)
-      setTimeout("practiceCompleted()", 3000);
-  }
-
-  function practiceCompleted() {
-    document.getElementById('Title').innerHTML = "Game";
-    document.getElementById('status').innerHTML = "We suggest you sit in an upright, relaxed <br/> posture that feels comfortable.<br/><br/>Please keep your eyes at least partly open during the experiment <br/><br/>The task will last about 15 minutes<br/><br/>Every time you respond, please make sure you firmly press the key. <br/><br/>Press the SPACEBAR to continue.";
-    document.onkeydown = function(event){
-      if(event.keyCode == 32)
-        document.getElementById('run').submit();
-    }
-  }
-    
-  function repractice(event) {
-    if(event.keyCode == 32)
-      document.getElementById('practice').submit();
-  }
-
-  function numOccurrences(array, element) {
-    var occurrences = 0;
-
-    for(i = 0; i < array.length; i++) {
-      if(array[i] == element)
-        occurrences++;
-    }
-    return occurrences;
-  }
-</script>
-{% endblock %}
-
 {% block body %}
-<h1 id="Title">Practice</h1>
-<p id="status">Press "a" as the first exhale begins and you count 1.</p>
+<div id="practice">
+
+  <div id="getready">
+    <p>To start practice, press <code>a</code> on your first exhale.</p>
+  </div>
+
+  <div id="running">
+    <p>Practice is running...</p>
+  </div>
+
+  <div id="success">
+    <p>Practice has finished. Well done!</p>
+  </div>
+
+  <div id="err_wrong_key">
+    <p>Please press only <code>a</code> and <code>f</code> during practice.
+    </p>
+  </div>
+
+  <div id="err_too_many">
+    <p>You didn't press <code>f</code> on your ninth breath. Make sure you press the <code>a</code> key during every exhale, and then press the <code>f</code> key on the ninth exhale.
+    </p>
+    <p>Press <code>SPACEBAR</code> to try again.</p>
+  </div>
+
+  <div id="err_debounce">
+    <p>Please press the keys only once for each breath.</p>
+    <p>Press SPACEBAR to try again.</p>
+  </div>
+
+  <div id="err_too_few">
+    <p>You didn't press <code>a</code> key on all breaths except the ninth breath. Make sure you press the <code>a</code> key during every exhale, and then press the <code>f</code> key on the ninth exhale.
+    </p>
+    <p>Press SPACEBAR to try again.</p>
+  </div>
+
+  <div id="err_timing">
+    <p>You took an unusual amount of time to complete the practice run. Make sure you press the <code>a</code> key once during every exhale, and then press the </code>f</code> key on the ninth exhale.
+    </p>
+    <p>Press <code>SPACEBAR</code> to try again.</p>
+  </div>
+</div>
 
 <p><a href="{% url timing.views.run_task %}">On to the real thing</a>
 </p>

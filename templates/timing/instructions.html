@@ -65,7 +65,9 @@
 </p>
 
 <script type="text/javascript">
-  var practice_path = "{% url timing.views.practice %}";
+  data.nav_practice = function() {
+    window.location.href = "{% url timing.views.practice %}";
+  }
 </script>
 
 {% endblock %}

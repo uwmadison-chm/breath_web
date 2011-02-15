@@ -50,7 +50,9 @@
 </p>
 
 <script type="text/javascript">
-  var next_page = "{% url timing.views.run_task %}";
+  data.nav_run = function() {
+    window.location.href = "{% url timing.views.run_task %}";
+  }
 </script>
 
 {% endblock %}

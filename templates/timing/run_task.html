@@ -3,7 +3,7 @@
 {% block body %}
 <div id="meditime_run">
   <div id="getready">
-    <p>The task will take about 15 minutes. Hit the 'a' key to begin...
+    <p>The task will take about {{ task_len_min }} minutes. Hit the 'a' key to begin...
     </p>
   </div>
   <div id="running">
@@ -14,5 +14,9 @@
 
 <p><a href="{% url timing.views.thanks %}">On to Thanks!</a>
 </p>
+
+<script type="text/javascript">
+  data.nav_thanks = function() { window.location.href = "{% url timing.views.thanks %}" }
+</script>
 
 {% endblock %}

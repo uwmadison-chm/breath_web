@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block body %}
-<form action="{% url timing.views.demographics %}">
+<form action="{% url timing.views.login %}" method="post">
   <p>Please enter your e-mail address to get started...</p>
   <input id="email" type="text" name="email"> 
   <input type="submit" value="Start!">

@@ -1,30 +1,82 @@
 import json
+import datetime
 
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.http import HttpResponse
+from django.db import IntegrityError
+
+from timing.models import Participant, Run, Response
 
 def welcome_consent(request):
-    return render_to_response('welcome_consent.html')
-
-def demographics(request):
-    return render_to_response('demographics.html')
+    if request.method == "GET":
+        return render_to_response('welcome_consent.html')        
 
 def login(request):
-    return render_to_response('login.html')
+    if request.method == "GET":
+        return render_to_response('login.html')
+    if request.method == "POST":
+        try:
+            ppt = Participant.objects.get(email=request.POST['email'])
+        except Participant.DoesNotExist:
+            ppt = Participant(email=request.POST['email'])
+            ppt.save()
+        request.session['ppt_id'] = ppt.pk
+        return redirect(demographics)
+            
+def demographics(request):
+    ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
+    return render_to_response('demographics.html')
 
 def instructions(request):
+    ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
     return render_to_response('instructions.html')
 
 def practice(request):
+    ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
     return render_to_response('practice.html')
 
 def run_task(request):
+    ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
+    if request.method == "GET":
+        run = Run(participant=ppt)
+        run.save()
+        request.session['run_id'] = run.pk
+        return render_to_response('run_task.html', {
+            'run' : run,
+            'task_len_min' : (run.planned_length_sec / 60)
+        })
+        
     if request.method == "POST":
-        return HttpResponse(json.dumps({"result": "ok"}))
-    else:
-        return render_to_response('run_task.html')
-
+        run = Run.objects.get(pk=request.session['run_id'])
+        return_data = {'finish' : False}
+        cur_time = datetime.datetime.now()
+        if run.started_at is None:
+            run.started_at = cur_time
+            run.save()
+        saved_nums = []
+        save_queue = json.loads(request.POST['save_queue'])
+        for num, data in save_queue.iteritems():
+            try:
+                resp = Response(
+                    run=run, press_num=data['num'], key=data['key'], 
+                    ms_since_run_start=data['time'])
+                resp.save()
+            except IntegrityError:
+                pass
+            saved_nums.append(data['num'])
+        
+        target_tdelta = datetime.timedelta(seconds=run.planned_length_sec)
+        run_tdelta = cur_time - run.started_at
+        if run_tdelta > target_tdelta:
+            return_data['finish'] = True
+        return_data['saved_nums'] = saved_nums
+        return HttpResponse(json.dumps(return_data))
+                
 def thanks(request):
-    return render_to_response('thanks.html')
+    ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
+    
+    return render_to_response('thanks.html', {
+        'participant' : ppt
+    })
 
 

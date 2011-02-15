@@ -1,16 +1,13 @@
-from models import Run
 from django.contrib import admin
 
-class RunAdmin(admin.ModelAdmin):
-    fieldsets = [
-        (None, {'fields': ['user']}),
-        ('Date', {'fields': ['date']}),
-        ('Keypresses', {'fields': ['keypresses']})
-        ]
-    list_display = ('user', 'date')
-    list_filter=['date']
-    date_hierarchy = 'date'
+from timing.models import *
 
-
-
-admin.site.register(Run, RunAdmin)
+admin.site.register(Gender)
+admin.site.register(Race)
+admin.site.register(Ethnicity)
+admin.site.register(CountryOfResidence)
+admin.site.register(EducationLevel)
+admin.site.register(Spirituality)
+admin.site.register(ReligiousAffiliation)
+admin.site.register(PoliticalIdentity)
+admin.site.register(Occupation)

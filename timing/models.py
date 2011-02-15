@@ -42,7 +42,7 @@ class Race(Demographic):
 class Ethnicity(Demographic):
     pass
 
-class CountyOfResidence(Demographic):
+class CountryOfResidence(Demographic):
     pass
 
 class EducationLevel(Demographic):
@@ -79,7 +79,7 @@ class Participant(StampedTrackedModel):
         Ethnicity, blank=True, null=True, default=None)
 
     country_of_residence = models.ForeignKey(
-        CountyOfResidence, blank=True, null=True, default=None)
+        CountryOfResidence, blank=True, null=True, default=None)
 
     education_level = models.ForeignKey(
         EducationLevel, blank=True, null=True, default=None)

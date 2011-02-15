@@ -69,6 +69,9 @@ def run_task(request):
         run_tdelta = cur_time - run.started_at
         if run_tdelta > target_tdelta:
             return_data['finish'] = True
+            run.finished_at = cur_time
+            run.save()
+            
         return_data['saved_nums'] = saved_nums
         return HttpResponse(json.dumps(return_data))
                 

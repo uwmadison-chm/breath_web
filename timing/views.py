@@ -31,7 +31,10 @@ def login(request):
                     consent_given=request.session.get('consent'))
                 ppt.save()
             request.session['ppt_id'] = ppt.pk
-            return redirect(demographics)
+            if ppt.has_demographics:
+                return redirect(instructions)
+            else:
+                return redirect(demographics)
     else:
         form = forms.LoginForm()
     return render_to_response('login.html', {'form' : form})

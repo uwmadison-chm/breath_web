@@ -108,7 +108,7 @@ class Participant(StampedTrackedModel):
     
     @property
     def has_demographics(self):
-        return self.birth_year is not None
+        return self.birth_year is not None and self.birth_year > 0
     
 
 class Run(StampedTrackedModel):

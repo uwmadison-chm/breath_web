@@ -460,24 +460,28 @@ ul.errorlist {
 #instructions li {
   display: none;
 }
-
+/* line 63, ../../compass/scss/screen.scss */
+#instructions li ol {
+  margin-left: 30px;
+}
 /* line 65, ../../compass/scss/screen.scss */
-#instructions li li {
+#instructions li ol li {
   display: list-item;
 }
 
-/* line 69, ../../compass/scss/screen.scss */
-code {
+/* line 71, ../../compass/scss/screen.scss */
+#instructions code, #practice code, #meditime_run code {
   font-weight: bold;
   font-family: Consolas, 'Andale Mono', monospace;
+  text-transform: uppercase;
 }
 
-/* line 74, ../../compass/scss/screen.scss */
+/* line 77, ../../compass/scss/screen.scss */
 #practice div {
   display: none;
 }
 
-/* line 78, ../../compass/scss/screen.scss */
+/* line 81, ../../compass/scss/screen.scss */
 #meditime_run div {
   display: none;
 }

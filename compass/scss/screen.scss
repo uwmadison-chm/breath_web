@@ -60,15 +60,18 @@ ul.errorlist {
 
 #instructions li {
   display: none;
+  ol {
+    margin-left: $blueprint-grid-width;
+    li {
+      display: list-item;
+    }
+  }
 }
 
-#instructions li li {
-  display: list-item;
-}
-
-code {
+#instructions code, #practice code, #meditime_run code {
   font-weight: bold;
   font-family: Consolas, 'Andale Mono', monospace;
+  text-transform: uppercase;
 }
 
 #practice div {

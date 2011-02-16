@@ -109,7 +109,7 @@ $(function() {
         }
         
         var settings = $.extend({
-            'key_map' : {"SPACEBAR" : 32, "a" : 65, "f" : 70},
+            'key_map' : {"SPACEBAR" : 32, "A" : 65, "F" : 70},
             'show_idx' : 0,
             'onfinish' : function() {}
         }, options);
@@ -126,7 +126,7 @@ $(function() {
         }
         
         var get_step_advancer = function(step) {
-            return step.find('code:last').text();
+            return step.find('code:last').text().toUpperCase();
         }
         
         var should_advance = function(keycode) {

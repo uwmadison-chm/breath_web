@@ -21,6 +21,9 @@ class DemographicsForm(forms.Form):
     birth_year = forms.TypedChoiceField(choices=ENUM_YEARS, coerce=int)
     
     birth_month = forms.TypedChoiceField(choices=ENUM_MONTHS, coerce=int)
+
+    email_ok = forms.BooleanField(required=False, 
+        label="I would like to be contacted to participate in future experiments.")
     
     def clean(self):
         cleaned_data = self.cleaned_data

@@ -45,6 +45,7 @@ def demographics(request):
             cd = form.cleaned_data
             ppt.birth_year = cd.get("birth_year")
             ppt.birth_month = cd.get("birth_month")
+            ppt.email_ok = cd.get("email_ok")
             ppt.save()
             return redirect(instructions)
     

@@ -104,7 +104,7 @@ class Participant(StampedTrackedModel):
     
     consent_given = models.BooleanField(default=False)
     
-    email_ok = models.Boolean
+    email_ok = models.BooleanField(default=False)
     
     @property
     def has_demographics(self):

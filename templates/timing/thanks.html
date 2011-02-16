@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
 {% block body %}
-<h1>Thank you for completing the task!</h1>
-<p>
-  Normally you would be redirected to a questionnaire.
-</p>
+<h1>Thank you for your participation!</h1>
+  <p class="redir_inst">Your participant number is <strong>{{ participant.participant_number}}</strong>.
+  </p>
+  <p>
+  Please take a few minutes to complete <a href="https://uwmadison.qualtrics.com/SE/?SID=SV_diBcUAelnZGJPWk", target="_blank">this survey</a>, using the participant number above.
+  </p>
 {% endblock %}

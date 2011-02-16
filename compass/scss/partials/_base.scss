@@ -11,7 +11,9 @@ $blueprint-grid-wm: $blueprint-grid-width + $blueprint-grid-margin;
 // $blueprint-grid-width: ($blueprint-container-size + $blueprint-grid-margin) / $blueprint-grid-columns - $blueprint-grid-margin;
 //$blueprint-container-size: 710px;
 
-$page_bg: rgb(218,212,204);
-$content_bg: rgb(243,239,231);
-$heading_fg: rgb(92,41,69);
+$page_bg: rgb(248,235,213);
+$content_bg: rgb(255,251,244);
+$heading_fg: rgb(115,109,97);
 $error_fg: rgb(92,29,32);
+$text_fg: rgb(51,50,48);
+

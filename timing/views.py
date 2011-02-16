@@ -9,6 +9,7 @@ from timing.models import Participant, Run, Response
 from timing import forms
 
 def welcome_consent(request):
+    request.session.set_expiry(0)
     if request.method == "GET":
         return render_to_response('welcome_consent.html')        
 

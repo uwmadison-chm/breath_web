@@ -31,7 +31,19 @@ def login(request):
             
 def demographics(request):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
-    return render_to_response('demographics.html')
+    form = forms.DemographicsForm()
+    if request.method == "POST":
+        form = forms.DemographicsForm(request.POST)
+        if form.is_valid():
+            print(form)
+            print(form.cleaned_data)
+            cd = form.cleaned_data
+            ppt.birth_year = cd.get("birth_year")
+            ppt.birth_month = cd.get("birth_month")
+            ppt.save()
+            return redirect(instructions)
+    
+    return render_to_response('demographics.html', {'form' : form})
 
 def instructions(request):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])

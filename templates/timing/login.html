@@ -3,8 +3,12 @@
 {% block body %}
 <form action="{% url timing.views.login %}" method="post">
   <p>Please enter your e-mail address to get started...</p>
-  <input id="email" type="text" name="email"> 
-  <input type="submit" value="Start!">
+  <div class="fl">
+    {{ form.email.errors }}
+    <label for="id_email">Email</label>
+    {{ form.email }}
+    <input type="submit" value="Log in" />
+  </div>
 </form>
 
 {% endblock %}

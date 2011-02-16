@@ -6,22 +6,28 @@ from django.http import HttpResponse
 from django.db import IntegrityError
 
 from timing.models import Participant, Run, Response
+from timing import forms
 
 def welcome_consent(request):
     if request.method == "GET":
         return render_to_response('welcome_consent.html')        
 
 def login(request):
-    if request.method == "GET":
-        return render_to_response('login.html')
     if request.method == "POST":
-        try:
-            ppt = Participant.objects.get(email=request.POST['email'])
-        except Participant.DoesNotExist:
-            ppt = Participant(email=request.POST['email'])
-            ppt.save()
-        request.session['ppt_id'] = ppt.pk
-        return redirect(demographics)
+        form = forms.LoginForm(request.POST)
+        if form.is_valid():
+            try:
+                ppt = Participant.objects.get(
+                    email=form.cleaned_data['email'])
+            except Participant.DoesNotExist:
+                ppt = Participant(
+                    email=form.cleaned_data['email'])
+                ppt.save()
+            request.session['ppt_id'] = ppt.pk
+            return redirect(demographics)
+    else:
+        form = forms.LoginForm()
+    return render_to_response('login.html', {'form' : form})
             
 def demographics(request):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])

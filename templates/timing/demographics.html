@@ -1,17 +1,15 @@
 {% extends "base.html" %}
 
 {% block body %}
-<p>This is the demographics form. It'll only show if it hasn't yet for you.</p>
+<h1>Awareness Online</h1>
 
 <form action="{% url timing.views.demographics %}" method="post">
   <div>
     {{ form.non_field_errors }}
   </div>
   <div class="fl">
-    <label>Birth Date</label>
-    <label for="id_birth_year">(Year)</label>
+    <label>Birth date</label>
     {{ form.birth_year }}
-    <label for="id_birth_month">(Month)</label>
     {{ form.birth_month }}
   </div>
   <div class="fl">

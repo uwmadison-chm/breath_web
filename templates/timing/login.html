@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
 {% block body %}
+<h1>Awareness Online: Log In</h1>
+
 <form action="{% url timing.views.login %}" method="post">
-  <p>Please enter your e-mail address to get started...</p>
+  <p>Please enter your e-mail address to get started.</p>
   <div class="fl">
     {{ form.email.errors }}
     <label for="id_email">Email</label>

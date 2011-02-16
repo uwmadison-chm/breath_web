@@ -10,11 +10,41 @@
 // Combine the partials into a single screen stylesheet.
 @import "partials/page";
 
+body {
+  font-family: Georgia, serif;
+  line-height: 1.5;
+  font-size: 16px;
+}
+
+h1 {
+  font-size: 150%;
+  line-height: 1;
+}
+
+p {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+.fl {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+ul.errorlist {
+  list-style: none;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  color: $error_fg;
+}
+
 #container {
   @include container;
 }
 
 #content {
+  margin-top: 1.5em;
+  padding-top: 1.5em;
   @include column(16, true);
   @include prepend(1);
   @include append(1);
@@ -34,6 +64,11 @@
 
 #instructions li li {
   display: list-item;
+}
+
+code {
+  font-weight: bold;
+  font-family: Consolas, 'Andale Mono', monospace;
 }
 
 #practice div {

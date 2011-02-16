@@ -14,11 +14,13 @@ body {
   font-family: Georgia, serif;
   line-height: 1.5;
   font-size: 16px;
+  background: $page_bg url('../img/background.png') repeat-y;
 }
 
 h1 {
   font-size: 150%;
   line-height: 1;
+  color: $heading_fg;
 }
 
 p {
@@ -40,6 +42,7 @@ ul.errorlist {
 
 #container {
   @include container;
+  margin-left: $blueprint-grid-wm;
 }
 
 #content {
@@ -61,7 +64,8 @@ ul.errorlist {
 #instructions li {
   display: none;
   ol {
-    margin-left: $blueprint-grid-width;
+    @include column(15, true);
+    @include prepend(1);
     li {
       display: list-item;
     }

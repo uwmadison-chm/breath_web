@@ -10,8 +10,13 @@ from timing import forms
 
 def welcome_consent(request):
     request.session.set_expiry(0)
-    if request.method == "GET":
-        return render_to_response('welcome_consent.html')        
+    form = forms.ConsentForm()
+    if request.method == "POST":
+        form = forms.ConsentForm(request.POST)
+        if form.is_valid():
+            request.session['consent'] = form.cleaned_data.get('consent')
+            return redirect(login)
+    return render_to_response('welcome_consent.html', {'form' : form})        
 
 def login(request):
     if request.method == "POST":
@@ -22,7 +27,8 @@ def login(request):
                     email=form.cleaned_data['email'])
             except Participant.DoesNotExist:
                 ppt = Participant(
-                    email=form.cleaned_data['email'])
+                    email=form.cleaned_data['email'],
+                    consent_given=request.session.get('consent'))
                 ppt.save()
             request.session['ppt_id'] = ppt.pk
             return redirect(demographics)
@@ -36,8 +42,6 @@ def demographics(request):
     if request.method == "POST":
         form = forms.DemographicsForm(request.POST)
         if form.is_valid():
-            print(form)
-            print(form.cleaned_data)
             cd = form.cleaned_data
             ppt.birth_year = cd.get("birth_year")
             ppt.birth_month = cd.get("birth_month")

@@ -10,6 +10,10 @@ ENUM_MONTHS = [(i+1, m) for i, m in enumerate(MONTHS)]
 
 ENUM_YEARS = [(y, y) for y in range(2002, 1900, -1)]
 
+class ConsentForm(forms.Form):
+    consent = forms.BooleanField(
+        label="I have read the above and give my consent to take part in this study.")
+
 class LoginForm(forms.Form):
     email = forms.EmailField()
 

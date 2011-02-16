@@ -102,6 +102,14 @@ class Participant(StampedTrackedModel):
     
     birth_month = models.IntegerField(default=0)
     
+    consent_given = models.BooleanField(default=False)
+    
+    email_ok = models.Boolean
+    
+    @property
+    def has_demographics(self):
+        return self.birth_year is not None
+    
 
 class Run(StampedTrackedModel):
     participant = models.ForeignKey(Participant)

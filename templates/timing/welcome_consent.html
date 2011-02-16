@@ -1,7 +1,13 @@
 {% extends "base.html" %}
 
 {% block body %}
+<h1>Awareness Online</h1>
 <p>
-  This page is the welcome and consent page. There'll be a form here.
+  The text of this page will be determined by what we give to the IRB.
 </p>
+
+<form action="{% url timing.views.welcome_consent %}" method="POST">
+  {{ form.as_p }}
+  <input type="submit" value="Continue" />
+</form>
 {% endblock %}

@@ -26,7 +26,7 @@ class StampedTrackedModel(models.Model):
 
 
 class Demographic(StampedTrackedModel):
-    label = models.CharField(max_length=255, default='')
+    label = models.CharField(max_length=255, default='', unique=True)
     position = models.IntegerField(default=0)
 
     class Meta:
@@ -34,6 +34,9 @@ class Demographic(StampedTrackedModel):
         ordering = ['position']
 
 class Gender(Demographic):
+    pass
+
+class Handedness(Demographic):
     pass
 
 class Race(Demographic):

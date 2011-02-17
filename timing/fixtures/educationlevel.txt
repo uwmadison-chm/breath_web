@@ -1,0 +1,15 @@
+Rather not say
+Elementary School
+Junior High
+Some High School
+High School Graduate
+Some College
+Associate's Degree
+Bachelor's Degree
+Some Graduate School
+Master's Degree
+M.B.A.
+J.D.
+M.D.
+Ph.D.
+Other Advanced Degree

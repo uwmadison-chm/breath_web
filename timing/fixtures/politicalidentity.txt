@@ -1,0 +1,8 @@
+Rather not say
+Strongly Liberal
+Moderately Liberal
+Slightly Liberal
+Neutral (Moderate)
+Slightly Conservative
+Moderately Conservative
+Strongly Conservative

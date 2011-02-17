@@ -28,6 +28,13 @@ class StampedTrackedModel(models.Model):
 class Demographic(StampedTrackedModel):
     label = models.CharField(max_length=255, default='', unique=True)
     position = models.IntegerField(default=0)
+    
+    @classmethod
+    def first(klass):
+        return klass.objects.all()[0]
+
+    def __unicode__(self):
+        return self.label
 
     class Meta:
         abstract = True
@@ -67,37 +74,41 @@ def _random_ppt_num():
     return str(random.randint(100000, 999999))
 
 class Participant(StampedTrackedModel):
-    email = models.CharField(max_length=255, unique=True)
+    email = models.CharField(max_length=255, unique=True, blank=False)
 
     participant_number = models.CharField(
         max_length=8, unique=True, default=_random_ppt_num)
 
     gender = models.ForeignKey(
-        Gender, blank=True, null=True, default=None)
+        Gender, default=Gender.first, null=True)
+
+    handedness = models.ForeignKey(
+        Handedness, default=Handedness.first, null=True)
 
     race = models.ForeignKey(
-        Race, blank=True, null=True, default=None)
+        Race, default=Race.first, null=True)
 
     ethnicity = models.ForeignKey(
-        Ethnicity, blank=True, null=True, default=None)
+        Ethnicity, default=Ethnicity.first, null=True)
 
     country_of_residence = models.ForeignKey(
-        CountryOfResidence, blank=True, null=True, default=None)
+        CountryOfResidence, default=CountryOfResidence.first, null=True)
 
     education_level = models.ForeignKey(
-        EducationLevel, blank=True, null=True, default=None)
+        EducationLevel, default=EducationLevel.first, null=True)
 
     spirituality = models.ForeignKey(
-        Spirituality, blank=True, null=True, default=None)
+        Spirituality, default=Spirituality.first, null=True)
 
     religious_affiliation = models.ForeignKey(
-        ReligiousAffiliation, blank=True, null=True, default=None)
+        ReligiousAffiliation, default=ReligiousAffiliation.first, 
+        null=True)
     
-    policital_identity = models.ForeignKey(
-        PoliticalIdentity, blank=True, null=True, default=None)
+    political_identity = models.ForeignKey(
+        PoliticalIdentity, default=PoliticalIdentity.first, null=True)
     
     occupation = models.ForeignKey(
-        Occupation, blank=True, null=True, default=None)
+        Occupation, default=Occupation.first, null=True)
     
     postal_code = models.CharField(max_length=5, blank=True, null=True)
 

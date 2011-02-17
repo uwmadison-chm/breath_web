@@ -8,18 +8,118 @@
     {{ form.non_field_errors }}
   </div>
   <div class="fl">
-    <label>Birth date</label>
-    {{ form.birth_year }}
-    {{ form.birth_month }}
+    <div class="l">
+      <label for="id_birth_month">Birth date</label>
+    </div>
+    <div class="r">
+      {{ form.birth_month }}
+      {{ form.birth_year }}
+    </div>
   </div>
   <div class="fl">
-    <label for="id_email_ok">
-      {{ form.email_ok.label }}
-    </label>
-    {{ form.email_ok }}
+    <div class="l">
+      <label for="id_gender">Gender</label>
+    </div>
+    <div class="r">
+      {{ form.gender }}
+    </div>
   </div>
   <div class="fl">
-    <input type="submit" value="Continue" />
+    <div class="l">
+      <label for="id_race">Race</label>
+    </div>
+    <div class="r">
+      {{ form.race }}
+    </div>
+  </div>
+  <div class="fl">
+    <div class="l">
+      <label for="id_ethnicity">Ethnicity</label>
+    </div>
+    <div class="r">
+      {{ form.ethnicity }}
+    </div>
+  </div>
+  <div class="fl">
+    <div class="l">
+      <label for="id_handedness">Handedness</label>
+    </div>
+    <div class="r">
+      {{ form.handedness }}
+    </div>
+  </div>
+  <div class="fl">
+    <div class="l">
+      <label for="id_country_of_residence">Country of residence</label>
+    </div>
+    <div class="r">
+      {{ form.country_of_residence }}
+    </div>
+  </div>
+  <div class="fl">
+    <div class="l">
+      <label for="id_postal_code">Postal code</label>
+    </div>
+    <div class="r">
+      {{ form.postal_code }}
+    </div>
+  </div>
+  <div class="fl">
+    <div class="l">
+      <label for="id_religious_affiliation">Religious affiliation</label>
+    </div>
+    <div class="r">
+      {{ form.religious_affiliation }}
+    </div>
+  </div>
+  <div class="fl">
+    <div class="l">
+      <label for="id_spirituality">Spirituality</label>
+    </div>
+    <div class="r">
+      {{ form.spirituality }}
+    </div>
+  </div>
+  <div class="fl">
+    <div class="l">
+      <label for="id_political_identity">Political identity</label>
+    </div>
+    <div class="r">
+      {{ form.political_identity }}
+    </div>
+  </div>
+  <div class="fl">
+    <div class="l">
+      <label for="id_education_level">Education</label>
+    </div>
+    <div class="r">
+      {{ form.education_level }}
+    </div>
+  </div>
+  
+  <div class="fl">
+    <div class="l">
+      <label for="id_occupation">Occupation</label>
+    </div>
+    <div class="r">
+      {{ form.occupation }}
+    </div>
+  </div>
+  
+  <div class="fl">
+    <div class="l">{{ form.email_ok }}
+    </div>
+    <div class="r">
+      <label for="id_email_ok">
+        {{ form.email_ok.label }}
+      </label>
+    </div>
+  </div>
+  <div class="fl">
+    <div class="l">&nbsp;</div>
+    <div class="r">
+      <input type="submit" value="Continue" />
+    </div>
   </div>
 </form>
 

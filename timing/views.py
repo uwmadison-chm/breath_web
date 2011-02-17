@@ -41,16 +41,15 @@ def login(request):
             
 def demographics(request):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
-    form = forms.DemographicsForm()
+    form = forms.DemographicsForm(instance=ppt)
     if request.method == "POST":
         form = forms.DemographicsForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            ppt.birth_year = cd.get("birth_year")
-            ppt.birth_month = cd.get("birth_month")
-            ppt.email_ok = cd.get("email_ok")
-            ppt.save()
+        try:
+            form.save()
             return redirect(instructions)
+        except Exception as e:
+            print e
+            print form.errors
     
     return render_to_response('demographics.html', {'form' : form})
 

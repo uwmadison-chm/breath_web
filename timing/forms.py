@@ -1,6 +1,7 @@
 import datetime
 
 from django import forms
+from timing import models
 
 MONTHS = [
     'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 
@@ -17,7 +18,11 @@ class ConsentForm(forms.Form):
 class LoginForm(forms.Form):
     email = forms.EmailField()
 
-class DemographicsForm(forms.Form):
+class DemographicsForm(forms.ModelForm):
+    class Meta:
+        model = models.Participant
+        exclude = ['participant_number', 'consent_given', 'email']
+    
     birth_year = forms.TypedChoiceField(choices=ENUM_YEARS, coerce=int)
     
     birth_month = forms.TypedChoiceField(choices=ENUM_MONTHS, coerce=int)

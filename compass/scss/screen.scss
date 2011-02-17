@@ -30,8 +30,17 @@ p {
 }
 
 .fl {
-  margin-top: 1.5em;
-  margin-bottom: 1.5em;
+  margin-top: 0.75em;
+  @include column(16, true);
+  
+  .l {
+      @include column(5, false);
+      text-align: right;
+  }
+  
+  .r {
+      @include column(11, true);
+  }
 }
 
 ul.errorlist {
@@ -56,6 +65,12 @@ ul.errorlist {
 
 .debug {
   background: url('../img/grid.png') repeat;
+  .l {
+    background-color: rgba(255,128,128,0.3);
+  }
+  .r {
+    background-color: rgba(128,128,255,0.3);
+  }
 }
 
 #instructions {

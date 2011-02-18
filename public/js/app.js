@@ -26,7 +26,6 @@ $(function() {
             'status_container' : '#meditime_run'
         }, options);
         pvt.settings.start_key = pvt.settings.start_key.toUpperCase();
-        console.log(pvt.settings.onfinish);
 
         pvt.reset = function() {
             pvt.presses = new Array();
@@ -67,8 +66,6 @@ $(function() {
                     delete pvt.save_queue[saved_nums[i]];
                 }
                 if (data['finish']) {
-                    console.log("I'm finishing!");
-                    console.log(pvt.settings.onfinish);
                     pvt.settings.onfinish();
                 }
             });
@@ -148,7 +145,6 @@ $(function() {
 
         // The main event! See if we can advance and do so.
         $(document).keydown(function(evt) {
-            console.log("hug");
             if (should_advance(evt.keyCode)) {
                 advance();
             }

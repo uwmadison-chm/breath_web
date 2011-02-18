@@ -183,7 +183,7 @@ $(function() {
             'cycle_length': 9,
             'count_key' : 'A',
             'reset_key' : 'F',
-            'restart_key' : ' ',
+            'restart_key' : 'A',
             'practice_cycles' : 1.5,
             'debounce_ms' : 300,
             'min_avg_ms' : 1500,

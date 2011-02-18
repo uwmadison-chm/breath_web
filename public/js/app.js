@@ -2,6 +2,13 @@ $(function() {
     $('#instructions').instructions(
         {'onfinish': data.nav_practice });
     
+    $('#guided_practice').meditime_practice(
+        {
+            'onfinish': data.nav_run,
+            'guide': '#practice_guide',
+            'status_container': '#guided_practice'
+        });
+    
     $('#practice').meditime_practice(
         {'onfinish': data.nav_run });
 
@@ -184,7 +191,21 @@ $(function() {
             pvt.run_state = 'stopped';
             pvt.iters = Math.floor(
                 pvt.settings.cycle_length*pvt.settings.practice_cycles);
+            pvt.build_keyguide(pvt.iters);
             pvt.show_status('getready');
+        }
+        
+        pvt.build_keyguide = function(iters) {
+            if (!pvt.settings.guide) { return; }
+            var keyguide = $(pvt.settings.guide).children("ol").first();
+            keyguide.empty();
+            var width_percent = 100/iters;
+            var width_css = width_percent.toFixed(2)+"%";
+            for (var i = 0; i < iters; i++) {
+                var tk = pvt.target_key(i);
+                keyguide.append('<li><code>'+tk+'</code></li>');
+            }
+            keyguide.find('li').css('width', width_css);
         }
         
         pvt.start = function() {
@@ -209,20 +230,34 @@ $(function() {
         
         pvt.show_status = function(name) {
             $(pvt.settings.status_container).children().hide();
+            console.log(pvt.settings.status_container);
             $('#'+name).show();
+            if (pvt.settings.guide) {
+                if (name === 'getready' || name === 'running') {
+                    $(pvt.settings.guide).show();
+                }
+            }
         }
         
         pvt.change_state = function(new_state) {
             pvt.run_state = new_state;
         }
         
-        pvt.target_key = function() {
-            var idx = ((pvt.presses.length+1) % pvt.settings.cycle_length);
-            if (idx === 0) {
+        pvt.target_key = function(idx) {
+            var cycle_pos = ((idx+1) % pvt.settings.cycle_length);
+            if (cycle_pos === 0) {
                 return pvt.settings.reset_key;
             } else {
                 return pvt.settings.count_key;
             }
+        }
+        
+        pvt.highlight_guide = function() {
+            if (!pvt.settings.guide) { return ;}
+            var idx = pvt.presses.length - 1;
+            var items = $(pvt.settings.guide).find('li');
+            items.removeClass('current');
+            items.slice(idx, idx+1).addClass('current');
         }
         
         pvt.fails_timing = function(times) {
@@ -249,7 +284,7 @@ $(function() {
         
         pvt.handle_key_run = function(key) {
             // Shorthand to save typing
-            var tk = pvt.target_key();
+            var tk = pvt.target_key(pvt.presses.length);
             var ck = pvt.settings.count_key;
             var rk = pvt.settings.reset_key;
             
@@ -279,6 +314,9 @@ $(function() {
                 pvt.throw_error('err_debounce');
                 return;
             }
+
+            pvt.highlight_guide();
+            
             // Finally, if we've got enough, we have success!
             if (pvt.presses.length >= pvt.iters) {
                 pvt.finish();

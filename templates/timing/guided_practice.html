@@ -2,18 +2,29 @@
 
 {% block body %}
 <h1>Awareness Online: Practice</h1>
-<div id="practice">
+<div id="guided_practice">
 
   <div id="getready">
-    <p>To start practice, press <code>a</code> on your first exhale.</p>
+    <p>
+      To start practice, press <code>a</code> on your first exhale.
+      Your count will be highlighted below.
+    </p>
   </div>
 
   <div id="running">
     <p>Practice is running...</p>
   </div>
+  
+  <div id="practice_guide">
+    <ol id="keyguide">
+    </ol>
+  </div>
 
   <div id="success">
-    <p>Practice has finished. Well done!</p>
+    <p>
+      Great job! Now, we'll do a practice session without the keys
+      displayed.
+    </p>
     <p>Press <code>SPACEBAR</code> to continue.
   </div>
 
@@ -49,7 +60,7 @@
 
 <script type="text/javascript">
   data.nav_run = function() {
-    window.location.href = "{% url timing.views.run_task %}";
+    window.location.href = "{% url timing.views.practice %}";
   }
 </script>
 

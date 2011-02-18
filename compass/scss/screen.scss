@@ -88,7 +88,7 @@ ul.errorlist {
   }
 }
 
-#instructions code, #practice code, #meditime_run code {
+code {
   font-weight: bold;
   font-family: Consolas, 'Andale Mono', monospace;
   text-transform: uppercase;
@@ -96,6 +96,23 @@ ul.errorlist {
 
 #practice div {
   display: none;
+}
+
+#keyguide {
+    list-style: none;
+    @include prepend(1);
+    @include append(1);
+    @include column(14, true);
+    li {
+        font-size: 2em;
+        text-align: center;
+        float: left;
+        color: $inactive_text;
+    }
+    li.current {
+        color: $text_fg;
+    }
+    margin-bottom: 1.25em;
 }
 
 #meditime_run div {

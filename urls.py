@@ -12,9 +12,10 @@ urlpatterns = patterns('',
     (r'^login$', views.login),
     (r'^demographics$', views.demographics),
     (r'^instructions$', views.instructions),
+    (r'^guided_practice$', views.guided_practice),
     (r'^practice$', views.practice),
     (r'^run_task$', views.run_task),
-    (r'^thanks$', views.thanks),
+    (r'^thanks$', views.thanks)
 )
 
 if settings.DEBUG:

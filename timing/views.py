@@ -58,6 +58,10 @@ def instructions(request):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
     return render_to_response('instructions.html')
 
+def guided_practice(request):
+    ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
+    return render_to_response('guided_practice.html')
+
 def practice(request):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
     return render_to_response('practice.html')

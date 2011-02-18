@@ -43,12 +43,13 @@ def demographics(request):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
     form = forms.DemographicsForm(instance=ppt)
     if request.method == "POST":
-        form = forms.DemographicsForm(request.POST)
+        form = forms.DemographicsForm(request.POST, instance=ppt)
         try:
             form.save()
             return redirect(instructions)
         except Exception as e:
             print e
+            print ppt.__dict__
             print form.errors
     
     return render_to_response('demographics.html', {'form' : form})

@@ -13,11 +13,15 @@ $(function() {
         {
             'onfinish': data.nav_run,
             'guide': '#practice_guide',
-            'status_container': '#guided_practice'
+            'status_container': '#guided_practice',
+            'log_path': data.log_path
         });
     
     $('#practice').meditime_practice(
-        {'onfinish': data.nav_run });
+        {
+            'onfinish': data.nav_run,
+            'log_path': data.log_path
+        });
 
     $('#meditime_run').meditime_run(
         { 'onfinish': data.nav_thanks });
@@ -202,6 +206,14 @@ $(function() {
             pvt.show_status('getready');
         }
         
+        pvt.send_log = function(key) {
+            var lp = pvt.settings.log_path;
+            if (!lp) { return; }
+            var prefix = pvt.settings.status_container.replace("#", '');
+            var full_path = lp+prefix+"_"+key;
+            $.ajax(full_path, {});
+        }
+        
         pvt.build_keyguide = function(iters) {
             if (!pvt.settings.guide) { return; }
             var keyguide = $(pvt.settings.guide).children("ol").first();
@@ -216,11 +228,13 @@ $(function() {
         }
         
         pvt.start = function() {
+            pvt.send_log("start");
             pvt.change_state('running');
             pvt.show_status('running');
         };
         
         pvt.finish = function() {
+            pvt.send_log("finish");
             // Ensure our average time is OK...
             if (pvt.fails_timing(pvt.times)) {
                 pvt.throw_error('err_timing');
@@ -231,6 +245,7 @@ $(function() {
         }
         
         pvt.throw_error = function(err_name) {
+            pvt.send_log(err_name);
             pvt.change_state('error');
             pvt.show_status(err_name);
         }

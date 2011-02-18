@@ -124,6 +124,11 @@ class Participant(StampedTrackedModel):
     def has_demographics(self):
         return self.birth_year is not None and self.birth_year > 0
     
+    def __unicode__(self):
+        return "Participant(email='%s', participant_number='%s')" % (
+            self.email, self.participant_number
+        )
+    
 
 class Run(StampedTrackedModel):
     participant = models.ForeignKey(Participant)
@@ -141,3 +146,14 @@ class Response(StampedTrackedModel):
         unique_together = ("run", "press_num")
 
 
+class Viewing(StampedTrackedModel):
+    session_key = models.CharField(max_length=255, blank=True, null=True)
+
+    participant = models.ForeignKey(Participant, blank=True, null=True)
+
+    view_key = models.CharField(max_length=255)
+    
+    def __unicode__(self):
+        return "Viewing(session_key='%s', participant=%s, view_key='%s')" %(
+            self.session_key, self.participant, self.view_key
+        )

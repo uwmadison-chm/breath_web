@@ -15,7 +15,8 @@ urlpatterns = patterns('',
     (r'^guided_practice$', views.guided_practice),
     (r'^practice$', views.practice),
     (r'^run_task$', views.run_task),
-    (r'^thanks$', views.thanks)
+    (r'^thanks$', views.thanks),
+    (r'^log/(?P<view_key>.*)$', views.log)
 )
 
 if settings.DEBUG:

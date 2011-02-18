@@ -51,6 +51,7 @@
   data.nav_run = function() {
     window.location.href = "{% url timing.views.run_task %}";
   }
+  data.log_path = "{% url timing.views.log view_key='' %}"
 </script>
 
 {% endblock %}

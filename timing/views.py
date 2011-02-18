@@ -5,11 +5,12 @@ from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.db import IntegrityError
 
-from timing.models import Participant, Run, Response
+from timing.models import Participant, Run, Response, Viewing
 from timing import forms
 
 def welcome_consent(request):
     request.session.set_expiry(0)
+    __add_log_item('welcome_consent', request)
     form = forms.ConsentForm()
     if request.method == "POST":
         form = forms.ConsentForm(request.POST)
@@ -37,17 +38,21 @@ def login(request):
                 return redirect(demographics)
     else:
         form = forms.LoginForm()
+    __add_log_item('login_form', request)
     return render_to_response('login.html', {'form' : form})
             
 def demographics(request):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
+    __add_log_item('demographics_form', request, ppt)
     form = forms.DemographicsForm(instance=ppt)
     if request.method == "POST":
         form = forms.DemographicsForm(request.POST, instance=ppt)
         try:
             form.save()
+            __add_log_item('demographics_save_success', request, ppt)
             return redirect(instructions)
         except Exception as e:
+            __add_log_item('demographics_save_fail', request, ppt)
             print e
             print ppt.__dict__
             print form.errors
@@ -56,18 +61,22 @@ def demographics(request):
 
 def instructions(request):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
+    __add_log_item('instructions', request, ppt)
     return render_to_response('instructions.html')
 
 def guided_practice(request):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
+    __add_log_item('guided_practice', request, ppt)
     return render_to_response('guided_practice.html')
 
 def practice(request):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
+    __add_log_item('practice', request, ppt)
     return render_to_response('practice.html')
 
 def run_task(request):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
+    __add_log_item('run_task', request, ppt)
     if request.method == "GET":
         run = Run(participant=ppt)
         run.save()
@@ -108,9 +117,18 @@ def run_task(request):
                 
 def thanks(request):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
+    __add_log_item('run_task', request, ppt)
     
     return render_to_response('thanks.html', {
         'participant' : ppt
     })
 
+def log(request, view_key):
+    ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
+    __add_log_item(view_key, request, ppt)
+    return HttpResponse('')
 
+def __add_log_item(view_key, request, ppt=None):
+    sk = request.session._session_key
+    v = Viewing(view_key=view_key, session_key=sk, participant=ppt)
+    v.save()

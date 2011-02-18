@@ -509,6 +509,7 @@ ul.errorlist {
   margin-right: 0;
   width: 590px;
   padding-left: 40px;
+  margin-bottom: 1.5em;
 }
 /* line 138, ../../../../../../opt/local/lib/ruby/gems/1.8/gems/compass-0.10.6/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
 * html #instructions li ol {
@@ -519,19 +520,19 @@ ul.errorlist {
   display: list-item;
 }
 
-/* line 91, ../../compass/scss/screen.scss */
+/* line 92, ../../compass/scss/screen.scss */
 code {
   font-weight: bold;
   font-family: Consolas, 'Andale Mono', monospace;
   text-transform: uppercase;
 }
 
-/* line 97, ../../compass/scss/screen.scss */
+/* line 98, ../../compass/scss/screen.scss */
 #practice div {
   display: none;
 }
 
-/* line 101, ../../compass/scss/screen.scss */
+/* line 102, ../../compass/scss/screen.scss */
 #keyguide {
   list-style: none;
   padding-left: 40px;
@@ -546,19 +547,19 @@ code {
 * html #keyguide {
   overflow-x: hidden;
 }
-/* line 106, ../../compass/scss/screen.scss */
+/* line 107, ../../compass/scss/screen.scss */
 #keyguide li {
   font-size: 2em;
   text-align: center;
   float: left;
   color: #bdae93;
 }
-/* line 112, ../../compass/scss/screen.scss */
+/* line 113, ../../compass/scss/screen.scss */
 #keyguide li.current {
   color: #333230;
 }
 
-/* line 118, ../../compass/scss/screen.scss */
+/* line 119, ../../compass/scss/screen.scss */
 #meditime_run div {
   display: none;
 }

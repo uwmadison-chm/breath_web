@@ -120,6 +120,8 @@ class Participant(StampedTrackedModel):
     
     email_ok = models.BooleanField(default=False)
     
+    timezone_offset_min = models.IntegerField(default=0)
+    
     @property
     def has_demographics(self):
         return self.birth_year is not None and self.birth_year > 0

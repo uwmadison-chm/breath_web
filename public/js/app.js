@@ -3,8 +3,6 @@ if (!window.console) {
     window.console.log = function() {};
 }
 
-console.log("Hello");
-
 $(function() {
     $('#instructions').instructions(
         {'onfinish': data.nav_practice });
@@ -25,7 +23,17 @@ $(function() {
 
     $('#meditime_run').meditime_run(
         { 'onfinish': data.nav_thanks });
+    
+    $('input.input_tzoffset').timezone_offset_field();
 });
+
+(function($) {
+    $.fn.timezone_offset_field = function() {
+        this.each(function(e){
+           this.value = new Date().getTimezoneOffset(); 
+        });
+    }
+})(jQuery);
 
 (function($) {
     $.fn.meditime_run = function(options) {
@@ -252,7 +260,6 @@ $(function() {
         
         pvt.show_status = function(name) {
             $(pvt.settings.status_container).children().hide();
-            console.log(pvt.settings.status_container);
             $('#'+name).show();
             if (pvt.settings.guide) {
                 if (name === 'getready' || name === 'running') {

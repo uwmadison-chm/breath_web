@@ -30,6 +30,9 @@ class DemographicsForm(forms.ModelForm):
     email_ok = forms.BooleanField(required=False, 
         label="I would like to be contacted to participate in future experiments.")
     
+    timezone_offset_min = forms.IntegerField(
+        widget=forms.HiddenInput(attrs={'class' : 'input_tzoffset'}))
+    
     def clean(self):
         cleaned_data = self.cleaned_data
         

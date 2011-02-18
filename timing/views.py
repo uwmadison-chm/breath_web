@@ -83,8 +83,8 @@ def practice(request):
 
 def run_task(request):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
-    __add_log_item('run_task', request, ppt)
     if request.method == "GET":
+        __add_log_item('run_task', request, ppt)
         run = Run(participant=ppt)
         run.save()
         request.session['run_id'] = run.pk

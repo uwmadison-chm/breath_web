@@ -9,6 +9,8 @@ from timing.models import Participant, Run, Response, Viewing
 from timing import forms
 
 def welcome_consent(request):
+    if request.method == "GET":
+        request.session.flush()
     request.session.set_expiry(0)
     __add_log_item('welcome_consent', request)
     form = forms.ConsentForm()

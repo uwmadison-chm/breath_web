@@ -89,6 +89,7 @@ def run_task(request):
     if request.method == "POST":
         run = Run.objects.get(pk=request.session['run_id'])
         return_data = {'finish' : False}
+        cur_time = datetime.datetime.utcnow()
         if run.started_at is None:
             run.start()
             run.save()
@@ -98,7 +99,8 @@ def run_task(request):
             try:
                 resp = Response(
                     run=run, press_num=data['num'], key=data['key'], 
-                    ms_since_run_start=data['time'])
+                    ms_since_run_start=data['time'], 
+                    timezone_offset_min=data['timezone_offset_min'])
                 resp.save()
             except IntegrityError:
                 pass

@@ -121,8 +121,6 @@ class Participant(StampedTrackedModel):
     
     email_ok = models.BooleanField(default=False)
     
-    timezone_offset_min = models.IntegerField(default=0)
-    
     @property
     def has_demographics(self):
         return self.birth_year is not None and self.birth_year > 0
@@ -158,7 +156,7 @@ class Run(StampedTrackedModel):
     finished_at = models.DateTimeField(blank=True, null=True)
     
     def start(self):
-        self.started_at = datetime.datetime.now()
+        self.started_at = datetime.datetime.utcnow()
         self.run_num = self.participant.next_run_number
     
 class Response(StampedTrackedModel):
@@ -168,7 +166,9 @@ class Response(StampedTrackedModel):
     
     press_num = models.IntegerField()
     
-    ms_since_run_start = models.IntegerField()    
+    ms_since_run_start = models.IntegerField()
+    
+    timezone_offset_min = models.IntegerField(default=0)
     
     class Meta:
         unique_together = ("run", "press_num")

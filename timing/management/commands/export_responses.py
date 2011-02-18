@@ -39,6 +39,6 @@ class Command(NoArgsCommand):
                     keycode,
                     resp.ms_since_run_start,
                     time.mktime(resp.created_at.timetuple()),
-                    run.participant.timezone_offset_min*60
+                    resp.timezone_offset_min*60
                 ]
                 writer.writerow(data)

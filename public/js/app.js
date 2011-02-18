@@ -24,16 +24,7 @@ $(function() {
     $('#meditime_run').meditime_run(
         { 'onfinish': data.nav_thanks });
     
-    $('input.input_tzoffset').timezone_offset_field();
 });
-
-(function($) {
-    $.fn.timezone_offset_field = function() {
-        this.each(function(e){
-           this.value = new Date().getTimezoneOffset(); 
-        });
-    }
-})(jQuery);
 
 (function($) {
     $.fn.meditime_run = function(options) {
@@ -73,7 +64,8 @@ $(function() {
         }
 
         pvt.handle_key = function(key) {
-            var time = new Date() - pvt.start_time;
+            var cur_time = new Date();
+            var time = cur_time - pvt.start_time;
             var idx = pvt.presses.length;
             pvt.presses.push(key);
             pvt.times.push(time);
@@ -81,6 +73,7 @@ $(function() {
                 'num' : idx,
                 'key' : key,
                 'time' : time,
+                'timezone_offset_min' : cur_time.getTimezoneOffset()
             };
             $.ajax('', {
                 'type' : 'POST',

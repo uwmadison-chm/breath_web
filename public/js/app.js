@@ -1,3 +1,10 @@
+if (!window.console) {
+    window.console = {};
+    window.console.log = function() {};
+}
+
+console.log("Hello");
+
 $(function() {
     $('#instructions').instructions(
         {'onfinish': data.nav_practice });

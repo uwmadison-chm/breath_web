@@ -32,10 +32,15 @@ def login(request):
                     consent_given=request.session.get('consent'))
                 ppt.save()
             request.session['ppt_id'] = ppt.pk
-            if ppt.has_demographics:
-                return redirect(instructions)
-            else:
+            if not ppt.has_demographics:
+                # We can't skip demographics...
                 return redirect(demographics)
+            if ppt.has_run_data:
+                # We can skip instructions and practice
+                return redirect(run_task)
+            
+            # The fall-through is to go through instructions
+            return redirect(instructions)
     else:
         form = forms.LoginForm()
     __add_log_item('login_form', request)

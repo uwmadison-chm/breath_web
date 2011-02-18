@@ -89,9 +89,8 @@ def run_task(request):
     if request.method == "POST":
         run = Run.objects.get(pk=request.session['run_id'])
         return_data = {'finish' : False}
-        cur_time = datetime.datetime.now()
         if run.started_at is None:
-            run.started_at = cur_time
+            run.start()
             run.save()
         saved_nums = []
         save_queue = json.loads(request.POST['save_queue'])

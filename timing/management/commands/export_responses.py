@@ -21,7 +21,8 @@ class Command(NoArgsCommand):
             'keypress_number',
             'keycode',
             'ms_since_run_start',
-            'server_timestamp'
+            'server_timestamp_sec',
+            'timezone_offset_sec'
         ]
         writer.writerow(header)
         for run in runs:
@@ -32,11 +33,12 @@ class Command(NoArgsCommand):
                 keycode = ord(resp.key)
                 data = [
                     run.participant.participant_number,
-                    run.pk,
+                    run.run_num,
                     run_finished,
                     resp.press_num+1,
                     keycode,
                     resp.ms_since_run_start,
-                    time.mktime(resp.created_at.timetuple())
+                    time.mktime(resp.created_at.timetuple()),
+                    run.participant.timezone_offset_min*60
                 ]
                 writer.writerow(data)

@@ -1,3 +1,4 @@
+import datetime
 import random
 
 from django.db import models
@@ -126,6 +127,18 @@ class Participant(StampedTrackedModel):
     def has_demographics(self):
         return self.birth_year is not None and self.birth_year > 0
     
+    @property
+    def started_runs(self):
+        return self.run_set.filter(started_at__isnull=False)
+    
+    @property
+    def next_run_number(self):
+        return self.started_runs.count() + 1
+    
+    @property
+    def has_run_data(self):
+        return self.next_run_number > 1
+    
     def __unicode__(self):
         return "Participant(email='%s', participant_number='%s')" % (
             self.email, self.participant_number
@@ -134,15 +147,28 @@ class Participant(StampedTrackedModel):
 
 class Run(StampedTrackedModel):
     participant = models.ForeignKey(Participant)
+
     planned_length_sec = models.IntegerField(default=60*15)
+
+    # Informational only...
+    run_num = models.IntegerField(default=0)
+    
     started_at = models.DateTimeField(blank=True, null=True)
+
     finished_at = models.DateTimeField(blank=True, null=True)
+    
+    def start(self):
+        self.started_at = datetime.datetime.now()
+        self.run_num = self.participant.next_run_number
     
 class Response(StampedTrackedModel):
     run = models.ForeignKey(Run)
+    
     key = models.CharField(max_length=1)
+    
     press_num = models.IntegerField()
-    ms_since_run_start = models.IntegerField()
+    
+    ms_since_run_start = models.IntegerField()    
     
     class Meta:
         unique_together = ("run", "press_num")

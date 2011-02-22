@@ -85,7 +85,7 @@ def run_task(request):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
     if request.method == "GET":
         __add_log_item('run_task', request, ppt)
-        run = Run(participant=ppt)
+        run = Run(participant=ppt, user_agent=request.META['HTTP_USER_AGENT'])
         run.save()
         request.session['run_id'] = run.pk
         return render_to_response('run_task.html', {

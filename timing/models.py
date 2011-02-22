@@ -155,6 +155,8 @@ class Run(StampedTrackedModel):
 
     finished_at = models.DateTimeField(blank=True, null=True)
     
+    user_agent = models.CharField(max_length=255, blank=True, null=True)
+    
     def start(self):
         self.started_at = datetime.datetime.utcnow()
         self.run_num = self.participant.next_run_number

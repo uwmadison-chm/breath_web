@@ -6,25 +6,50 @@ if (!window.console) {
 $(function() {
     $('#instructions').instructions(
         {'onfinish': data.nav_practice });
-    
+
     $('#guided_practice').meditime_practice(
         {
             'onfinish': data.nav_run,
             'guide': '#practice_guide',
             'status_container': '#guided_practice',
-            'log_path': data.log_path
-        });
-    
+            'log_path': data.log_path,
+            'flasher' : '#flasher'
+    });
+
     $('#practice').meditime_practice(
         {
             'onfinish': data.nav_run,
-            'log_path': data.log_path
-        });
+            'log_path': data.log_path,
+            'flasher' : '#flasher'
+    });
 
     $('#meditime_run').meditime_run(
-        { 'onfinish': data.nav_thanks });
-    
+        { 
+            'onfinish': data.nav_thanks,
+            'flasher' : '#flasher'
+    });
 });
+
+(function($){
+    $.fn.flashable = function(options) {
+        var pvt = {};
+        pvt.settings = $.extend({
+            'duration' : 300,
+            'color' : "#f4e9d5",
+            }, options);
+
+        pvt.flash_fx = function(elt) {
+            $(this).effect(
+                "highlight",
+                {"color": pvt.settings.color}, 
+                pvt.settings.duration);
+            }
+
+            this.each(function() {
+                this.flash = pvt.flash_fx;
+        });
+    }
+})(jQuery);
 
 (function($) {
     $.fn.meditime_run = function(options) {
@@ -43,6 +68,7 @@ $(function() {
             'status_container' : '#meditime_run'
         }, options);
         pvt.settings.start_key = pvt.settings.start_key.toUpperCase();
+        $(pvt.settings.flasher).flashable();
 
         pvt.reset = function() {
             pvt.presses = new Array();
@@ -56,6 +82,14 @@ $(function() {
             $(pvt.settings.status_container).children().hide();
             $('#'+name).show();
         }
+        
+        pvt.flash = function() {
+            if ($(pvt.settings.flasher)) {
+                $(pvt.settings.flasher).each(function() {
+                    this.flash();
+                });
+            }
+        }
 
         pvt.start = function() {
             pvt.run_state = 'running';
@@ -64,6 +98,7 @@ $(function() {
         }
 
         pvt.handle_key = function(key) {
+            pvt.flash();
             var cur_time = new Date();
             var time = cur_time - pvt.start_time;
             var idx = pvt.presses.length;
@@ -196,6 +231,7 @@ $(function() {
         pvt.settings.count_key = pvt.settings.count_key.toUpperCase();
         pvt.settings.reset_key = pvt.settings.reset_key.toUpperCase();
         pvt.settings.restart_key = pvt.settings.restart_key.toUpperCase();
+        $(pvt.settings.flasher).flashable();
         
         pvt.reset = function() {
             pvt.presses = new Array();
@@ -215,6 +251,14 @@ $(function() {
             $.ajax(full_path, {});
         }
         
+        pvt.flash = function() {
+            if ($(pvt.settings.flasher)) {
+                $(pvt.settings.flasher).each(function() {
+                this.flash();
+                });
+            }
+        }
+
         pvt.build_keyguide = function(iters) {
             if (!pvt.settings.guide) { return; }
             var keyguide = $(pvt.settings.guide).children("ol").first();
@@ -310,7 +354,7 @@ $(function() {
             var ck = pvt.settings.count_key;
             var rk = pvt.settings.reset_key;
             
-            
+            pvt.flash()
             if (tk === key) {
                 pvt.presses.push(key);
                 pvt.times.push(new Date());

@@ -52,7 +52,7 @@ ul.errorlist {
 
 #container {
   @include container;
-  margin-left: $blueprint-grid-wm;
+  margin-left: $blueprint-grid-outer-width;
 }
 
 #content {
@@ -61,6 +61,15 @@ ul.errorlist {
   @include column(16, true);
   @include prepend(1);
   @include append(1);
+}
+
+div#flasher {
+  position: fixed;
+  left: $blueprint-grid-outer-width;
+  top: 0;
+  width: $blueprint-container-size;
+  height: 100%;
+  z-index: -1;
 }
 
 .debug {

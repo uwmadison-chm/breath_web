@@ -481,28 +481,38 @@ ul.errorlist {
 }
 
 /* line 66, ../../compass/scss/screen.scss */
+div#flasher {
+  position: fixed;
+  left: 40px;
+  top: 0;
+  width: 710px;
+  height: 100%;
+  z-index: -1;
+}
+
+/* line 75, ../../compass/scss/screen.scss */
 .debug {
   background: url("../img/grid.png") repeat;
 }
-/* line 68, ../../compass/scss/screen.scss */
+/* line 77, ../../compass/scss/screen.scss */
 .debug .l {
   background-color: rgba(255, 128, 128, 0.3);
 }
-/* line 71, ../../compass/scss/screen.scss */
+/* line 80, ../../compass/scss/screen.scss */
 .debug .r {
   background-color: rgba(128, 128, 255, 0.3);
 }
 
-/* line 76, ../../compass/scss/screen.scss */
+/* line 85, ../../compass/scss/screen.scss */
 #instructions {
   list-style-type: none;
 }
 
-/* line 80, ../../compass/scss/screen.scss */
+/* line 89, ../../compass/scss/screen.scss */
 #instructions li {
   display: none;
 }
-/* line 82, ../../compass/scss/screen.scss */
+/* line 91, ../../compass/scss/screen.scss */
 #instructions li ol {
   display: inline;
   float: left;
@@ -515,24 +525,24 @@ ul.errorlist {
 * html #instructions li ol {
   overflow-x: hidden;
 }
-/* line 85, ../../compass/scss/screen.scss */
+/* line 94, ../../compass/scss/screen.scss */
 #instructions li ol li {
   display: list-item;
 }
 
-/* line 92, ../../compass/scss/screen.scss */
+/* line 101, ../../compass/scss/screen.scss */
 code {
   font-weight: bold;
   font-family: Consolas, 'Andale Mono', monospace;
   text-transform: uppercase;
 }
 
-/* line 98, ../../compass/scss/screen.scss */
+/* line 107, ../../compass/scss/screen.scss */
 #practice div {
   display: none;
 }
 
-/* line 102, ../../compass/scss/screen.scss */
+/* line 111, ../../compass/scss/screen.scss */
 #keyguide {
   list-style: none;
   padding-left: 40px;
@@ -547,19 +557,19 @@ code {
 * html #keyguide {
   overflow-x: hidden;
 }
-/* line 107, ../../compass/scss/screen.scss */
+/* line 116, ../../compass/scss/screen.scss */
 #keyguide li {
   font-size: 2em;
   text-align: center;
   float: left;
   color: #bdae93;
 }
-/* line 113, ../../compass/scss/screen.scss */
+/* line 122, ../../compass/scss/screen.scss */
 #keyguide li.current {
   color: #333230;
 }
 
-/* line 119, ../../compass/scss/screen.scss */
+/* line 128, ../../compass/scss/screen.scss */
 #meditime_run div {
   display: none;
 }

@@ -18,9 +18,11 @@ var data = {};
   <div id="container">
     <div id="content">
       {% block body %}{% endblock %}
+      <div id="flasher"></div>
     </div>
   </div>
   <script type="text/javascript" src="{% js_prefix %}/jquery-1.5.min.js"> </script>
+  <script type="text/javascript" src="{% js_prefix %}/jquery-ui-1.8.9.custom.min.js"> </script>
   <script type="text/javascript" src="{% js_prefix %}/app.js"> </script>
 </body>
 </html>

@@ -170,6 +170,8 @@ class Response(StampedTrackedModel):
     
     ms_since_run_start = models.IntegerField()
     
+    duration_ms = models.IntegerField(default=0)
+    
     timezone_offset_min = models.IntegerField(default=0)
     
     class Meta:

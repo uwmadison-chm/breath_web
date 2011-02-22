@@ -106,7 +106,8 @@ def run_task(request):
             try:
                 resp = Response(
                     run=run, press_num=data['num'], key=data['key'], 
-                    ms_since_run_start=data['time'], 
+                    ms_since_run_start=data['since_run_start'],
+                    duration_ms=data['duration'],
                     timezone_offset_min=data['timezone_offset_min'])
                 resp.save()
             except IntegrityError:

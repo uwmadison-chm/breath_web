@@ -71,6 +71,7 @@ $(function() {
         $(pvt.settings.flasher).flashable();
 
         pvt.reset = function() {
+            pvt.currently_pressed = {};
             pvt.presses = new Array();
             pvt.times = new Array();
             pvt.save_queue = {};
@@ -98,17 +99,18 @@ $(function() {
         }
 
         pvt.handle_key = function(key) {
-            var cur_time = new Date();
-            var time = cur_time - pvt.start_time;
+            var pair = pvt.currently_pressed[key];
+            var since_run_start = pair.keydown.timeStamp - pvt.start_time;
+            var duration = pair.keyup.timeStamp - pair.keydown.timeStamp;
             var idx = pvt.presses.length;
             pvt.presses.push(key);
-            pvt.times.push(time);
-            pvt.flash();
+            pvt.times.push(since_run_start);
             pvt.save_queue[idx] = {
                 'num' : idx,
                 'key' : key,
-                'time' : time,
-                'timezone_offset_min' : cur_time.getTimezoneOffset()
+                'since_run_start' : since_run_start,
+                'duration' : duration,
+                'timezone_offset_min' : new Date().getTimezoneOffset()
             };
             $.ajax('', {
                 'type' : 'POST',
@@ -123,31 +125,55 @@ $(function() {
                     pvt.settings.onfinish();
                 }
             });
-        }
-
-        pvt.handle_response = function(resp) {
-            // Find out what IDs we should delete. Delete 'em.
+            // And ensure we don't see this again.
+            delete pvt.currently_pressed[key];
         }
 
         pvt.reset();
 
         $(document).keydown(function(evt) {
             var keyChar = String.fromCharCode(evt.keyCode);
+            // Don't re-process keydowns we already have.
+            if (pvt.currently_pressed[keyChar]) { 
+                console.log("Not re-processing "+keyChar);
+                return; 
+            }
+            console.log(evt);
+            
             switch(pvt.run_state) {
             case 'stopped':
                 if (keyChar === pvt.settings.start_key) {
                     pvt.start();
-                    pvt.handle_key(keyChar);
+                    pvt.flash();
+                    pvt.currently_pressed[keyChar] = {'keydown': evt};
                 }
                 break;
             case 'running':
-                pvt.handle_key(keyChar);
+                pvt.flash();
+                pvt.currently_pressed[keyChar] = {'keydown': evt};
+                // We'll handle sending this to the server on keyup().
+                break;
+            case 'finished':
+                // Don't worry about keys in this case. Shouldn't happen
+                // but not an error if it does.
                 break;
             
             default:
                 alert("Oops! I'm somehow in state: "+pvt.run_state);
                 break;
             }
+        });
+        
+        $(document).keyup(function(evt) {
+            console.log(evt);
+            var keyChar = String.fromCharCode(evt.keyCode);
+            // We *must* be waiting on a keyup for this processing to make
+            if (!pvt.currently_pressed[keyChar]) { 
+                console.log("Got an unexpected keyup for "+keyChar);
+                return; 
+            }
+            pvt.currently_pressed[keyChar]['keyup'] = evt;
+            pvt.handle_key(keyChar);
         });
     }
 })(jQuery);

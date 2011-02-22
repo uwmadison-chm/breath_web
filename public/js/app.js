@@ -98,12 +98,12 @@ $(function() {
         }
 
         pvt.handle_key = function(key) {
-            pvt.flash();
             var cur_time = new Date();
             var time = cur_time - pvt.start_time;
             var idx = pvt.presses.length;
             pvt.presses.push(key);
             pvt.times.push(time);
+            pvt.flash();
             pvt.save_queue[idx] = {
                 'num' : idx,
                 'key' : key,

@@ -267,6 +267,7 @@ $(function() {
                 pvt.settings.cycle_length*pvt.settings.practice_cycles);
             pvt.build_keyguide(pvt.iters);
             pvt.show_status('getready');
+            pvt.currently_pressed = {};
         }
         
         pvt.send_log = function(key) {
@@ -419,6 +420,11 @@ $(function() {
         
         $(document).keydown(function(evt) {
             var keyChar = String.fromCharCode(evt.keyCode);
+            if (pvt.currently_pressed[keyChar]) {
+                // Don't re-handle an already pressed key
+                return;
+            }
+            pvt.currently_pressed[keyChar] = {'keydown': evt}
             switch(pvt.run_state) {
             case 'stopped':
                 if (keyChar === pvt.settings.count_key) {
@@ -442,6 +448,13 @@ $(function() {
             default:
                 alert("Oops! I'm somehow in state: "+pvt.run_state);
             }
+        });
+        
+        $(document).keyup(function(evt) {
+            // Don't need as much logic here as in the run() version --
+            // we'll just delete from our list regardless.
+            var keyChar = String.fromCharCode(evt.keyCode);
+            delete pvt.currently_pressed[keyChar];
         });
         pvt.reset();
     }

@@ -39,7 +39,7 @@ class Command(NoArgsCommand):
                     resp.press_num+1,
                     keycode,
                     resp.ms_since_run_start,
-                    duration_ms,
+                    resp.duration_ms,
                     time.mktime(resp.created_at.timetuple()),
                     resp.timezone_offset_min*60
                 ]

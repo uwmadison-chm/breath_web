@@ -89,9 +89,9 @@ $(function() {
             }
         }
 
-        pvt.start = function() {
+        pvt.start = function(evt) {
             pvt.run_state = 'running';
-            pvt.start_time = new Date();
+            pvt.start_time = evt.timeStamp;
             pvt.show_status('running');
         }
 
@@ -140,7 +140,7 @@ $(function() {
             switch(pvt.run_state) {
             case 'stopped':
                 if (keyChar === pvt.settings.start_key) {
-                    pvt.start();
+                    pvt.start(evt);
                     pvt.flash();
                     pvt.currently_pressed[keyChar] = {'keydown': evt};
                 }
@@ -372,7 +372,7 @@ $(function() {
             return (time_delta < pvt.settings.debounce_ms);
         }
         
-        pvt.handle_key_run = function(key) {
+        pvt.handle_key_run = function(key, timestamp) {
             // Shorthand to save typing
             var tk = pvt.target_key(pvt.presses.length);
             var ck = pvt.settings.count_key;
@@ -381,7 +381,7 @@ $(function() {
             pvt.flash()
             if (tk === key) {
                 pvt.presses.push(key);
-                pvt.times.push(new Date());
+                pvt.times.push(timestamp);
             } else {
                 // It's some kind of error.
                 if (key === ck) {
@@ -426,11 +426,11 @@ $(function() {
             case 'stopped':
                 if (keyChar === pvt.settings.count_key) {
                     pvt.start();
-                    pvt.handle_key_run(keyChar);
+                    pvt.handle_key_run(keyChar, evt.timeStamp);
                 }
                 break;
             case 'running':
-                pvt.handle_key_run(keyChar);
+                pvt.handle_key_run(keyChar, evt.timeStamp);
                 break;
             case 'error':
                 if (keyChar === pvt.settings.restart_key) {

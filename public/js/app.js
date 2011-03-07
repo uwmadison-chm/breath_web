@@ -13,20 +13,17 @@ $(function() {
             'guide': '#practice_guide',
             'status_container': '#guided_practice',
             'log_path': data.log_path,
-            'flasher' : '#flasher'
     });
 
     $('#practice').meditime_practice(
         {
             'onfinish': data.nav_run,
             'log_path': data.log_path,
-            'flasher' : '#flasher'
     });
 
     $('#meditime_run').meditime_run(
         { 
             'onfinish': data.nav_thanks,
-            'flasher' : '#flasher'
     });
 });
 

@@ -1,9 +1,15 @@
 {% extends "base.html" %}
 
 {% block body %}
-<h1>Awareness Online: Welcome!</h1>
+<h1>Awareness Online</h1>
+
+<h2>Principal Investigator</h2>
 <p>
-  The text of this page is pending IRB approval.
+  Richard J. Davidson, Ph.D., Vilas Professor of Psychology and Psychiatry
+</p>
+
+<p>
+If you have not reviewed our <a href="{% url timing.views.background %}">background</a> and <a href="{% url timing.views.privacy %}">privacy</a> information, please do so before registering.
 </p>
 
 <form action="{% url timing.views.welcome_consent %}" method="POST">

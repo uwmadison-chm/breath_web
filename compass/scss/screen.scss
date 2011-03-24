@@ -24,6 +24,16 @@ h1 {
   color: $heading_fg;
 }
 
+h2 {
+  font-weight: bold;
+  margin-top: 1.5em;
+  margin-bottom: -1.5em;
+}
+
+span.ph {
+  white-space: nowrap;
+}
+
 p {
   margin-top: 1.5em;
   margin-bottom: 1.5em;

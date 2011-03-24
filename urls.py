@@ -9,6 +9,8 @@ from timing import views
 urlpatterns = patterns('',
     (r'^admin/(.*)', admin.site.root),
     (r'^$', views.welcome_consent),
+    (r'^background$', views.background),
+    (r'^privacy$', views.privacy),
     (r'^login$', views.login),
     (r'^demographics$', views.demographics),
     (r'^instructions$', views.instructions),

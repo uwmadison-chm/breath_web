@@ -21,6 +21,12 @@ def welcome_consent(request):
             return redirect(login)
     return render_to_response('welcome_consent.html', {'form' : form})        
 
+def background(request):
+    return render_to_response('background.html')
+
+def privacy(request):
+    return render_to_response('privacy.html')
+
 def login(request):
     if request.method == "POST":
         form = forms.LoginForm(request.POST)

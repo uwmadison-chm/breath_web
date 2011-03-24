@@ -406,12 +406,24 @@ h1 {
 }
 
 /* line 27, ../../compass/scss/screen.scss */
+h2 {
+  font-weight: bold;
+  margin-top: 1.5em;
+  margin-bottom: -1.5em;
+}
+
+/* line 33, ../../compass/scss/screen.scss */
+span.ph {
+  white-space: nowrap;
+}
+
+/* line 37, ../../compass/scss/screen.scss */
 p {
   margin-top: 1.5em;
   margin-bottom: 1.5em;
 }
 
-/* line 32, ../../compass/scss/screen.scss */
+/* line 42, ../../compass/scss/screen.scss */
 .fl {
   margin-top: 0.75em;
   display: inline;
@@ -423,7 +435,7 @@ p {
 * html .fl {
   overflow-x: hidden;
 }
-/* line 36, ../../compass/scss/screen.scss */
+/* line 46, ../../compass/scss/screen.scss */
 .fl .l {
   display: inline;
   float: left;
@@ -435,7 +447,7 @@ p {
 * html .fl .l {
   overflow-x: hidden;
 }
-/* line 41, ../../compass/scss/screen.scss */
+/* line 51, ../../compass/scss/screen.scss */
 .fl .r {
   display: inline;
   float: left;
@@ -447,7 +459,7 @@ p {
   overflow-x: hidden;
 }
 
-/* line 46, ../../compass/scss/screen.scss */
+/* line 56, ../../compass/scss/screen.scss */
 ul.errorlist {
   list-style: none;
   margin-top: 1.5em;
@@ -455,7 +467,7 @@ ul.errorlist {
   color: #5c1d20;
 }
 
-/* line 53, ../../compass/scss/screen.scss */
+/* line 63, ../../compass/scss/screen.scss */
 #container {
   width: 710px;
   margin: 0 auto;
@@ -464,7 +476,7 @@ ul.errorlist {
   margin-left: 40px;
 }
 
-/* line 58, ../../compass/scss/screen.scss */
+/* line 68, ../../compass/scss/screen.scss */
 #content {
   margin-top: 1.5em;
   padding-top: 1.5em;
@@ -480,7 +492,7 @@ ul.errorlist {
   overflow-x: hidden;
 }
 
-/* line 66, ../../compass/scss/screen.scss */
+/* line 76, ../../compass/scss/screen.scss */
 div#flasher {
   position: fixed;
   left: 40px;
@@ -490,29 +502,29 @@ div#flasher {
   z-index: -1;
 }
 
-/* line 75, ../../compass/scss/screen.scss */
+/* line 85, ../../compass/scss/screen.scss */
 .debug {
   background: url("../img/grid.png") repeat;
 }
-/* line 77, ../../compass/scss/screen.scss */
+/* line 87, ../../compass/scss/screen.scss */
 .debug .l {
   background-color: rgba(255, 128, 128, 0.3);
 }
-/* line 80, ../../compass/scss/screen.scss */
+/* line 90, ../../compass/scss/screen.scss */
 .debug .r {
   background-color: rgba(128, 128, 255, 0.3);
 }
 
-/* line 85, ../../compass/scss/screen.scss */
+/* line 95, ../../compass/scss/screen.scss */
 #instructions {
   list-style-type: none;
 }
 
-/* line 89, ../../compass/scss/screen.scss */
+/* line 99, ../../compass/scss/screen.scss */
 #instructions li {
   display: none;
 }
-/* line 91, ../../compass/scss/screen.scss */
+/* line 101, ../../compass/scss/screen.scss */
 #instructions li ol {
   display: inline;
   float: left;
@@ -525,24 +537,24 @@ div#flasher {
 * html #instructions li ol {
   overflow-x: hidden;
 }
-/* line 94, ../../compass/scss/screen.scss */
+/* line 104, ../../compass/scss/screen.scss */
 #instructions li ol li {
   display: list-item;
 }
 
-/* line 101, ../../compass/scss/screen.scss */
+/* line 111, ../../compass/scss/screen.scss */
 code {
   font-weight: bold;
   font-family: Consolas, 'Andale Mono', monospace;
   text-transform: uppercase;
 }
 
-/* line 107, ../../compass/scss/screen.scss */
+/* line 117, ../../compass/scss/screen.scss */
 #practice div {
   display: none;
 }
 
-/* line 111, ../../compass/scss/screen.scss */
+/* line 121, ../../compass/scss/screen.scss */
 #keyguide {
   list-style: none;
   padding-left: 40px;
@@ -557,19 +569,19 @@ code {
 * html #keyguide {
   overflow-x: hidden;
 }
-/* line 116, ../../compass/scss/screen.scss */
+/* line 126, ../../compass/scss/screen.scss */
 #keyguide li {
   font-size: 2em;
   text-align: center;
   float: left;
   color: #bdae93;
 }
-/* line 122, ../../compass/scss/screen.scss */
+/* line 132, ../../compass/scss/screen.scss */
 #keyguide li.current {
   color: #333230;
 }
 
-/* line 128, ../../compass/scss/screen.scss */
+/* line 138, ../../compass/scss/screen.scss */
 #meditime_run div {
   display: none;
 }

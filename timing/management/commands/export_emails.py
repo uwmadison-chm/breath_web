@@ -17,4 +17,4 @@ class Command(NoArgsCommand):
         for ppt in ppts:
             writer.writerow([
                 getattr(ppt, field) for field in field_names
-            ])        
+            ])

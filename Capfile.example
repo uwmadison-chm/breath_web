@@ -2,6 +2,7 @@ load 'deploy'
 
 # Probably do need to change these
 set :user, "vack"
+set :run_as, "tutrest"
 set :application, "meditime"
 set :repository, "svn+ssh://tezpur.keck.waisman.wisc.edu/home/vack/svn/meditime/trunk"
 
@@ -12,8 +13,7 @@ set :gateway, "tezpur.keck.waisman.wisc.edu"
 set :deploy_via, :export
 set :ssh_options , {:forward_agent => true}
 set :deploy_to, "/var/www/cap_deployments/#{application}"
-set :pidfile, "#{shared_path}/var/#{application}.pid"
-set :gunicorn_cmd, "#{shared_path}/bin/cornitup"
+set :gunicorn_cmd, "#{shared_path}/bin/#{application}"
 
 
 desc <<-DESC
@@ -49,21 +49,24 @@ namespace :deploy do
     Start a gunicorn instance to run the server
   DESC
   task :start do
-    run "#{gunicorn_cmd}"
+    default_run_options[:pty] = true 
+    sudo "#{gunicorn_cmd} start", :as => run_as
   end
   
   desc <<-DESC
     Kill our gunicorn instance
   DESC
   task :stop do
-    run "kill `cat #{pidfile}`"
+    default_run_options[:pty] = true 
+    sudo "#{gunicorn_cmd} stop", :as => run_as
   end
   
   desc <<-DESC
     Restart gunicorn.
   DESC
   task :restart do
-    run "kill -HUP `cat #{pidfile}`"
+    default_run_options[:pty] = true 
+    sudo "#{gunicorn_cmd} restart", :as => run_as
   end
 end
 

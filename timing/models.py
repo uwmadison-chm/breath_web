@@ -122,6 +122,12 @@ class Participant(StampedTrackedModel):
     email_ok = models.BooleanField(default=False)
     
     @property
+    def email_ok_num(self):
+        if self.email_ok:
+            return 1
+        return 0
+    
+    @property
     def has_demographics(self):
         return self.birth_year is not None and self.birth_year > 0
     

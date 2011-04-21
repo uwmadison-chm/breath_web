@@ -11,7 +11,7 @@ class Command(NoArgsCommand):
     def handle_noargs(self, **options):
         ppts = models.Participant.objects.all().order_by('pk')
         
-        field_names = ['participant_number', 'email']
+        field_names = ['participant_number', 'email', 'email_ok_num']
         writer = csv.writer(sys.stdout, delimiter=",")
         writer.writerow(field_names)
         for ppt in ppts:

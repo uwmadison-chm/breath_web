@@ -13,7 +13,7 @@ set :gateway, "tezpur.keck.waisman.wisc.edu"
 set :deploy_via, :export
 set :ssh_options , {:forward_agent => true}
 set :deploy_to, "/var/www/cap_deployments/#{application}"
-set :gunicorn_cmd, "#{shared_path}/bin/#{application}"
+set :gunicorn_cmd, "#{shared_path}/bin/gunicorn"
 
 
 desc <<-DESC
@@ -26,7 +26,6 @@ task :info do
   puts "shared_path: #{shared_path}"
   puts "deploy_to: #{deploy_to}"
   puts "current_path: #{current_path}"
-  puts "pidfile: #{pidfile}"
   puts "gunicorn_cmd: #{gunicorn_cmd}"
 end
 

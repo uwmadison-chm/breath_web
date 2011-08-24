@@ -40,8 +40,8 @@ namespace :deploy do
     run "echo \"REVISION=#{latest_revision}\" > #{scmfile}"
     run "echo \"REPOSITORY_URL=\\\"#{full_url}\\\"\" >> #{scmfile}"
     
-    run "cp -sf #{shared_path}/system/settings.py #{release_path}/settings.py"
-    run "cp -sf #{shared_path}/system/.htaccess #{release_path}/public/.htaccess"
+    run "cp -f #{shared_path}/system/settings.py #{release_path}/settings.py"
+    run "cp -f #{shared_path}/system/.htaccess #{release_path}/public/.htaccess"
   end
   
   desc <<-DESC

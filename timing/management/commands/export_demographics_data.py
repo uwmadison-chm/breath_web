@@ -5,9 +5,10 @@ from django.core.management.base import NoArgsCommand
 
 from timing import models
 
+
 class Command(NoArgsCommand):
     help = "Print demographic data as CSV"
-    
+
     def handle_noargs(self, **options):
 
         field_names = [
@@ -23,12 +24,10 @@ class Command(NoArgsCommand):
             ,'political_identity_id'
             ,'occupation_id'
             ,'birth_year'
-            ,'birth_month'
-        ]
+            ,'birth_month']
 
         writer = csv.writer(sys.stdout, delimiter=",")
         writer.writerow(field_names)
         for ppt in models.Participant.objects.all():
             writer.writerow([
-                getattr(ppt, field) for field in field_names
-            ])
+                getattr(ppt, field) for field in field_names])

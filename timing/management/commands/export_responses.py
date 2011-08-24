@@ -6,13 +6,15 @@ from django.core.management.base import NoArgsCommand
 
 from timing import models
 
+
 class Command(NoArgsCommand):
     help = "Print response data as CSV"
-    
+
     def handle_noargs(self, **options):
         writer = csv.writer(sys.stdout, delimiter=",")
         # We're going to write:
-        # participant #, run #, run_finished, press #, key_code, time_ms, server_time
+        # participant #, run #, run_finished, press #, key_code, time_ms,
+        # server_time
         runs = models.Run.objects.all()
         header = [
             'participant_number',
@@ -23,8 +25,8 @@ class Command(NoArgsCommand):
             'ms_since_run_start',
             'duration_ms',
             'server_timestamp_sec',
-            'timezone_offset_sec'
-        ]
+            'timezone_offset_sec']
+
         writer.writerow(header)
         for run in runs:
             run_finished = 0
@@ -41,6 +43,5 @@ class Command(NoArgsCommand):
                     resp.ms_since_run_start,
                     resp.duration_ms,
                     time.mktime(resp.created_at.timetuple()),
-                    resp.timezone_offset_min*60
-                ]
+                    resp.timezone_offset_min*60]
                 writer.writerow(data)

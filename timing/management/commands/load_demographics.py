@@ -5,6 +5,7 @@ from django.core.management.base import NoArgsCommand
 import timing
 from timing import models
 
+
 class Command(NoArgsCommand):
     help = "Load demographic text files into database"
 
@@ -18,13 +19,12 @@ class Command(NoArgsCommand):
         ,models.ReligiousAffiliation
         ,models.PoliticalIdentity
         ,models.CountryOfResidence
-        ,models.EducationLevel
-    ]
-    
+        ,models.EducationLevel]
+
     def handle_noargs(self, **options):
         fixture_dir = os.path.join(
             os.path.dirname(timing.__file__), "fixtures")
-            
+
         for klass in self.__class__.demographic_classes:
             fixture_file = os.path.join(
                 fixture_dir, klass.__name__.lower()+".txt")

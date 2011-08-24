@@ -7,7 +7,7 @@ admin.autodiscover()
 from timing import views
 
 urlpatterns = patterns('',
-    (r'^admin/(.*)', admin.site.root),
+    (r'^admin/', include(admin.site.urls)),
     (r'^$', views.welcome_consent),
     (r'^background$', views.background),
     (r'^privacy$', views.privacy),

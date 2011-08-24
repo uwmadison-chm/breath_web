@@ -5,14 +5,13 @@ from django.db import models
 from django.conf import settings
 
 
-"""
-Abstract base class -- automatically records created_at, updated_at,
-and SCM revision of the code used to create the record.
-
-All models should inherit from this unless there's a good reason.
-"""
-
 class StampedTrackedModel(models.Model):
+    """
+    Abstract base class -- automatically records created_at, updated_at,
+    and SCM revision of the code used to create the record.
+
+    All models should inherit from this unless there's a good reason.
+    """
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -24,6 +23,42 @@ class StampedTrackedModel(models.Model):
     
     class Meta:
         abstract = True
+
+
+def random_slug(slug_len):
+    # Limit the the choices to characters that look dissimilar-ish.
+    # Still lots of 'em.
+    letters = 'bcdfghjkmnpqrstvz'
+    valid_chars=letters+letters.upper()+"2679"
+
+    def fx():
+        vcl = len(valid_chars)
+        charnums = range(slug_len)
+        slug = ''.join([random.choice(valid_chars) for cn in range(slug_len)])
+        return slug
+    return fx
+
+
+class Experiment(StampedTrackedModel):
+    """
+    All the parameters associated with an experiment will live in here.
+    Additionally, this contains a URL slug that'll be used to direct ppts
+    to an individual experiment.
+    """
+
+    url_slug = models.SlugField(
+        "URL slug",
+        max_length=10,
+        unique=True,
+        default=random_slug(4))
+
+    run_length_seconds = models.IntegerField(
+        "Run length",
+        help_text = "(Seconds)",
+        default=60*15)
+    
+    chime_on_error = models.BooleanField(
+        default=False)
 
 
 class Demographic(StampedTrackedModel):

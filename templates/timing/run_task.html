@@ -4,7 +4,7 @@
 <h1>Awareness Online</h1>
 <div id="meditime_run">
   <div id="getready">
-    <p>The task will take about {{ task_len_min }} minutes and be followed by a few questionnaires. We suggest you sit in an upright, relaxed posture that feels comfortable. To begin, press <code>a</code> on your first exhale...</p>
+    <p>The task will take about {{ exp.run_length_minutes }} minutes and be followed by a few questionnaires. We suggest you sit in an upright, relaxed posture that feels comfortable. To begin, press <code>a</code> on your first exhale...</p>
     </p>
   </div>
   <div id="running">
@@ -14,7 +14,8 @@
 </div>
 
 <script type="text/javascript">
-  data.nav_thanks = function() { window.location.href = "{% url timing.views.thanks slug=exp.url_slug %}" }
+  data.nav_thanks = function() { window.location.href = "{% url timing.views.thanks slug=exp.url_slug %}"; };
+  data.chime_on_error = {{ exp.chime_on_error_js }};
 </script>
 
 {% endblock %}

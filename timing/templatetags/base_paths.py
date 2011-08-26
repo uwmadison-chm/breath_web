@@ -5,6 +5,9 @@ register = template.Library()
 def js_prefix():
     return settings.JS_PREFIX
 
+def fx_prefix():
+    return settings.FX_PREFIX
+
 
 def css_prefix():
     return settings.CSS_PREFIX

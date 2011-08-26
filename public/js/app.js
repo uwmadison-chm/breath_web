@@ -4,6 +4,7 @@ if (!window.console) {
 }
 
 $(function() {
+    $('#welcome').welcome({'sound': '/fx/chord.wav'});
     $('#instructions').instructions(
         {'onfinish': data.nav_practice });
 
@@ -46,6 +47,35 @@ $(function() {
                 this.flash = pvt.flash_fx;
         });
     }
+})(jQuery);
+
+(function($) {
+    $.fn.welcome = function(options) {
+        console.log(this);
+        var me = $(this);
+        if (me.size() !== 1) {
+            return;
+        }
+        console.log("Helloes");
+        var pvt = {};
+        pvt.settings = $.extend({
+            'sound' : false
+        }, options);
+
+        console.log(pvt.settings.sound);
+        ding_fx = function() {
+            var dinger = soundManager.createSound({
+                'id':'dinger',
+                'url':pvt.settings.sound
+            })
+            dinger.play();
+        }
+        if (pvt.settings.sound) {
+            soundManager.onready(function() {
+                ding_fx();
+            });
+        }
+    };
 })(jQuery);
 
 (function($) {

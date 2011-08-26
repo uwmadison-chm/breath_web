@@ -68,6 +68,17 @@ class Experiment(StampedTrackedModel):
     def __unicode__(self):
         return "%s: %s, created %s" % (
             self.pk, self.url_slug, self.created_at)
+    
+    @property
+    def chime_on_error_js(self):
+        if self.chime_on_error:
+            return "true"
+        else:
+            return "false"
+    
+    @property
+    def run_length_minutes(self):
+        return self.run_length_seconds/60
 
 class Demographic(StampedTrackedModel):
     label = models.CharField(max_length=255, default='', unique=True)
@@ -204,6 +215,7 @@ class Participant(StampedTrackedModel):
 
 
 class Run(StampedTrackedModel):
+    
     participant = models.ForeignKey(Participant)
 
     planned_length_sec = models.IntegerField(default=60*15)

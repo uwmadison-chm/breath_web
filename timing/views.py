@@ -163,7 +163,8 @@ def thanks(request, slug):
     __add_log_item('run_task', request, ppt)
 
     return render_to_response('thanks.html', {
-        'participant': ppt})
+        'participant': ppt,
+        'exp': exp})
 
 
 def log(request, view_key, slug):

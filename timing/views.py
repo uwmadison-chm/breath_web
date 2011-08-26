@@ -5,11 +5,12 @@ from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.db import IntegrityError
 
-from timing.models import Participant, Run, Response, Viewing
+from timing.models import Experiment, Participant, Run, Response, Viewing
 from timing import forms
 
 
 def welcome_consent(request, slug):
+    exp = get_object_or_404(Experiment, url_slug=slug)
     if request.method == "GET":
         request.session.flush()
     request.session.set_expiry(0)
@@ -19,20 +20,25 @@ def welcome_consent(request, slug):
         form = forms.ConsentForm(request.POST)
         if form.is_valid():
             request.session['consent'] = form.cleaned_data.get('consent')
-            return redirect(login)
+            return redirect(login, slug=exp.url_slug)
     return render_to_response('welcome_consent.html',
-        {'form': form, 's': slug})
+        {'form': form, 'exp': exp})
 
 
 def background(request, slug):
-    return render_to_response('background.html')
+    exp = get_object_or_404(Experiment, url_slug=slug)
+    return render_to_response('background.html',
+        {'exp': exp})
 
 
 def privacy(request, slug):
-    return render_to_response('privacy.html')
+    exp = get_object_or_404(Experiment, url_slug=slug)
+    return render_to_response('privacy.html',
+        {'exp': exp})
 
 
 def login(request, slug):
+    exp = get_object_or_404(Experiment, url_slug=slug)
     if request.method == "POST":
         form = forms.LoginForm(request.POST)
         if form.is_valid():
@@ -47,20 +53,22 @@ def login(request, slug):
             request.session['ppt_id'] = ppt.pk
             if not ppt.has_demographics:
                 # We can't skip demographics...
-                return redirect(demographics)
+                return redirect(demographics, slug=exp.url_slug)
             if ppt.has_run_data:
                 # We can skip instructions and practice
-                return redirect(run_task)
+                return redirect(run_task, slug=exp.url_slug)
 
             # The fall-through is to go through instructions
-            return redirect(instructions)
+            return redirect(instructions, slug=exp.url_slug)
     else:
         form = forms.LoginForm()
     __add_log_item('login_form', request)
-    return render_to_response('login.html', {'form': form})
+    return render_to_response('login.html', 
+        {'form': form, 'exp': exp})
 
 
 def demographics(request, slug):
+    exp = get_object_or_404(Experiment, url_slug=slug)
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
     __add_log_item('demographics_form', request, ppt)
     form = forms.DemographicsForm(instance=ppt)
@@ -69,35 +77,43 @@ def demographics(request, slug):
         try:
             form.save()
             __add_log_item('demographics_save_success', request, ppt)
-            return redirect(instructions)
+            return redirect(instructions, slug=exp.url_slug)
         except Exception as e:
             __add_log_item('demographics_save_fail', request, ppt)
             print e
             print ppt.__dict__
             print form.errors
 
-    return render_to_response('demographics.html', {'form': form})
+    return render_to_response('demographics.html', 
+        {'form': form, 'exp': exp})
 
 
 def instructions(request, slug):
+    exp = get_object_or_404(Experiment, url_slug=slug)
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
     __add_log_item('instructions', request, ppt)
-    return render_to_response('instructions.html')
+    return render_to_response('instructions.html',
+        {'exp': exp})
 
 
 def guided_practice(request, slug):
+    exp = get_object_or_404(Experiment, url_slug=slug)
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
     __add_log_item('guided_practice', request, ppt)
-    return render_to_response('guided_practice.html')
+    return render_to_response('guided_practice.html',
+        {'exp': exp})
 
 
 def practice(request, slug):
+    exp = get_object_or_404(Experiment, url_slug=slug)
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
     __add_log_item('practice', request, ppt)
-    return render_to_response('practice.html')
+    return render_to_response('practice.html',
+        {'exp': exp})
 
 
 def run_task(request, slug):
+    exp = get_object_or_404(Experiment, url_slug=slug)
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
     if request.method == "GET":
         __add_log_item('run_task', request, ppt)
@@ -106,7 +122,8 @@ def run_task(request, slug):
         request.session['run_id'] = run.pk
         return render_to_response('run_task.html', {
             'run': run,
-            'task_len_min': (run.planned_length_sec / 60)})
+            'task_len_min': (run.planned_length_sec / 60),
+            'exp': exp})
 
     if request.method == "POST":
         run = Run.objects.get(pk=request.session['run_id'])
@@ -141,6 +158,7 @@ def run_task(request, slug):
 
 
 def thanks(request, slug):
+    exp = get_object_or_404(Experiment, url_slug=slug)
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
     __add_log_item('run_task', request, ppt)
 
@@ -149,6 +167,7 @@ def thanks(request, slug):
 
 
 def log(request, view_key, slug):
+    exp = get_object_or_404(Experiment, url_slug=slug)
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
     __add_log_item(view_key, request, ppt)
     return HttpResponse('')

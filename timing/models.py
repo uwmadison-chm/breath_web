@@ -65,6 +65,9 @@ class Experiment(StampedTrackedModel):
         blank=True,
         default="")
 
+    def __unicode__(self):
+        return "%s: %s, created %s" % (
+            self.pk, self.url_slug, self.created_at)
 
 class Demographic(StampedTrackedModel):
     label = models.CharField(max_length=255, default='', unique=True)

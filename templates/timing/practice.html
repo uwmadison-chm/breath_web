@@ -49,9 +49,9 @@
 
 <script type="text/javascript">
   data.nav_run = function() {
-    window.location.href = "{% url timing.views.run_task slug='s' %}";
+    window.location.href = "{% url timing.views.run_task slug=exp.url_slug %}";
   }
-  data.log_path = "{% url timing.views.log view_key='' slug='s' %}"
+  data.log_path = "{% url timing.views.log view_key='' slug=exp.url_slug %}"
 </script>
 
 {% endblock %}

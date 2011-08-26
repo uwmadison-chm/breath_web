@@ -3,7 +3,7 @@
 {% block body %}
 <h1>Awareness Online</h1>
 
-<form action="{% url timing.views.demographics slug='s' %}" method="post">
+<form action="{% url timing.views.demographics slug=exp.url_slug %}" method="post">
   <div>
     {{ form.non_field_errors }}
   </div>

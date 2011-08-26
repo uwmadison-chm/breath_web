@@ -18,7 +18,8 @@ class ConsentForm(forms.Form):
 
 
 class LoginForm(forms.Form):
-    email = forms.EmailField()
+    email = forms.EmailField(widget=forms.TextInput(
+        {'autofocus':'autofocus'}))
 
 
 class DemographicsForm(forms.ModelForm):

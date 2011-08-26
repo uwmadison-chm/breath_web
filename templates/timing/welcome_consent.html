@@ -22,10 +22,14 @@
 </p>
 
 <p>
-If you have not reviewed our <a href="{% url timing.views.background %}">background</a> and <a href="{% url timing.views.privacy %}">privacy</a> information, please do so before registering.
+If you have not reviewed our 
+<a href="{% url timing.views.background slug=exp.url_slug %}">background</a> 
+and <a href="{% url timing.views.privacy slug=exp.url_slug %}">privacy</a> 
+information, 
+please do so before registering.
 </p>
 
-<form action="{% url timing.views.welcome_consent slug='s' %}" method="POST">
+<form action="{% url timing.views.welcome_consent slug=exp.url_slug %}" method="POST">
   {{ form.as_p }}
   <input type="submit" value="Continue" />
 </form>

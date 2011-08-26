@@ -3,7 +3,7 @@
 {% block body %}
 <h1>Awareness Online: Log In</h1>
 
-<form action="{% url timing.views.login %}" method="post">
+<form action="{% url timing.views.login slug='s' %}" method="post">
   <p>Please enter your e-mail address to get started.</p>
   <div class="fl">
     {{ form.email.errors }}

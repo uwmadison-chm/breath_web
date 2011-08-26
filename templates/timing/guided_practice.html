@@ -60,9 +60,9 @@
 
 <script type="text/javascript">
   data.nav_run = function() {
-    window.location.href = "{% url timing.views.practice %}";
+    window.location.href = "{% url timing.views.practice slug='s' %}";
   }
-  data.log_path = "{% url timing.views.log view_key='' %}"
+  data.log_path = "{% url timing.views.log view_key='' slug='s' %}"
   
 </script>
 

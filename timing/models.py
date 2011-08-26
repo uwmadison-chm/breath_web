@@ -29,12 +29,10 @@ def random_slug(slug_len):
     # Limit the the choices to characters that look dissimilar-ish.
     # Still lots of 'em.
     letters = 'bcdfghjkmnpqrstvz'
-    valid_chars=letters+letters.upper()+"2679"
 
     def fx():
-        vcl = len(valid_chars)
         charnums = range(slug_len)
-        slug = ''.join([random.choice(valid_chars) for cn in range(slug_len)])
+        slug = ''.join([random.choice(letters) for cn in range(slug_len)])
         return slug
     return fx
 
@@ -50,15 +48,22 @@ class Experiment(StampedTrackedModel):
         "URL slug",
         max_length=10,
         unique=True,
-        default=random_slug(4))
+        default=random_slug(5))
 
     run_length_seconds = models.IntegerField(
         "Run length",
         help_text = "(Seconds)",
         default=60*15)
 
+    survey_url = models.URLField(
+        max_length=255)
+
     chime_on_error = models.BooleanField(
         default=False)
+
+    run_instructions = models.TextField(
+        blank=True,
+        default="")
 
 
 class Demographic(StampedTrackedModel):

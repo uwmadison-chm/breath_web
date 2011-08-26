@@ -9,7 +9,7 @@ from timing.models import Participant, Run, Response, Viewing
 from timing import forms
 
 
-def welcome_consent(request):
+def welcome_consent(request, slug):
     if request.method == "GET":
         request.session.flush()
     request.session.set_expiry(0)
@@ -20,18 +20,19 @@ def welcome_consent(request):
         if form.is_valid():
             request.session['consent'] = form.cleaned_data.get('consent')
             return redirect(login)
-    return render_to_response('welcome_consent.html', {'form': form})
+    return render_to_response('welcome_consent.html',
+        {'form': form, 's': slug})
 
 
-def background(request):
+def background(request, slug):
     return render_to_response('background.html')
 
 
-def privacy(request):
+def privacy(request, slug):
     return render_to_response('privacy.html')
 
 
-def login(request):
+def login(request, slug):
     if request.method == "POST":
         form = forms.LoginForm(request.POST)
         if form.is_valid():
@@ -59,7 +60,7 @@ def login(request):
     return render_to_response('login.html', {'form': form})
 
 
-def demographics(request):
+def demographics(request, slug):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
     __add_log_item('demographics_form', request, ppt)
     form = forms.DemographicsForm(instance=ppt)
@@ -78,25 +79,25 @@ def demographics(request):
     return render_to_response('demographics.html', {'form': form})
 
 
-def instructions(request):
+def instructions(request, slug):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
     __add_log_item('instructions', request, ppt)
     return render_to_response('instructions.html')
 
 
-def guided_practice(request):
+def guided_practice(request, slug):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
     __add_log_item('guided_practice', request, ppt)
     return render_to_response('guided_practice.html')
 
 
-def practice(request):
+def practice(request, slug):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
     __add_log_item('practice', request, ppt)
     return render_to_response('practice.html')
 
 
-def run_task(request):
+def run_task(request, slug):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
     if request.method == "GET":
         __add_log_item('run_task', request, ppt)
@@ -139,7 +140,7 @@ def run_task(request):
         return HttpResponse(json.dumps(return_data))
 
 
-def thanks(request):
+def thanks(request, slug):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
     __add_log_item('run_task', request, ppt)
 
@@ -147,7 +148,7 @@ def thanks(request):
         'participant': ppt})
 
 
-def log(request, view_key):
+def log(request, view_key, slug):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
     __add_log_item(view_key, request, ppt)
     return HttpResponse('')

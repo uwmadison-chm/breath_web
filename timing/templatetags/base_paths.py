@@ -13,4 +13,5 @@ def css_prefix():
     return settings.CSS_PREFIX
 
 register.simple_tag(js_prefix)
+register.simple_tag(fx_prefix)
 register.simple_tag(css_prefix)

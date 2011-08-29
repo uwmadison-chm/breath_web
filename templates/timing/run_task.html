@@ -1,11 +1,11 @@
 {% extends "base.html" %}
+{% load base_paths %}
 
 {% block body %}
 <h1>Awareness Online</h1>
 <div id="meditime_run">
   <div id="getready">
-    <p>The task will take about {{ exp.run_length_minutes }} minutes and be followed by a few questionnaires. We suggest you sit in an upright, relaxed posture that feels comfortable. To begin, press <code>a</code> on your first exhale...</p>
-    </p>
+    {{ exp.run_instructions|safe }}
   </div>
   <div id="running">
     <p>Task is running...</p>
@@ -16,6 +16,7 @@
 <script type="text/javascript">
   data.nav_thanks = function() { window.location.href = "{% url timing.views.thanks slug=exp.url_slug %}"; };
   data.chime_on_error = {{ exp.chime_on_error_js }};
+  data.error_chime_url = '{% fx_prefix %}/chord.mp3';
 </script>
 
 {% endblock %}

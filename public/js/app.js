@@ -4,7 +4,6 @@ if (!window.console) {
 }
 
 $(function() {
-    $('#welcome').welcome({'sound': '/fx/chord.wav'});
     $('#instructions').instructions(
         {'onfinish': data.nav_practice });
 
@@ -25,6 +24,8 @@ $(function() {
     $('#meditime_run').meditime_run(
         { 
             'onfinish': data.nav_thanks,
+            'chime_on_error': data.chime_on_error,
+            'error_chime_url': data.error_chime_url,
     });
 });
 
@@ -50,7 +51,7 @@ $(function() {
 })(jQuery);
 
 (function($) {
-    $.fn.welcome = function(options) {
+    $.fn.auto_chime = function(options) {
         console.log(this);
         var me = $(this);
         if (me.size() !== 1) {
@@ -92,10 +93,30 @@ $(function() {
             'start_key' : 'A',
             'run_ms' : (60*1000*15),
             'onfinish' : function() {},
-            'status_container' : '#meditime_run'
+            'status_container' : '#meditime_run',
+            'cycle_length': 9,
+            'chime_on_error': false,
+            'count_key': 'A',
+            'reset_key': 'F',
+            'error_chime_url': ''
         }, options);
         pvt.settings.start_key = pvt.settings.start_key.toUpperCase();
         $(pvt.settings.flasher).flashable();
+
+        pvt.make_error_chime = function() {
+            pvt.error_chime = soundManager.createSound({
+               'id': 'error_chime',
+               'url':  pvt.settings.error_chime_url,
+               'autoLoad': true,
+            });
+            console.log("Audio system initialized");
+        }
+        console.log(pvt.settings.chime_on_error);
+        
+        if (pvt.settings.chime_on_error) {
+            console.log("Hello...");
+            soundManager.onready(pvt.make_error_chime);
+        }
 
         pvt.reset = function() {
             pvt.currently_pressed = {};
@@ -118,11 +139,20 @@ $(function() {
                 });
             }
         }
+        
+        pvt.chime = function() {
+            if (pvt.error_chime) {
+                soundManager.play('error_chime');
+                return true;
+            }
+            return false
+        }
 
         pvt.start = function(evt) {
             pvt.run_state = 'running';
             pvt.start_time = evt.timeStamp;
             pvt.show_status('running');
+            pvt.counter_count = 0;
         }
 
         pvt.handle_key = function(key) {
@@ -130,14 +160,26 @@ $(function() {
             var since_run_start = pair.keydown.timeStamp - pvt.start_time;
             var duration = pair.keyup.timeStamp - pair.keydown.timeStamp;
             var idx = pvt.presses.length;
+            var chimed = false;
             pvt.presses.push(key);
             pvt.times.push(since_run_start);
+            if (key === pvt.settings.count_key) {
+                pvt.counter_count++;
+            } else if (key === pvt.settings.reset_key) {
+                if (pvt.counter_count !== pvt.settings.cycle_length-1) {
+                    chimed = pvt.chime();
+                }
+                pvt.counter_count = 0;
+            } else {
+                pvt.counter_count = 0;
+            }
             pvt.save_queue[idx] = {
                 'num' : idx,
                 'key' : key,
                 'since_run_start' : since_run_start,
                 'duration' : duration,
-                'timezone_offset_min' : new Date().getTimezoneOffset()
+                'timezone_offset_min' : new Date().getTimezoneOffset(),
+                'chimed' : chimed
             };
             $.ajax('', {
                 'type' : 'POST',

@@ -27,6 +27,10 @@ $(function() {
             'chime_on_error': data.chime_on_error,
             'error_chime_url': data.error_chime_url,
     });
+    
+    $('#thanks').auto_chime({
+       'sound_url': data.sound_url, 
+    });
 });
 
 (function($){
@@ -57,24 +61,23 @@ $(function() {
         if (me.size() !== 1) {
             return;
         }
-        console.log("Helloes");
         var pvt = {};
         pvt.settings = $.extend({
-            'sound' : false
+            'sound_url' : false
         }, options);
 
-        console.log(pvt.settings.sound);
-        ding_fx = function() {
-            var dinger = soundManager.createSound({
-                'id':'dinger',
-                'url':pvt.settings.sound
-            })
-            dinger.play();
-        }
-        if (pvt.settings.sound) {
-            soundManager.onready(function() {
-                ding_fx();
+        console.log(pvt.settings.sound_url);
+        
+        play_fx = function() {
+            var the_sound = soundManager.createSound({
+                'id':'the_sound',
+                'url':pvt.settings.sound_url
             });
+            the_sound.play();
+        }
+        
+        if (pvt.settings.sound_url) {
+            soundManager.onready(play_fx);
         }
     };
 })(jQuery);

@@ -16,7 +16,7 @@
 <script type="text/javascript">
   data.nav_thanks = function() { window.location.href = "{% url timing.views.thanks slug=exp.url_slug %}"; };
   data.chime_on_error = {{ exp.chime_on_error_js }};
-  data.error_chime_url = '{% fx_prefix %}/chord.mp3';
+  data.error_chime_url = '{% fx_prefix %}/error_chime.mp3';
 </script>
 
 {% endblock %}

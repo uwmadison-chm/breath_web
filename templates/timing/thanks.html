@@ -1,10 +1,14 @@
 {% extends "base.html" %}
+{% load base_paths %}
 
 {% block body %}
-<h1>Awareness Online</h1>
-  <p class="redir_inst">Thank you for your participation! Your participant number is <strong>{{ participant.participant_number}}</strong>.
-  </p>
-  <p>
-  Please take a few minutes to complete <a href="{{ exp.survey_url }}", target="_blank">this survey</a>, using the participant number above.
-  </p>
+<h1 id="thanks">Awareness Online</h1>
+<p class="redir_inst">Thank you for your participation! Your participant number is <strong>{{ participant.participant_number}}</strong>.
+</p>
+<p>
+Please take a few minutes to complete <a href="{{ exp.survey_url }}", target="_blank">this survey</a>, using the participant number above.
+</p>
+<script type="text/javascript">
+data.sound_url = '{% fx_prefix %}/end_chime.mp3';
+</script>
 {% endblock %}

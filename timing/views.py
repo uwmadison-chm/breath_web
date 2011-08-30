@@ -117,12 +117,12 @@ def run_task(request, slug):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
     if request.method == "GET":
         __add_log_item('run_task', request, ppt)
-        run = Run(participant=ppt, user_agent=request.META['HTTP_USER_AGENT'])
-        run.save()
+        run = exp.run_set.create(
+            participant=ppt, 
+            user_agent=request.META['HTTP_USER_AGENT'])
         request.session['run_id'] = run.pk
         return render_to_response('run_task.html', {
             'run': run,
-            'task_len_min': (run.planned_length_sec / 60),
             'exp': exp})
 
     if request.method == "POST":
@@ -136,17 +136,17 @@ def run_task(request, slug):
         save_queue = json.loads(request.POST['save_queue'])
         for num, data in save_queue.iteritems():
             try:
-                resp = Response(
-                    run=run, press_num=data['num'], key=data['key'],
+                resp = run.response_set.create(
+                    press_num=data['num'], key=data['key'],
                     ms_since_run_start=data['since_run_start'],
                     duration_ms=data['duration'],
-                    timezone_offset_min=data['timezone_offset_min'])
-                resp.save()
+                    timezone_offset_min=data['timezone_offset_min'],
+                    played_error_chime=data['chimed'])
             except IntegrityError:
                 pass
             saved_nums.append(data['num'])
 
-        target_tdelta = datetime.timedelta(seconds=run.planned_length_sec)
+        target_tdelta = datetime.timedelta(seconds=exp.run_length_seconds)
         run_tdelta = cur_time - run.started_at
         if run_tdelta > target_tdelta:
             return_data['finish'] = True

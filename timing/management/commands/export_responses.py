@@ -18,6 +18,7 @@ class Command(NoArgsCommand):
         runs = models.Run.objects.all()
         header = [
             'participant_number',
+            'experiment_number',
             'run_number',
             'run_finished',
             'keypress_number',
@@ -25,7 +26,10 @@ class Command(NoArgsCommand):
             'ms_since_run_start',
             'duration_ms',
             'server_timestamp_sec',
-            'timezone_offset_sec']
+            'timezone_offset_sec',
+            'played_chime']
+
+        bool_to_int = {True: 1, False: 0}
 
         writer.writerow(header)
         for run in runs:
@@ -36,6 +40,7 @@ class Command(NoArgsCommand):
                 keycode = ord(resp.key)
                 data = [
                     run.participant.participant_number,
+                    run.experiment.pk,
                     run.run_num,
                     run_finished,
                     resp.press_num+1,
@@ -43,5 +48,6 @@ class Command(NoArgsCommand):
                     resp.ms_since_run_start,
                     resp.duration_ms,
                     time.mktime(resp.created_at.timetuple()),
-                    resp.timezone_offset_min*60]
+                    resp.timezone_offset_min*60,
+                    bool_to_int[resp.played_error_chime]]
                 writer.writerow(data)

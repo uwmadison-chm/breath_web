@@ -216,9 +216,9 @@ class Participant(StampedTrackedModel):
 
 class Run(StampedTrackedModel):
     
+    experiment = models.ForeignKey(Experiment)
+    
     participant = models.ForeignKey(Participant)
-
-    planned_length_sec = models.IntegerField(default=60*15)
 
     # Informational only...
     run_num = models.IntegerField(default=0)
@@ -235,6 +235,7 @@ class Run(StampedTrackedModel):
 
 
 class Response(StampedTrackedModel):
+    
     run = models.ForeignKey(Run)
 
     key = models.CharField(max_length=1)
@@ -246,6 +247,8 @@ class Response(StampedTrackedModel):
     duration_ms = models.IntegerField(default=0)
 
     timezone_offset_min = models.IntegerField(default=0)
+    
+    played_error_chime = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ("run", "press_num")

@@ -75,6 +75,10 @@ class Experiment(StampedTrackedModel):
             self.pk, self.url_slug, self.created_at)
     
     @property
+    def experiment_number(self):
+        return self.pk
+    
+    @property
     def chime_on_error_js(self):
         if self.chime_on_error:
             return "true"

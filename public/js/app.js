@@ -76,7 +76,6 @@ $(function() {
         pvt.settings = $.extend({
             'save_path' : '',
             'start_key' : 'A',
-            'run_ms' : (60*1000*15),
             'onfinish' : function() {},
             'status_container' : '#meditime_run',
             'cycle_length': 9,
@@ -91,6 +90,9 @@ $(function() {
         $(pvt.settings.flasher).flashable();
 
         pvt.make_error_chime = function() {
+            if (!pvt.settings.chime_on_error) {
+                return;
+            }
             pvt.error_chime = soundManager.createSound({
                'id': 'error_chime',
                'url':  pvt.settings.error_chime_url,
@@ -100,7 +102,7 @@ $(function() {
         }
         
         pvt.make_guide = function() {
-            console.log(pvt.settings);
+            //console.log(pvt.settings);
             if (!pvt.settings.play_guide) {
                 return;
             }
@@ -112,13 +114,10 @@ $(function() {
             //console.log("Guide initialized");
         }
         
-        if (pvt.settings.chime_on_error) {
-            //console.log("Hello...");
-            soundManager.onready(function() {
-                pvt.make_error_chime();
-                pvt.make_guide();
-            });
-        }
+        soundManager.onready(function() {
+            pvt.make_error_chime();
+            pvt.make_guide();
+        });
 
         pvt.reset = function() {
             pvt.currently_pressed = {};

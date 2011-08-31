@@ -17,7 +17,7 @@
   data.onfinish = function() { window.location.href = "{% url timing.views.thanks slug=exp.url_slug %}"; };
   data.chime_on_error = {{ exp.chime_on_error_js }};
   data.error_chime_url = '{% fx_prefix %}/error_chime.mp3';
-  data.guide_url = '/{{ exp.guide_sound_file }}';
+  data.guide_url = '{{MEDIA_URL}}/{{ exp.guide_sound_file }}';
   data.play_guide = {{ exp.has_guide_sound_js }};
 </script>
 

@@ -1,6 +1,7 @@
 import json
 import datetime
 
+from django.template import RequestContext 
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.db import IntegrityError
@@ -22,19 +23,19 @@ def welcome_consent(request, slug):
             request.session['consent'] = form.cleaned_data.get('consent')
             return redirect(login, slug=exp.url_slug)
     return render_to_response('welcome_consent.html',
-        {'form': form, 'exp': exp})
+        {'form': form, 'exp': exp}, context_instance=RequestContext(request))
 
 
 def background(request, slug):
     exp = get_object_or_404(Experiment, url_slug=slug)
     return render_to_response('background.html',
-        {'exp': exp})
+        {'exp': exp}, context_instance=RequestContext(request))
 
 
 def privacy(request, slug):
     exp = get_object_or_404(Experiment, url_slug=slug)
     return render_to_response('privacy.html',
-        {'exp': exp})
+        {'exp': exp}, context_instance=RequestContext(request))
 
 
 def login(request, slug):
@@ -64,7 +65,7 @@ def login(request, slug):
         form = forms.LoginForm()
     __add_log_item('login_form', request)
     return render_to_response('login.html', 
-        {'form': form, 'exp': exp})
+        {'form': form, 'exp': exp}, context_instance=RequestContext(request))
 
 
 def demographics(request, slug):
@@ -85,7 +86,7 @@ def demographics(request, slug):
             print form.errors
 
     return render_to_response('demographics.html', 
-        {'form': form, 'exp': exp})
+        {'form': form, 'exp': exp}, context_instance=RequestContext(request))
 
 
 def instructions(request, slug):
@@ -93,7 +94,7 @@ def instructions(request, slug):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
     __add_log_item('instructions', request, ppt)
     return render_to_response('instructions.html',
-        {'exp': exp})
+        {'exp': exp}, context_instance=RequestContext(request))
 
 
 def guided_practice(request, slug):
@@ -101,7 +102,7 @@ def guided_practice(request, slug):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
     __add_log_item('guided_practice', request, ppt)
     return render_to_response('guided_practice.html',
-        {'exp': exp})
+        {'exp': exp}, context_instance=RequestContext(request))
 
 
 def practice(request, slug):
@@ -109,7 +110,7 @@ def practice(request, slug):
     ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
     __add_log_item('practice', request, ppt)
     return render_to_response('practice.html',
-        {'exp': exp})
+        {'exp': exp}, context_instance=RequestContext(request))
 
 
 def run_task(request, slug):
@@ -123,7 +124,8 @@ def run_task(request, slug):
         request.session['run_id'] = run.pk
         return render_to_response('run_task.html', {
             'run': run,
-            'exp': exp})
+            'exp': exp},
+            context_instance=RequestContext(request))
 
     if request.method == "POST":
         run = Run.objects.get(pk=request.session['run_id'])
@@ -164,7 +166,7 @@ def thanks(request, slug):
 
     return render_to_response('thanks.html', {
         'participant': ppt,
-        'exp': exp})
+        'exp': exp}, context_instance=RequestContext(request))
 
 
 def log(request, view_key, slug):

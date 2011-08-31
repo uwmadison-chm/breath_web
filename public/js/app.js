@@ -4,33 +4,15 @@ if (!window.console) {
 }
 
 $(function() {
-    $('#instructions').instructions(
-        {'onfinish': data.nav_practice });
+    $('#instructions').instructions(data);
 
-    $('#guided_practice').meditime_practice(
-        {
-            'onfinish': data.nav_run,
-            'guide': '#practice_guide',
-            'status_container': '#guided_practice',
-            'log_path': data.log_path,
-    });
+    $('#guided_practice').meditime_practice(data);
 
-    $('#practice').meditime_practice(
-        {
-            'onfinish': data.nav_run,
-            'log_path': data.log_path,
-    });
+    $('#practice').meditime_practice(data);
 
-    $('#meditime_run').meditime_run(
-        { 
-            'onfinish': data.nav_thanks,
-            'chime_on_error': data.chime_on_error,
-            'error_chime_url': data.error_chime_url,
-    });
+    $('#meditime_run').meditime_run(data);
     
-    $('#thanks').auto_chime({
-       'sound_url': data.sound_url, 
-    });
+    $('#thanks').auto_chime(data);
 });
 
 (function($){
@@ -56,7 +38,7 @@ $(function() {
 
 (function($) {
     $.fn.auto_chime = function(options) {
-        console.log(this);
+        //console.log(this);
         var me = $(this);
         if (me.size() !== 1) {
             return;
@@ -66,7 +48,7 @@ $(function() {
             'sound_url' : false
         }, options);
 
-        console.log(pvt.settings.sound_url);
+        //console.log(pvt.settings.sound_url);
         
         play_fx = function() {
             var the_sound = soundManager.createSound({
@@ -101,7 +83,9 @@ $(function() {
             'chime_on_error': false,
             'count_key': 'A',
             'reset_key': 'F',
-            'error_chime_url': ''
+            'error_chime_url': '',
+            'guide_url': '',
+            'play_guide': false,
         }, options);
         pvt.settings.start_key = pvt.settings.start_key.toUpperCase();
         $(pvt.settings.flasher).flashable();
@@ -112,13 +96,28 @@ $(function() {
                'url':  pvt.settings.error_chime_url,
                'autoLoad': true,
             });
-            console.log("Audio system initialized");
+            //console.log("Error chime initialized");
         }
-        console.log(pvt.settings.chime_on_error);
+        
+        pvt.make_guide = function() {
+            console.log(pvt.settings);
+            if (!pvt.settings.play_guide) {
+                return;
+            }
+            pvt.guide_sound = soundManager.createSound({
+                'id': 'guide',
+                'url': pvt.settings.guide_url,
+                'autoLoad': true,
+            });
+            //console.log("Guide initialized");
+        }
         
         if (pvt.settings.chime_on_error) {
-            console.log("Hello...");
-            soundManager.onready(pvt.make_error_chime);
+            //console.log("Hello...");
+            soundManager.onready(function() {
+                pvt.make_error_chime();
+                pvt.make_guide();
+            });
         }
 
         pvt.reset = function() {
@@ -145,17 +144,20 @@ $(function() {
         
         pvt.chime = function() {
             if (pvt.error_chime) {
-                soundManager.play('error_chime');
+                pvt.error_chime.play();
                 return true;
             }
             return false
         }
-
+        
         pvt.start = function(evt) {
             pvt.run_state = 'running';
             pvt.start_time = evt.timeStamp;
             pvt.show_status('running');
             pvt.counter_count = 0;
+            if (pvt.settings.play_guide) {
+                pvt.guide_sound.play();
+            }
         }
 
         pvt.handle_key = function(key) {
@@ -207,10 +209,10 @@ $(function() {
             var keyChar = String.fromCharCode(evt.keyCode);
             // Don't re-process keydowns we already have.
             if (pvt.currently_pressed[keyChar]) { 
-                console.log("Not re-processing "+keyChar);
+                //console.log("Not re-processing "+keyChar);
                 return; 
             }
-            console.log(evt);
+            //console.log(evt);
             
             switch(pvt.run_state) {
             case 'stopped':
@@ -237,11 +239,11 @@ $(function() {
         });
         
         $(document).keyup(function(evt) {
-            console.log(evt);
+            //console.log(evt);
             var keyChar = String.fromCharCode(evt.keyCode);
             // We *must* be waiting on a keyup for this processing to make
             if (!pvt.currently_pressed[keyChar]) { 
-                console.log("Got an unexpected keyup for "+keyChar);
+                //console.log("Got an unexpected keyup for "+keyChar);
                 return; 
             }
             pvt.currently_pressed[keyChar]['keyup'] = evt;

@@ -64,6 +64,11 @@ class Experiment(StampedTrackedModel):
     run_instructions = models.TextField(
         blank=True,
         default="")
+        
+    guide_sound_file = models.FileField(
+        blank=True,
+        null=True,
+        upload_to="guides")
 
     def __unicode__(self):
         return "%s: %s, created %s" % (
@@ -75,6 +80,12 @@ class Experiment(StampedTrackedModel):
             return "true"
         else:
             return "false"
+    
+    @property
+    def has_guide_sound_js(self):
+        if self.guide_sound_file is not None and self.guide_sound_file <> '':
+            return "true"
+        return "false"
     
     @property
     def run_length_minutes(self):

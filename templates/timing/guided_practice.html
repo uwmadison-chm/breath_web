@@ -59,10 +59,12 @@
 </div>
 
 <script type="text/javascript">
-  data.nav_run = function() {
+  data.onfinish = function() {
     window.location.href = "{% url timing.views.practice slug=exp.url_slug %}";
   }
-  data.log_path = "{% url timing.views.log view_key='' slug=exp.url_slug %}"
+  data.log_path = "{% url timing.views.log view_key='' slug=exp.url_slug %}";
+  data.guide = "#practice_guide";
+  data.status_container = "#guided_practice";
   
 </script>
 

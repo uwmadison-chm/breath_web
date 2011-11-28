@@ -72,11 +72,11 @@ class Experiment(StampedTrackedModel):
     
     breath_time_key = models.CharField(
         max_length=1, 
-        default="F")
+        default="J")
     
     end_cycle_key = models.CharField(
         max_length=1,
-        default="A")
+        default="K")
     
     cycle_length = models.IntegerField(
         default=9)

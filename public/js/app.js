@@ -259,7 +259,7 @@ $(function() {
         }
         
         var settings = $.extend({
-            'key_map' : {"SPACEBAR" : 32, "A" : 65, "F" : 70},
+            'key_map' : {"SPACEBAR" : 32},
             'show_idx' : 0,
             'onfinish' : function() {}
         }, options);
@@ -282,6 +282,9 @@ $(function() {
         var should_advance = function(keycode) {
             var advancer = get_step_advancer(get_step(show_idx));
             var adv_keycode = settings.key_map[advancer];
+            if (!adv_keycode) {
+              adv_keycode = advancer.charCodeAt(0);
+            }
             return (adv_keycode === keycode);
         }
         

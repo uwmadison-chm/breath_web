@@ -10,7 +10,7 @@
       Before we begin, make sure that you close all other browser windows, turn off your cell phone, and minimize potential distractions.
     </p>
     <p>
-      Press <code>A</code> to continue.
+      Press <code>{{ exp.breath_time_key }}</code> to continue.
     </p>
   </li>
   <li>
@@ -18,20 +18,20 @@
       In this task, we would like you to be aware of the breath. You may be  aware of the rising and falling of your belly or chest or the movement of breath in and out near your nose. There's no need to control the breath. Just breath normally.
     </p>
     <p>
-      Press <code>A</code> to continue.
+      Press <code>{{ exp.breath_time_key }}</code> to continue.
     </p>
   </li>
   <li>
-    <p>Please count your breaths silently. Start with 1 on the 1st exhale, and  continue up to 9 for the 9th exhale. At the beginning of each exhale,  press the <code>A</code>. When you get to 9, though, press <code>F</code>. Then with the next breath start counting again at 1. Press the <code>A</code> as usual at the beginning of each exhale.
+    <p>Please count your breaths silently. Start with 1 on the 1st exhale, and  continue up to {{ exp.cycle_length }} for the {{ exp.cycle_length }}<sup>th</sup> exhale. At the beginning of each exhale,  press the <code>{{ exp.breath_time_key }}</code>. When you get to {{ exp.cycle_length }}, though, press <code>{{ exp.end_cycle_key }}</code>. Then with the next breath start counting again at 1. Press the <code>{{ exp.breath_time_key }}</code> as usual at the beginning of each exhale.
     </p>
     <p>
-      Press <code>F</code> to continue.
+      Press <code>{{ exp.end_cycle_key }}</code> to continue.
     </p>
 
   </li>
   <li>
     <p>
-      If you realize you have lost count, that's OK. Press the spacebar and gently bring the attention back to your breath. Then, start your count over at 1 with the next exhale. As usual, you'll press the <code>A</code> at the beginning of every exhale except when you reach the number 9 and press <code>F</code>.
+      If you realize you have lost count, that's OK. Press the spacebar and gently bring the attention back to your breath. Then, start your count over at 1 with the next exhale. As usual, you'll press the <code>{{ exp.breath_time_key }}</code> at the beginning of every exhale except when you reach the number {{ exp.cycle_length }} and press <code>{{ exp.end_cycle_key }}</code>.
     </p>
     <p>Press <code>spacebar</code> to continue
     </p>
@@ -39,21 +39,21 @@
   </li>
   <li>
     <p>
-      As you count your breaths, keep your fingers on the <code>A</code> and <code>F</code> keys. What's very IMPORTANT is that:
+      As you count your breaths, keep your fingers on the <code>{{ exp.breath_time_key }}</code> and <code>{{ exp.end_cycle_key }}</code> keys. What's very IMPORTANT is that:
     </p>
     <ol>
-      <li>EVERY TIME you begin to breath out, you press the <code>A</code></li>
-      <li>EVERY TIME your count reaches 9, you press <code>F</code>, and then you start back at 1</li>
+      <li>EVERY TIME you begin to breath out, you press the <code>{{ exp.breath_time_key }}</code></li>
+      <li>EVERY TIME your count reaches {{ exp.cycle_length }}, you press <code>{{ exp.end_cycle_key }}</code>, and then you start back at 1</li>
       <li>EVERY TIME you lose track of your count, press the <code>spacebar</code></li>
     </ol>
 
-    <p>Press the letter <code>A</code> to continue.
+    <p>Press the letter <code>{{ exp.breath_time_key }}</code> to continue.
     </p>
   </li>
   <li>
     <p>On the next screen, we'll start to practice. There's no need to look at anything in particular while you're counting. Place the attention on the breath.
     </p>
-    <p>Press <code>A</code> to continue to the practice screen
+    <p>Press <code>{{ exp.breath_time_key }}</code> to continue to the practice screen
     </p>
   </li>
 </ol>

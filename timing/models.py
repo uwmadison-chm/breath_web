@@ -69,6 +69,20 @@ class Experiment(StampedTrackedModel):
         blank=True,
         null=True,
         upload_to="guides")
+    
+    breath_time_key = models.CharField(
+        max_length=1, 
+        default="F")
+    
+    end_cycle_key = models.CharField(
+        max_length=1,
+        default="A")
+    
+    cycle_length = models.IntegerField(
+        default=9)
+    
+    practice_cycles = models.FloatField(
+        default=1.5)
 
     def __unicode__(self):
         return "%s: %s, created %s" % (
@@ -94,6 +108,11 @@ class Experiment(StampedTrackedModel):
     @property
     def run_length_minutes(self):
         return self.run_length_seconds/60
+    
+    def save(self, *args, **kwargs):
+        self.breath_time_key = self.breath_time_key.upper()
+        self.end_cycle_key = self.end_cycle_key.upper()
+        super(Experiment, self).save(*args, **kwargs)
 
 class Demographic(StampedTrackedModel):
     label = models.CharField(max_length=255, default='', unique=True)

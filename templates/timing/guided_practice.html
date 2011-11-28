@@ -6,8 +6,8 @@
 
   <div id="getready">
     <p>
-      To start practice, press <code>a</code> on your first exhale.
-      Your count will be highlighted below.
+      To start practice, press <code>{{ exp.breath_time_key }}</code> on your 
+      first exhale. Your count will be highlighted below.
     </p>
   </div>
 
@@ -25,39 +25,41 @@
 
   <div id="success">
     <p>
-      Great job! Now, we'll do a practice session without the keys
-      displayed.
+      Great job! Now, we'll do a practice session without the keys displayed.
     </p>
-    <p>Press <code>A</code> to continue.
+    <p>Press <code>{{ exp.breath_time_key }}</code> to continue.
   </div>
 
   <div id="err_wrong_key">
-    <p>Please press only <code>a</code> and <code>f</code> during practice.
+    <p>
+      Please press only <code>{{ exp.breath_time_key }}</code> and <code>{{ exp.end_cycle_key }}</code> during practice.
     </p>
-    <p>Press <code>A</code> to try again.
+    <p>Press <code>{{ exp.breath_time_key }}</code> to try again.
   </div>
 
   <div id="err_too_many">
-    <p>You didn't press <code>f</code> on your ninth breath. Make sure you press the <code>a</code> key during every exhale, and then press the <code>f</code> key on the ninth exhale.
+    <p>You didn't press <code>{{ exp.end_cycle_key }}</code> on your {{ exp.cycle_length }}<sup>th</sup> breath. Make sure you 
+press the <code>{{ exp.breath_time_key }}</code> key during every exhale, 
+and then press the <code>{{ exp.end_cycle_key }}</code> key on the {{ exp.cycle_length }}<sup>th</sup> exhale.
     </p>
-    <p>Press <code>A</code> to try again.</p>
+    <p>Press <code>{{ exp.breath_time_key }}</code> to try again.</p>
   </div>
 
   <div id="err_debounce">
     <p>Please press the keys only once for each breath.</p>
-    <p>Press <code>A</code> to try again.</p>
+    <p>Press <code>{{ exp.breath_time_key }}</code> to try again.</p>
   </div>
 
   <div id="err_too_few">
-    <p>You didn't press <code>a</code> key on all breaths except the ninth breath. Make sure you press the <code>a</code> key during every exhale, and then press the <code>f</code> key on the ninth exhale.
+    <p>You didn't press <code>{{ exp.breath_time_key }}</code> key on all breaths except the {{ exp.cycle_length }}<sup>th</sup> breath. Make sure you press the <code>{{ exp.breath_time_key }}</code> key during every exhale, and then press the <code>{{ exp.end_cycle_key }}</code> key on the {{ exp.cycle_length }}<sup>th</sup> exhale.
     </p>
-    <p>Press <code>A</code> to try again.</p>
+    <p>Press <code>{{ exp.breath_time_key }}</code> to try again.</p>
   </div>
 
   <div id="err_timing">
-    <p>You took an unusual amount of time to complete the practice run. Make sure you press the <code>a</code> key once during every exhale, and then press the <code>f</code> key on the ninth exhale.
+    <p>You took an unusual amount of time to complete the practice run. Make sure you press the <code>{{ exp.breath_time_key }}</code> key once during every exhale, and then press the <code>{{ exp.end_cycle_key }}</code> key on the {{ exp.cycle_length }}<sup>th</sup> exhale.
     </p>
-    <p>Press <code>A</code> to try again.</p>
+    <p>Press <code>{{ exp.breath_time_key }}</code> to try again.</p>
   </div>
 </div>
 
@@ -69,6 +71,11 @@
   data.guide = "#practice_guide";
   data.status_container = "#guided_practice";
   data.count_indicator = "#count_indicator";
+  data.count_key = "{{ exp.breath_time_key }}";
+  data.restart_key = "{{ exp.breath_time_key }}";
+  data.reset_key = "{{ exp.end_cycle_key }}";
+  data.cycle_length = {{ exp.cycle_length }};
+  data.practice_cycles = {{ exp.practice_cycles }};
 </script>
 
 {% endblock %}

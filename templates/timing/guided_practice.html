@@ -18,6 +18,9 @@
   <div id="practice_guide">
     <ol id="keyguide">
     </ol>
+    <div id="count_indicator">
+      1
+    </div>
   </div>
 
   <div id="success">
@@ -65,7 +68,7 @@
   data.log_path = "{% url timing.views.log view_key='' slug=exp.url_slug %}";
   data.guide = "#practice_guide";
   data.status_container = "#guided_practice";
-  
+  data.count_indicator = "#count_indicator";
 </script>
 
 {% endblock %}

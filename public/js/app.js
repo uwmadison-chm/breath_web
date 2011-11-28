@@ -324,6 +324,7 @@ $(function() {
             'min_avg_ms' : 1500,
             'max_avg_ms' : 30000,
             'status_container' : '#practice',
+            'count_indicator' : null,
             'onfinish' : function() {}
         }, options);
         // Keycodes get converted to upper-case strings.
@@ -349,6 +350,15 @@ $(function() {
             var prefix = pvt.settings.status_container.replace("#", '');
             var full_path = lp+prefix+"_"+key;
             $.ajax(full_path, {});
+        }
+        
+        pvt.update_count_indicator = function() {
+          var current_count = (
+            (pvt.presses.length-1) % pvt.settings.cycle_length)+1;
+          $(pvt.settings.count_indicator)
+            .html(current_count)
+            .css('opacity', 1)
+            .fadeTo(600, 0);
         }
         
         pvt.flash = function() {
@@ -482,6 +492,7 @@ $(function() {
             }
 
             pvt.highlight_guide();
+            pvt.update_count_indicator();
             
             // Finally, if we've got enough, we have success!
             if (pvt.presses.length >= pvt.iters) {

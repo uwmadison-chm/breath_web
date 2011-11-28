@@ -11,7 +11,7 @@
 @import "partials/page";
 
 body {
-  font-family: Georgia, serif;
+  font-family: $body_font;
   line-height: 1.5;
   font-size: 16px;
   background: $page_bg url('../img/background.png') repeat-y;
@@ -133,6 +133,14 @@ code {
         color: $text_fg;
     }
     margin-bottom: 1.25em;
+}
+
+#count_indicator {
+  text-align: center;
+  font-size: 4em;
+  font-family: Consolas, 'Andale Mono', monospace;
+  color: $heading_fg;
+  opacity: 0;
 }
 
 #meditime_run div {

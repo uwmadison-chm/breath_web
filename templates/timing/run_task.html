@@ -19,6 +19,10 @@
   data.error_chime_url = '{% fx_prefix %}/error_chime.mp3';
   data.guide_url = '{{MEDIA_URL}}{{ exp.guide_sound_file }}';
   data.play_guide = {{ exp.has_guide_sound_js }};
+  data.count_key = "{{ exp.breath_time_key }}";
+  data.start_key = "{{ exp.breath_time_key }}";
+  data.reset_key = "{{ exp.end_cycle_key }}";
+  
 </script>
 
 {% endblock %}

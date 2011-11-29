@@ -15,7 +15,9 @@ class Command(NoArgsCommand):
         field_names = [
             'experiment_number', 'url_slug', 'run_length_seconds', 
             'survey_url', 'chime_on_error', 'run_instructions',
-            'guide_sound_file']
+            'guide_sound_file', 'breath_time_key', 'breath_time_keycode',
+            'end_cycle_key', 'end_cycle_keycode', 'cycle_length',
+            'practice_cycles']
         writer = csv.writer(sys.stdout, delimiter=",")
         writer.writerow(field_names)
         for exp in exps:

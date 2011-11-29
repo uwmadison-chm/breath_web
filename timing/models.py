@@ -109,6 +109,14 @@ class Experiment(StampedTrackedModel):
     def run_length_minutes(self):
         return self.run_length_seconds/60
     
+    @property
+    def breath_time_keycode(self):
+        return ord(self.breath_time_key)
+    
+    @property
+    def end_cycle_keycode(self):
+        return ord(self.end_cycle_key)
+    
     def save(self, *args, **kwargs):
         self.breath_time_key = self.breath_time_key.upper()
         self.end_cycle_key = self.end_cycle_key.upper()

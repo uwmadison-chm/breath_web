@@ -1,21 +1,34 @@
 import sys
-import time
+import datetime
 import csv
+import os
+from optparse import make_option
 
-from django.core.management.base import NoArgsCommand
+from django.core.management.base import BaseCommand, CommandError
 
 from timing import models
 
 
-class Command(NoArgsCommand):
-    help = "Print response data as CSV"
+class Command(BaseCommand):
+    help = "Write a CSV file containing response data for each experiment"
 
-    def handle_noargs(self, **options):
-        writer = csv.writer(sys.stdout, delimiter=",")
-        # We're going to write:
-        # participant #, run #, run_finished, press #, key_code, time_ms,
-        # server_time
-        runs = models.Run.objects.all()
+    option_list = BaseCommand.option_list + (
+        make_option('-f', '--force', help='Export all data, not just changed',
+        action='store_true', dest='force', default=False), )
+
+    def handle(self, *args, **kwargs):
+        if not len(args) == 1:
+            raise CommandError("Must specify output directory")
+        out_dir = args[0]
+
+        experiments = models.Experiment.objects.all()
+        for exp in experiments:
+            if kwargs['force'] or exp.needs_export:
+                self._write_experiment_data(out_dir, exp)
+                exp.last_exported_at = datetime.datetime.now()
+                exp.save()
+
+    def _write_experiment_data(self, path, exp):
         header = [
             'participant_number',
             'experiment_number',
@@ -29,25 +42,13 @@ class Command(NoArgsCommand):
             'timezone_offset_sec',
             'played_chime']
 
-        bool_to_int = {True: 1, False: 0}
-
-        writer.writerow(header)
-        for run in runs:
-            run_finished = 0
-            if run.finished_at is not None:
-                run_finished = 1
-            for resp in run.response_set.order_by('press_num'):
-                keycode = ord(resp.key)
-                data = [
-                    run.participant.participant_number,
-                    run.experiment.pk,
-                    run.run_num,
-                    run_finished,
-                    resp.press_num+1,
-                    keycode,
-                    resp.ms_since_run_start,
-                    resp.duration_ms,
-                    time.mktime(resp.created_at.timetuple()),
-                    resp.timezone_offset_min*60,
-                    bool_to_int[resp.played_error_chime]]
-                writer.writerow(data)
+        out_file = "%s-%s-responses.csv" % (exp.pk, exp.url_slug)
+        full_path = os.path.join(path, out_file)
+        with open(full_path, 'w') as f:
+            writer = csv.writer(f, delimiter=',')
+            writer.writerow(header)
+            for run in exp.run_set.all():
+                responses = run.response_set.order_by('press_num')
+                for resp in responses:
+                    row = [getattr(resp, att) for att in header]
+                    writer.writerow(row)

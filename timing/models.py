@@ -1,4 +1,5 @@
 import datetime
+import time
 import random
 
 from django.db import models
@@ -84,6 +85,12 @@ class Experiment(StampedTrackedModel):
     practice_cycles = models.FloatField(
         default=1.5)
 
+    last_exported_at = models.DateTimeField(
+        auto_now_add=True)
+        
+    data_last_added_at = models.DateTimeField(
+        auto_now_add=True)
+        
     def __unicode__(self):
         return "%s: %s, created %s" % (
             self.pk, self.url_slug, self.created_at)
@@ -116,6 +123,13 @@ class Experiment(StampedTrackedModel):
     @property
     def end_cycle_keycode(self):
         return ord(self.end_cycle_key)
+
+    @property
+    def needs_export(self):
+        export = False
+        if (self.data_last_added_at > self.last_exported_at):
+            export = True
+        return export
 
     def save(self, *args, **kwargs):
         self.breath_time_key = self.breath_time_key.upper()
@@ -295,6 +309,46 @@ class Response(StampedTrackedModel):
 
     class Meta:
         unique_together = ("run", "press_num")
+
+    @property
+    def participant_number(self):
+        return self.run.participant.participant_number
+
+    @property
+    def experiment_number(self):
+        return self.run.experiment.pk
+
+    @property
+    def run_number(self):
+        return self.run.run_num
+
+    @property
+    def run_finished(self):
+        finished = 0
+        if self.run.finished_at is not None:
+            finished = 1
+        return finished
+
+    @property
+    def keypress_number(self):
+        return self.press_num + 1
+
+    @property
+    def keycode(self):
+        return ord(self.key)
+
+    @property
+    def server_timestamp_sec(self):
+        return time.mktime(self.created_at.timetuple())
+
+    @property
+    def timezone_offset_sec(self):
+        return self.timezone_offset_min*60
+
+    @property
+    def played_chime(self):
+        bool_to_int = {True: 1, False: 0}
+        return bool_to_int[self.played_error_chime]
 
 
 class Viewing(StampedTrackedModel):

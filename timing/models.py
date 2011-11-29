@@ -64,63 +64,64 @@ class Experiment(StampedTrackedModel):
     run_instructions = models.TextField(
         blank=True,
         default="")
-        
+
     guide_sound_file = models.FileField(
         blank=True,
         null=True,
         upload_to="guides")
-    
+
     breath_time_key = models.CharField(
-        max_length=1, 
+        max_length=1,
         default="J")
-    
+
     end_cycle_key = models.CharField(
         max_length=1,
         default="K")
-    
+
     cycle_length = models.IntegerField(
         default=9)
-    
+
     practice_cycles = models.FloatField(
         default=1.5)
 
     def __unicode__(self):
         return "%s: %s, created %s" % (
             self.pk, self.url_slug, self.created_at)
-    
+
     @property
     def experiment_number(self):
         return self.pk
-    
+
     @property
     def chime_on_error_js(self):
         if self.chime_on_error:
             return "true"
         else:
             return "false"
-    
+
     @property
     def has_guide_sound_js(self):
         if self.guide_sound_file is not None and self.guide_sound_file <> '':
             return "true"
         return "false"
-    
+
     @property
     def run_length_minutes(self):
         return self.run_length_seconds/60
-    
+
     @property
     def breath_time_keycode(self):
         return ord(self.breath_time_key)
-    
+
     @property
     def end_cycle_keycode(self):
         return ord(self.end_cycle_key)
-    
+
     def save(self, *args, **kwargs):
         self.breath_time_key = self.breath_time_key.upper()
         self.end_cycle_key = self.end_cycle_key.upper()
         super(Experiment, self).save(*args, **kwargs)
+
 
 class Demographic(StampedTrackedModel):
     label = models.CharField(max_length=255, default='', unique=True)
@@ -257,9 +258,9 @@ class Participant(StampedTrackedModel):
 
 
 class Run(StampedTrackedModel):
-    
+
     experiment = models.ForeignKey(Experiment)
-    
+
     participant = models.ForeignKey(Participant)
 
     # Informational only...
@@ -277,7 +278,7 @@ class Run(StampedTrackedModel):
 
 
 class Response(StampedTrackedModel):
-    
+
     run = models.ForeignKey(Run)
 
     key = models.CharField(max_length=1)
@@ -289,7 +290,7 @@ class Response(StampedTrackedModel):
     duration_ms = models.IntegerField(default=0)
 
     timezone_offset_min = models.IntegerField(default=0)
-    
+
     played_error_chime = models.BooleanField(default=False)
 
     class Meta:

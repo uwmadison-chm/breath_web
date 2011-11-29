@@ -13,7 +13,7 @@ class Command(NoArgsCommand):
         exps = models.Experiment.objects.all().order_by('pk')
 
         field_names = [
-            'experiment_number', 'url_slug', 'run_length_seconds', 
+            'experiment_number', 'url_slug', 'run_length_seconds',
             'survey_url', 'chime_on_error', 'run_instructions',
             'guide_sound_file', 'breath_time_key', 'breath_time_keycode',
             'end_cycle_key', 'end_cycle_keycode', 'cycle_length',

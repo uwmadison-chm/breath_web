@@ -87,10 +87,10 @@ class Experiment(StampedTrackedModel):
 
     last_exported_at = models.DateTimeField(
         auto_now_add=True)
-        
+
     data_last_added_at = models.DateTimeField(
         auto_now_add=True)
-        
+
     def __unicode__(self):
         return "%s: %s, created %s" % (
             self.pk, self.url_slug, self.created_at)
@@ -349,6 +349,14 @@ class Response(StampedTrackedModel):
     def played_chime(self):
         bool_to_int = {True: 1, False: 0}
         return bool_to_int[self.played_error_chime]
+
+    def __update_experiment_time(self):
+        self.run.experiment.data_last_added_at = self.created_at
+        self.run.experiment.save()
+
+    def save(self, *args, **kwargs):
+        super(Response, self).save(*args, **kwargs)
+        self.__update_experiment_time()
 
 
 class Viewing(StampedTrackedModel):

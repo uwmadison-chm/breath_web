@@ -56,9 +56,6 @@ def login(request, slug):
             if not ppt.has_demographics:
                 # We can't skip demographics...
                 return redirect(demographics, slug=exp.url_slug)
-            if exp.use_swf_url is not None:
-                # We're replacing practice and such with the Flash game
-                return redirect(run_swf, slug=exp.url_slug)
             if ppt.has_run_data:
                 # We can skip instructions and practice
                 return redirect(run_task, slug=exp.url_slug)

@@ -91,6 +91,12 @@ class Experiment(StampedTrackedModel):
     data_last_added_at = models.DateTimeField(
         auto_now_add=True)
 
+    use_swf_url = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        default=None)
+
     def __unicode__(self):
         return "%s: %s, created %s" % (
             self.pk, self.url_slug, self.created_at)

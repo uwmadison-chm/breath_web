@@ -1,5 +1,6 @@
 import json
 import datetime
+import csv
 
 from django.template import RequestContext 
 from django.shortcuts import render_to_response, redirect, get_object_or_404
@@ -55,6 +56,9 @@ def login(request, slug):
             if not ppt.has_demographics:
                 # We can't skip demographics...
                 return redirect(demographics, slug=exp.url_slug)
+            if exp.use_swf_url is not None:
+                # We're replacing practice and such with the Flash game
+                return redirect(run_swf, slug=exp.url_slug)
             if ppt.has_run_data:
                 # We can skip instructions and practice
                 return redirect(run_task, slug=exp.url_slug)
@@ -113,10 +117,30 @@ def practice(request, slug):
         {'exp': exp}, context_instance=RequestContext(request))
 
 
+def run_swf(request, slug):
+    exp = get_object_or_404(Experiment, url_slug=slug)
+    ppt_key = request.session.get('ppt_id')
+    ppt = get_object_or_404(Participant, pk=ppt_key)
+    run = exp.run_set.create(
+        participant=ppt, 
+        user_agent=request.META['HTTP_USER_AGENT'])
+    return render_to_response('run_swf.html', {
+        'run': run,
+        'exp': exp,
+        'participant': ppt})
+
+
 def run_task(request, slug):
     exp = get_object_or_404(Experiment, url_slug=slug)
-    ppt = get_object_or_404(Participant, pk=request.session['ppt_id'])
+
+    ppt_key = (request.session.get('ppt_id') or 
+        request.POST['ppt_id'])
+    ppt = get_object_or_404(Participant, pk=ppt_key)
     if request.method == "GET":
+        if exp.use_swf_url is not None:
+            # We're replacing the regular game with the Flash game
+            return redirect(run_swf, slug=exp.url_slug)
+
         __add_log_item('run_task', request, ppt)
         run = exp.run_set.create(
             participant=ppt, 
@@ -128,7 +152,8 @@ def run_task(request, slug):
             context_instance=RequestContext(request))
 
     if request.method == "POST":
-        run = Run.objects.get(pk=request.session['run_id'])
+        run_key = request.session.get('run_id') or request.POST['run_id']
+        run = Run.objects.get(pk=run_key)
         return_data = {'finish': False}
         cur_time = datetime.datetime.utcnow()
         if run.started_at is None:
@@ -175,6 +200,29 @@ def log(request, view_key, slug):
     __add_log_item(view_key, request, ppt)
     return HttpResponse('')
 
+
+def run_csv(request, run_id):
+    print("foo")
+    run = get_object_or_404(Run, pk=run_id)
+    header = [
+        'participant_number',
+        'experiment_number',
+        'run_number',
+        'run_finished',
+        'keypress_number',
+        'keycode',
+        'ms_since_run_start',
+        'duration_ms',
+        'server_timestamp_sec',
+        'timezone_offset_sec',
+        'played_chime']
+    response = HttpResponse(mimetype='text/plain')
+    writer = csv.writer(response)
+    writer.writerow(header)
+    for resp in run.response_set.order_by('press_num'):
+        row = [getattr(resp, att) for att in header]
+        writer.writerow(row)
+    return response
 
 def __add_log_item(view_key, request, ppt=None):
     sk = request.session._session_key

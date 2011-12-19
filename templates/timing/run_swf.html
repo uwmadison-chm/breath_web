@@ -15,14 +15,7 @@
   <param name="salign" value="" />
   <param name="allowScriptAccess" value="always" />
   <param name=”allowFullScreen” value=”true” />
-  <param name="finish_url" value="{% url timing.views.thanks slug=exp.url_slug %}">
-  <param name="breath_time_key" value="{{ exp.breath_time_key }}">
-  <param name="run_start_key" value="{{ exp.breath_time_key }}">
-  <param name="end_cycle_key" value="{{ exp.end_cycle_key }}">
-  <param name="cycle_length" value="{{ exp.cycle_length }}">
-  <param name="ppt_id" value="{{ participant.pk }}">
-  <param name="run_id" value="{{ run.pk }}">
-  <param name="post_path" value="{% url timing.views.run_task slug=exp.url_slug %}">
+  <param name="FlashVars" value="{{ flash_params|safe }}">
   <!--[if !IE]>-->
   <object type="application/x-shockwave-flash" data="{{ exp.use_swf_url }}" width="640" height="480" allowfullscreen="true">
     <param name="movie" value="{{ exp.use_swf_url }}" />
@@ -36,14 +29,7 @@
     <param name="devicefont" value="false" />
     <param name="salign" value="" />
     <param name="allowScriptAccess" value="always" />
-    <param name="finish_url" value="{% url timing.views.thanks slug=exp.url_slug %}">
-    <param name="breath_time_key" value="{{ exp.breath_time_key }}">
-    <param name="run_start_key" value="{{ exp.breath_time_key }}">
-    <param name="end_cycle_key" value="{{ exp.end_cycle_key }}">
-    <param name="cycle_length" value="{{ exp.cycle_length }}">
-    <param name="ppt_id" value="{{ participant.pk }}">
-    <param name="run_id" value="{{ run.pk }}">
-    <param name="post_path" value="{% url timing.views.run_task slug=exp.url_slug %}">
+    <param name="FlashVars" value="{{ flash_params|safe }}">
     
   <!--<![endif]-->
     <a href="http://www.adobe.com/go/getflash">

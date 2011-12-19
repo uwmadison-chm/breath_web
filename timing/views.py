@@ -4,7 +4,8 @@ import csv
 
 from django.template import RequestContext 
 from django.shortcuts import render_to_response, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, QueryDict
+from django.core.urlresolvers import reverse
 from django.db import IntegrityError
 
 from timing.models import Experiment, Participant, Run, Response, Viewing
@@ -121,10 +122,22 @@ def run_swf(request, slug):
     run = exp.run_set.create(
         participant=ppt, 
         user_agent=request.META['HTTP_USER_AGENT'])
+    flash_params = {
+        'post_path': reverse(thanks, kwargs={'slug': exp.url_slug}),
+        'finish_path': reverse(run_task, kwargs={'slug': exp.url_slug}),
+        'breath_time_key': exp.breath_time_key,
+        'run_start_key': exp.breath_time_key,
+        'end_cycle_key': exp.end_cycle_key,
+        'cycle_length': exp.cycle_length,
+        'ppt_id': ppt.pk,
+        'run_id': run.pk,}
+    qd = QueryDict('').copy()
+    qd.update(flash_params)
     return render_to_response('run_swf.html', {
         'run': run,
         'exp': exp,
-        'participant': ppt})
+        'participant': ppt,
+        'flash_params': qd.urlencode()})
 
 
 def run_task(request, slug):

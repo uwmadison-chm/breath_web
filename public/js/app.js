@@ -180,6 +180,7 @@ $(function() {
             pvt.save_queue[idx] = {
                 'num' : idx,
                 'key' : key,
+                'prompt' : 0,
                 'since_run_start' : since_run_start,
                 'duration' : duration,
                 'timezone_offset_min' : new Date().getTimezoneOffset(),

@@ -304,6 +304,8 @@ class Response(StampedTrackedModel):
     key = models.CharField(max_length=1)
 
     press_num = models.IntegerField()
+	
+    prompt_type = models.IntegerField(default=0)
 
     ms_since_run_start = models.IntegerField()
 

@@ -174,7 +174,9 @@ def run_task(request, slug):
         for num, data in save_queue.iteritems():
             try:
                 resp = run.response_set.create(
-                    press_num=data['num'], key=data['key'],
+                    press_num=data['num'], 
+                    key=data['key'],
+                    prompt_type = data['prompt'],
                     ms_since_run_start=data['since_run_start'],
                     duration_ms=data['duration'],
                     timezone_offset_min=data['timezone_offset_min'],

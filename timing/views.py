@@ -152,7 +152,9 @@ def run_swf(request, slug):
 			run.save()
 		saved_nums = []
 		save_queue = json.loads(request.POST['save_queue'])
-		for data in save_queue:
+		#for data in save_queue:
+		for num, data in save_queue.iteritems():
+
 			try:
 				resp = run.response_set.create(
 					press_num=data['num'], 

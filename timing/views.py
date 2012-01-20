@@ -119,32 +119,66 @@ def run_swf(request, slug):
     exp = get_object_or_404(Experiment, url_slug=slug)
     ppt_key = request.session.get('ppt_id')
     ppt = get_object_or_404(Participant, pk=ppt_key)
-    run = exp.run_set.create(
-        participant=ppt, 
-        user_agent=request.META['HTTP_USER_AGENT'])
-    request.session['run_id'] = run.pk
-    flash_params = {
-        'post_path': reverse(run_task, kwargs={'slug': exp.url_slug}),
-        'finish_path': reverse(thanks, kwargs={'slug': exp.url_slug}),
-        'breath_time_key': exp.breath_time_key,
-        'run_start_key': exp.breath_time_key,
-        'end_cycle_key': exp.end_cycle_key,
-        'cycle_length': exp.cycle_length,
-        'ppt_id': ppt.pk,
-        'run_id': run.pk,}
-    qd = QueryDict('').copy()
-    qd.update(flash_params)
-    return render_to_response('run_swf.html', {
-        'run': run,
-        'exp': exp,
-        'participant': ppt,
-        'flash_params': qd.urlencode()})
+        
+    if request.method == "GET":
+		run = exp.run_set.create(
+			participant=ppt, 
+			user_agent=request.META['HTTP_USER_AGENT'])
+		request.session['run_id'] = run.pk
+		flash_params = {
+			'post_path': reverse(run_swf, kwargs={'slug': exp.url_slug}),
+			'finish_path': reverse(thanks, kwargs={'slug': exp.url_slug}),
+			'breath_time_key': exp.breath_time_key,
+			'run_start_key': exp.breath_time_key,
+			'end_cycle_key': exp.end_cycle_key,
+			'cycle_length': exp.cycle_length,
+			'ppt_id': ppt.pk,
+			'run_id': run.pk,}
+		qd = QueryDict('').copy()
+		qd.update(flash_params)
+		return render_to_response('run_swf.html', {
+			'run': run,
+			'exp': exp,
+			'participant': ppt,
+			'flash_params': qd.urlencode()})
+			
+    if request.method == "POST":
+		run_key = request.session.get('run_id') or request.POST['run_id']
+		run = Run.objects.get(pk=run_key)
+		return_data = {'finish': False}
+		cur_time = datetime.datetime.utcnow()
+		if run.started_at is None:
+			run.start()
+			run.save()
+		saved_nums = []
+		save_queue = json.loads(request.POST['save_queue'])
+		for data in save_queue:
+			try:
+				resp = run.response_set.create(
+					press_num=data['num'], 
+					key=data['key'],
+					prompt_type = data['prompt'],
+					ms_since_run_start=data['since_run_start'],
+					duration_ms=data['duration'],
+					timezone_offset_min=data['timezone_offset_min'],
+					played_error_chime=data['chimed'])
+			except IntegrityError:
+				pass
+			saved_nums.append(data['num'])
 
+		target_tdelta = datetime.timedelta(seconds=exp.run_length_seconds)
+		run_tdelta = cur_time - run.started_at
+		if run_tdelta > target_tdelta:
+			return_data['finish'] = True
+			run.finished_at = cur_time
+			run.save()
+
+		return_data['saved_nums'] = saved_nums
+		return HttpResponse(json.dumps(return_data))
 
 def run_task(request, slug):
 
     exp = get_object_or_404(Experiment, url_slug=slug)
-
     ppt_key = (request.session.get('ppt_id') or 
         request.POST['ppt_id'])
     ppt = get_object_or_404(Participant, pk=ppt_key)

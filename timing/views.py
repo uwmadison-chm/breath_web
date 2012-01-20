@@ -122,6 +122,7 @@ def run_swf(request, slug):
     run = exp.run_set.create(
         participant=ppt, 
         user_agent=request.META['HTTP_USER_AGENT'])
+    request.session['run_id'] = run.pk
     flash_params = {
         'post_path': reverse(run_task, kwargs={'slug': exp.url_slug}),
         'finish_path': reverse(thanks, kwargs={'slug': exp.url_slug}),

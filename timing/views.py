@@ -123,8 +123,8 @@ def run_swf(request, slug):
         participant=ppt, 
         user_agent=request.META['HTTP_USER_AGENT'])
     flash_params = {
-        'post_path': reverse(thanks, kwargs={'slug': exp.url_slug}),
-        'finish_path': reverse(run_task, kwargs={'slug': exp.url_slug}),
+        'post_path': reverse(run_task, kwargs={'slug': exp.url_slug}),
+        'finish_path': reverse(thanks, kwargs={'slug': exp.url_slug}),
         'breath_time_key': exp.breath_time_key,
         'run_start_key': exp.breath_time_key,
         'end_cycle_key': exp.end_cycle_key,
@@ -141,6 +141,7 @@ def run_swf(request, slug):
 
 
 def run_task(request, slug):
+
     exp = get_object_or_404(Experiment, url_slug=slug)
 
     ppt_key = (request.session.get('ppt_id') or 

@@ -128,6 +128,7 @@ def run_swf(request, slug):
 		flash_params = {
 			'post_path': reverse(run_swf, kwargs={'slug': exp.url_slug}),
 			'finish_path': reverse(thanks, kwargs={'slug': exp.url_slug}),
+			'audio_path' : '../swf/activity/',
 			'breath_time_key': exp.breath_time_key,
 			'run_start_key': exp.breath_time_key,
 			'end_cycle_key': exp.end_cycle_key,

@@ -1,7 +1,8 @@
 load 'deploy'
 
-# Probably do need to change these
-set :user, "vack"
+# You'll need to change this
+set :user, ""
+
 set :run_as, "tutrest"
 set :application, "meditime"
 set :repository, "svn+ssh://tezpur.keck.waisman.wisc.edu/home/vack/svn/meditime/trunk"
@@ -42,6 +43,7 @@ namespace :deploy do
     
     run "cp -f #{shared_path}/system/settings.py #{release_path}/settings.py"
     run "cp -f #{shared_path}/system/.htaccess #{release_path}/public/.htaccess"
+    run "ln -sf #{shared_path}/media/guides #{release_path}/public"
   end
   
   desc <<-DESC
@@ -49,7 +51,7 @@ namespace :deploy do
   DESC
   task :start do
     default_run_options[:pty] = true 
-    sudo "#{gunicorn_cmd} start", :as => run_as
+    run "sudo -u #{run_as} #{gunicorn_cmd} start"
   end
   
   desc <<-DESC
@@ -57,7 +59,7 @@ namespace :deploy do
   DESC
   task :stop do
     default_run_options[:pty] = true 
-    sudo "#{gunicorn_cmd} stop", :as => run_as
+    run "sudo -u #{run_as} #{gunicorn_cmd} stop"
   end
   
   desc <<-DESC
@@ -65,7 +67,7 @@ namespace :deploy do
   DESC
   task :restart do
     default_run_options[:pty] = true 
-    sudo "#{gunicorn_cmd} restart", :as => run_as
+    run "sudo -u #{run_as} #{gunicorn_cmd} restart"
   end
 end
 

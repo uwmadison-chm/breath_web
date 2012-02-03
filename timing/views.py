@@ -131,6 +131,7 @@ def run_swf(request, slug):
 			'audio_path' : '../swf/activity/',
 			'breath_time_key': exp.breath_time_key,
 			'run_start_key': exp.breath_time_key,
+			'guide_sound': exp.guide_sound_file,
 			'end_cycle_key': exp.end_cycle_key,
 			'cycle_length': exp.cycle_length,
 			'ppt_id': ppt.pk,

@@ -15,14 +15,28 @@
   </li>
   <li>
     <p>
-      In this task, we would like you to be aware of the breath. You may be  aware of the rising and falling of your belly or chest or the movement of breath in and out near your nose. There's no need to control the breath. Just breath normally.
+      In this task, we would like you to be aware of your breath.
+      
+      Please be aware of the movement of breath in and out in the space below your nose and above your upper lip.
+      
+      There's no need to control the breath.  
+      Just breathe normally.
     </p>
     <p>
       Press <code>{{ exp.breath_time_key }}</code> to continue.
     </p>
   </li>
   <li>
-    <p>Please count your breaths silently. Start with 1 on the 1st exhale, and  continue up to {{ exp.cycle_length }} for the {{ exp.cycle_length }}<sup>th</sup> exhale. At the beginning of each exhale,  press the <code>{{ exp.breath_time_key }}</code>. When you get to {{ exp.cycle_length }}, though, press <code>{{ exp.end_cycle_key }}</code>. Then with the next breath start counting again at 1. Press the <code>{{ exp.breath_time_key }}</code> as usual at the beginning of each exhale.
+      <p>At some point, you may notice your attention has wandered from the breath.  That's okay.  Just gently place it back on the breath.
+      Press <code>{{ exp.breath_time_key }}</code> to continue.
+      </p>
+      <p>
+      To help attention stay with the breath, you'll use a small part of your attention to silently count breaths from 1 to {{ exp.cycle_length }}, again and again.  An in and out breath together make one count. 
+      </p>
+      <p>
+      On the next page we'll practice. With the first breaths, you'll press <code>{{ exp.breath_time_key }}</code>, and on breath {{ exp.cycle_length }} you'll press <code>{{ exp.end_cycle_key }}</code>.</p>
+      <p>
+      Remember to say the count softly so it only gets a little attention while most of the attention is on feeling the breath.
     </p>
     <p>
       Press <code>{{ exp.end_cycle_key }}</code> to continue.
@@ -31,32 +45,24 @@
   </li>
   <li>
     <p>
-      If you realize you have lost count, that's OK. Press the spacebar and gently bring the attention back to your breath. Then, start your count over at 1 with the next exhale. As usual, you'll press the <code>{{ exp.breath_time_key }}</code> at the beginning of every exhale except when you reach the number {{ exp.cycle_length }} and press <code>{{ exp.end_cycle_key }}</code>.
+      Feeling the breath move at it’s own natural rhythm, once it moves in and out, silently say “one” and press the down arrow.
+      </p>
+      <p>
+      After it moves in and out again, say "two" and press <code>{{ exp.breath_time_key }}</code>.
+      </p>
+      <p>
+      Continue this way up to {{ exp.cycle_length }}.
+      When you get to {{ exp.cycle_length }}, press <code>{{ exp.end_cycle_key }}</code> (instead of <code>{{ exp.breath_time_key }}</code>).
+      Then return to 1 on the next breath and pressing <code>{{ exp.breath_time_key }}</code>, going from 1 to {{ exp.cycle_length }} again and again. 
+      </p>
+      <p>
+      Please begin keypressing as you count your breaths if you have not already done so.
     </p>
     <p>Press <code>spacebar</code> to continue
     </p>
 
   </li>
-  <li>
-    <p>
-      As you count your breaths, keep your fingers on the <code>{{ exp.breath_time_key }}</code> and <code>{{ exp.end_cycle_key }}</code> keys. What's very IMPORTANT is that:
-    </p>
-    <ol>
-      <li>EVERY TIME you begin to breath out, you press the <code>{{ exp.breath_time_key }}</code></li>
-      <li>EVERY TIME your count reaches {{ exp.cycle_length }}, you press <code>{{ exp.end_cycle_key }}</code>, and then you start back at 1</li>
-      <li>EVERY TIME you lose track of your count, press the <code>spacebar</code></li>
-    </ol>
-
-    <p>Press the letter <code>{{ exp.breath_time_key }}</code> to continue.
-    </p>
-  </li>
-  <li>
-    <p>On the next screen, we'll start to practice. There's no need to look at anything in particular while you're counting. Place the attention on the breath.
-    </p>
-    <p>Press <code>{{ exp.breath_time_key }}</code> to continue to the practice screen
-    </p>
-  </li>
-</ol>
+ </ol>
 </p>
 
 <script type="text/javascript">

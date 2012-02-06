@@ -1,3 +1,8 @@
+//Define Global Key Mappings
+var key_map = {"SPACEBAR" : 32, "↓" : 40, "→" : 39};
+var char_codes = {32 : "SPACEBAR", 40 : "↓", 39 : "→"};
+
+
 if (!window.console) {
     window.console = {};
     window.console.log = function() {};
@@ -74,6 +79,7 @@ $(function() {
 
         var pvt = {};
         pvt.settings = $.extend({
+            'key_map' : key_map,
             'save_path' : '',
             'start_key' : 'A',
             'onfinish' : function() {},
@@ -206,8 +212,9 @@ $(function() {
         pvt.reset();
 
         $(document).keydown(function(evt) {
-            var keyChar = String.fromCharCode(evt.keyCode);
-            // Don't re-process keydowns we already have.
+            var keyChar = char_codes[evt.keyCode];
+            if (!keyChar) keyChar = String.fromCharCode(evt.keyCode);            // Don't re-process keydowns we already have.
+            
             if (pvt.currently_pressed[keyChar]) { 
                 //console.log("Not re-processing "+keyChar);
                 return; 
@@ -240,8 +247,9 @@ $(function() {
         
         $(document).keyup(function(evt) {
             //console.log(evt);
-            var keyChar = String.fromCharCode(evt.keyCode);
-            // We *must* be waiting on a keyup for this processing to make
+            var keyChar = char_codes[evt.keyCode];
+            if (!keyChar) keyChar = String.fromCharCode(evt.keyCode);            // We *must* be waiting on a keyup for this processing to make
+            
             if (!pvt.currently_pressed[keyChar]) { 
                 //console.log("Got an unexpected keyup for "+keyChar);
                 return; 
@@ -260,7 +268,7 @@ $(function() {
         }
         
         var settings = $.extend({
-            'key_map' : {"SPACEBAR" : 32},
+            'key_map' : key_map,
             'show_idx' : 0,
             'onfinish' : function() {}
         }, options);
@@ -319,6 +327,7 @@ $(function() {
         
         var pvt = {};
         pvt.settings = $.extend({
+            'key_map' : key_map,
             'cycle_length': 9,
             'count_key' : 'A',
             'reset_key' : 'F',
@@ -506,8 +515,10 @@ $(function() {
             // caught in finish()
         }
         
-        $(document).keydown(function(evt) {
-            var keyChar = String.fromCharCode(evt.keyCode);
+        $(document).keydown(function(evt) {             
+            var keyChar = char_codes[evt.keyCode];
+            if (!keyChar) keyChar = String.fromCharCode(evt.keyCode);
+              
             if (pvt.currently_pressed[keyChar]) {
                 // Don't re-handle an already pressed key
                 return;
@@ -541,8 +552,10 @@ $(function() {
         $(document).keyup(function(evt) {
             // Don't need as much logic here as in the run() version --
             // we'll just delete from our list regardless.
-            var keyChar = String.fromCharCode(evt.keyCode);
+            var keyChar = char_codes[evt.keyCode];
+            if (!keyChar) keyChar = String.fromCharCode(evt.keyCode);
             delete pvt.currently_pressed[keyChar];
+
         });
         pvt.reset();
     }

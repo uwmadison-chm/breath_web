@@ -131,7 +131,7 @@ $(function() {
             pvt.times = new Array();
             pvt.save_queue = {};
             pvt.run_state = 'stopped';
-            pvt.show_status('getready');
+            pvt.show_status('running');
         }
 
         pvt.show_status = function(name) {
@@ -347,13 +347,14 @@ $(function() {
         $(pvt.settings.flasher).flashable();
         
         pvt.reset = function() {
+            console.log("in  pvt.reset");
             pvt.presses = new Array();
             pvt.times = new Array();
             pvt.run_state = 'stopped';
             pvt.iters = Math.floor(
                 pvt.settings.cycle_length*pvt.settings.practice_cycles);
             pvt.build_keyguide(pvt.iters);
-            pvt.show_status('getready');
+            pvt.show_status('running');
             pvt.currently_pressed = {};
         }
         
@@ -396,6 +397,7 @@ $(function() {
         }
         
         pvt.start = function() {
+            console.log("in  pvt.start");
             pvt.send_log("start");
             pvt.change_state('running');
             pvt.show_status('running');
@@ -422,7 +424,7 @@ $(function() {
             $(pvt.settings.status_container).children().hide();
             $('#'+name).show();
             if (pvt.settings.guide) {
-                if (name === 'getready' || name === 'running') {
+                if (name === 'running') {
                     $(pvt.settings.guide).show();
                 }
             }

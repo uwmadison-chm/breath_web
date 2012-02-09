@@ -20,6 +20,7 @@ urlpatterns = patterns('',
     (r'^(?P<slug>[A-Za-z0-9_]+)/run_swf$', views.run_swf),
     (r'^(?P<slug>[A-Za-z0-9_]+)/thanks$', views.thanks),
     (r'^(?P<slug>[A-Za-z0-9_]+)/log/(?P<view_key>.*)$', views.log),
+    (r'^(?P<slug>[A-Za-z0-9_]+)/data\.csv$', views.experiment_csv),
     (r'^runs/(?P<run_id>[0-9]+)\.csv$', views.run_csv),
 )
 

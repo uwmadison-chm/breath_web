@@ -255,7 +255,6 @@ def log(request, view_key, slug):
 
 
 def run_csv(request, run_id):
-    print("foo")
     run = get_object_or_404(Run, pk=run_id)
     header = [
         'participant_number',
@@ -275,6 +274,30 @@ def run_csv(request, run_id):
     for resp in run.response_set.order_by('press_num'):
         row = [getattr(resp, att) for att in header]
         writer.writerow(row)
+    return response
+
+
+def experiment_csv(request, slug):
+    exp = get_object_or_404(Experiment, url_slug=slug)
+    response = HttpResponse(mimetype='text/plain')
+    header = [
+        'participant_number',
+        'experiment_number',
+        'run_number',
+        'run_finished',
+        'keypress_number',
+        'keycode',
+        'ms_since_run_start',
+        'duration_ms',
+        'server_timestamp_sec',
+        'timezone_offset_sec',
+        'played_chime']
+    writer = csv.writer(response)
+    writer.writerow(header)
+    for run in exp.run_set.all():
+        for resp in run.response_set.order_by('press_num'):
+            row = [getattr(resp, att) for att in header]
+            writer.writerow(row)
     return response
 
 

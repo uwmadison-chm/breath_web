@@ -287,6 +287,7 @@ def experiment_csv(request, slug):
         'run_finished',
         'keypress_number',
         'keycode',
+        'prompt_type',
         'ms_since_run_start',
         'duration_ms',
         'server_timestamp_sec',
@@ -297,6 +298,7 @@ def experiment_csv(request, slug):
     for run in exp.run_set.all():
         for resp in run.response_set.order_by('press_num'):
             row = [getattr(resp, att) for att in header]
+            row = [unicode(d).encode('utf-8') for d in row]
             writer.writerow(row)
     return response
 

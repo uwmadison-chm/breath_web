@@ -343,7 +343,8 @@ class Response(StampedTrackedModel):
 
     @property
     def keycode(self):
-        return ord(self.key)
+        k = self.key[0]
+        return ord(k)
 
     @property
     def server_timestamp_sec(self):

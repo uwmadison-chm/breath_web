@@ -21,5 +21,6 @@ class Command(NoArgsCommand):
         writer = csv.writer(sys.stdout, delimiter=",")
         writer.writerow(field_names)
         for exp in exps:
-            writer.writerow([
-                getattr(exp, field) for field in field_names])
+            data = [getattr(exp, field) for field in field_names]
+            data = [unicode(d).encode('utf-8') for d in data]
+            writer.writerow(data)

@@ -36,6 +36,7 @@ class Command(BaseCommand):
             'run_finished',
             'keypress_number',
             'keycode',
+            'prompt_type',
             'ms_since_run_start',
             'duration_ms',
             'server_timestamp_sec',
@@ -51,4 +52,6 @@ class Command(BaseCommand):
                 responses = run.response_set.order_by('press_num')
                 for resp in responses:
                     row = [getattr(resp, att) for att in header]
+                    row = [unicode(d).encode('utf-8') for d in row]
+
                     writer.writerow(row)

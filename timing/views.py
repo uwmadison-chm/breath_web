@@ -188,7 +188,7 @@ def run_task(request, slug):
         request.POST['ppt_id'])
     ppt = get_object_or_404(Participant, pk=ppt_key)
     if request.method == "GET":
-        if exp.use_swf_url is not None:
+        if exp.use_swf_url is not None and len(exp.use_swf_url.strip()) > 0 :
             # We're replacing the regular game with the Flash game
             return redirect(run_swf, slug=exp.url_slug)
 

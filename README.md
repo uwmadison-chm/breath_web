@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/189608566.svg)](https://zenodo.org/badge/latestdoi/189608566)
+
 # Web-based breath counting tool
 
 A django + Flash app to help track breath counting

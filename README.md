@@ -20,7 +20,7 @@ Change experiment settings and add subjects in the Django admin interface.
 
 If you use this code in your research, please cite [this paper](https://www.frontiersin.org/articles/10.3389/fpsyg.2014.01202/full):
 
-> Levinson, Daniel B., et al. "A mind you can count on: validating breath counting as a behavioral measure of mindfulness." _Frontiers in psychology_ 5 (2014): 1202.
+> Levinson, D. B., Stoll, E. L., Kindy, S. D., Merry, H. L., & Davidson, R. J. (2014). A mind you can count on: validating breath counting as a behavioral measure of mindfulness. _Frontiers in psychology,_ 5, 1202.
 
 ## Contributing
 

@@ -14,7 +14,7 @@ This is a pretty straightforward, albeit old, Django app. You may need to either
 
 ## Running the app
 
-Changing experiment settings and adding subjects are done in the Django admin interface.
+Change experiment settings and add subjects in the Django admin interface.
 
 ## Credits
 

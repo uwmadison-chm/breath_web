@@ -24,6 +24,8 @@ If you use this code in your research, please cite [this paper](https://www.fron
 
 > Levinson, D. B., Stoll, E. L., Kindy, S. D., Merry, H. L., & Davidson, R. J. (2014). A mind you can count on: validating breath counting as a behavioral measure of mindfulness. _Frontiers in psychology,_ 5, 1202.
 
+and reference the project [on Zenodo](https://doi.org/10.5281/zenodo.3236445).
+
 ## Contributing
 
 This app is completely unmaintained, and provided for historical and open science purposes. There are no current plans to maintain it again. To make changes, please fork this repository and edit in your fork.

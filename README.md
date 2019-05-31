@@ -16,6 +16,12 @@ This is a pretty straightforward, albeit old, Django app. You may need to either
 
 Change experiment settings and add subjects in the Django admin interface.
 
+## Citing
+
+If you use this code in your research, please cite [this paper](https://www.frontiersin.org/articles/10.3389/fpsyg.2014.01202/full):
+
+> Levinson, Daniel B., et al. "A mind you can count on: validating breath counting as a behavioral measure of mindfulness." _Frontiers in psychology_ 5 (2014): 1202.
+
 ## Contributing
 
 This app is completely unmaintained, and provided for historical and open science purposes. There are no current plans to maintain it again. To make changes, please fork this repository and edit in your fork.

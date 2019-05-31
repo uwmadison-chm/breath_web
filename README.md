@@ -28,4 +28,4 @@ This app is completely unmaintained, and provided for historical and open scienc
 
 ## Credits
 
-This app was developed at the Waisman Center for Brain Imaging, for a study run by [Daniel Levinson](mailto:danlevinson@gmail.com). Web code was written by [Nate Vack](mailto:njvack@wisc.edu) and Flash code was written by [David Gagnon](mailto:djgagnon@wisc.edu).
+This app was developed at the Waisman Center for Brain Imaging, for a study run by [Daniel Levinson](mailto:danlevinson@gmail.com). Web code was written by [Nate Vack](mailto:njvack@wisc.edu) and Flash code was written by [David Gagnon](mailto:djgagnon@wisc.edu). Art is from [morguefile.com](https://morguefile.com/) and sound is from [freesound.org](https://freesound.org/).

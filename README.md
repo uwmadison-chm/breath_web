@@ -16,6 +16,10 @@ This is a pretty straightforward, albeit old, Django app. You may need to either
 
 Change experiment settings and add subjects in the Django admin interface.
 
+## Contributing
+
+This app is completely unmaintained, and provided for historical and open science purposes. There are no current plans to maintain it again. To make changes, please fork this repository and edit in your fork.
+
 ## Credits
 
 This app was developed at the Waisman Center for Brain Imaging, for a study run by [Daniel Levinson](mailto:danlevinson@gmail.com). Web code was written by [Nate Vack](mailto:njvack@wisc.edu) and Flash code was written by [David Gagnon](mailto:djgagnon@wisc.edu).

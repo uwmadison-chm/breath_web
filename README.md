@@ -16,7 +16,7 @@ This is a pretty straightforward, albeit old, Django app. You may need to either
 
 ## Running the app
 
-Change experiment settings and add subjects in the Django admin interface.
+Change experiment settings and add subjects in the Django admin interface. The app is not currently running for me, so I'm not sure what the settings do now. Experiment!
 
 ## Citing
 
@@ -28,8 +28,10 @@ and reference the project [on Zenodo](https://doi.org/10.5281/zenodo.3236445).
 
 ## Contributing
 
-This app is completely unmaintained, and provided for historical and open science purposes. There are no current plans to maintain it again. To make changes, please fork this repository and edit in your fork.
+This project is completely unmaintained, and provided for historical and open science purposes only. There are currently no plans to maintain it again. To make changes, please fork this repository and edit in your fork.
+
+Future iterations of this task would probably be more appropriately developed to run on [Pavlovia](https://pavlovia.org/) or [Gorilla](https://gorilla.sc/).
 
 ## Credits
 
-This app was developed at the Waisman Center for Brain Imaging, for a study run by [Daniel Levinson](mailto:danlevinson@gmail.com). Web code was written by [Nate Vack](mailto:njvack@wisc.edu) and Flash code was written by [David Gagnon](mailto:djgagnon@wisc.edu). Art is from [morguefile.com](https://morguefile.com/) and sound is from [freesound.org](https://freesound.org/).
+This app was developed at the Waisman Center for Brain Imaging, for a study run by [Daniel Levinson](mailto:danlevinson@gmail.com). Web code was written by [Nate Vack](mailto:njvack@wisc.edu) and Flash code was written by [David Gagnon](mailto:djgagnon@wisc.edu) and Nathan Mckenzie (mailto:nathan@icecreambreakfast.com). Art is from [morguefile.com](https://morguefile.com/) and sound is from [freesound.org](https://freesound.org/).

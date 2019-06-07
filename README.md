@@ -20,7 +20,7 @@ To set up an experiment, go to the admin interface and create an Experiment. The
 
 * **URL slug**: The base path for your experiment — after creating your experiment, participants will go to `https://<your_domain>/<app_path>/<experiment_url_slug>`.
 * **Run length**: How long (in seconds) you want to collect data
-* **Survey url**: After data collection ends, the URL for a followup survey (in Qualtrics or REDCap or whatever)
+* **Survey url**: After data collection ends, the URL for a followup survey (in Qualtrics or REDCap or whatever). If this is blank, participants will see a thank you message.
 * **Chime on error**: If you want a little ding to play for a miscount
 * **Run instructions**: Custom instructions to show to the participant
 * **Guide sound file**: An optional MP3 to play during data collection

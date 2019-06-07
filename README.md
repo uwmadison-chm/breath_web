@@ -30,7 +30,7 @@ To set up an experiment, go to the admin interface and create an Experiment. The
 * **Practice cycles**: How much practice they'll do. There's a guided and unguided practice.
 * **Use swf url**: An optional URL for a flash file to show during data collection. If this is blank, participants will see a neutral screen during data collection.
 
-After experiment creation, you can collect data at `https://<your_domain>/<URL slug>`.
+After experiment creation, you can collect data at `https://<your_domain>/<app_path>/<experiment_url_slug>`.
 
 ## Citing
 

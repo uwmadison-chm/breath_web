@@ -18,7 +18,7 @@ This is a pretty straightforward, albeit old, Django app. You may need to either
 
 To set up an experiment, go to the admin interface and create an Experiment. The following settings will be of interest:
 
-* **URL slug**: The base URL for your experiment.
+* **URL slug**: The base path for your experiment — after creating your experiment, participants will go to `https://<your_domain>/<app_path>/<experiment_url_slug>`.
 * **Run length**: How long (in seconds) you want to collect data
 * **Survey url**: After data collection ends, the URL for a followup survey (in Qualtrics or REDCap or whatever)
 * **Chime on error**: If you want a little ding to play for a miscount
@@ -30,7 +30,7 @@ To set up an experiment, go to the admin interface and create an Experiment. The
 * **Practice cycles**: How much practice they'll do. There's a guided and unguided practice.
 * **Use swf url**: An optional URL for a flash file to show during data collection. If this is blank, participants will see a neutral screen during data collection.
 
-After experiment creation, you can collect data at `https://<your_domain>/<app_path>/<experiment_url_slug>`.
+
 
 ## Citing
 

@@ -14,9 +14,23 @@ This documentation is extremely incomplete; I'm writing it in 2019 and haven't w
 
 This is a pretty straightforward, albeit old, Django app. You may need to either install a version of Django that was modern circa 2011, or update the app to run in a modern version.
 
-## Running the app
+## Running experiments
 
-Change experiment settings and add subjects in the Django admin interface. The app is not currently running for me, so I'm not sure what the settings do now. Experiment!
+To set up an experiment, go to the admin interface and create an Experiment. The following settings will be of interest:
+
+* **URL slug**: The base URL for your experiment.
+* **Run length**: How long (in seconds) you want to collect data
+* **Survey url**: After data collection ends, the URL for a followup survey (in Qualtrics or REDCap or whatever)
+* **Chime on error**: If you want a little ding to play for a miscount
+* **Run instructions**: Custom instructions to show to the participant
+* **Guide sound file**: An optional MP3 to play during data collection
+* **Breath time key**: For most breaths, press this key. I'm not sure how to specify arrow keys here, but we've done that before I think.
+* **End cycle key**: The key to press at the end of a count cycle
+* **Cycle length**: How long the breath cycle should be
+* **Practice cycles**: How much practice they'll do. There's a guided and unguided practice.
+* **Use swf url**: An optional URL for a flash file to show during data collection. If this is blank, participants will see a neutral screen during data collection.
+
+After experiment creation, you can collect data at `https://<your_domain>/<URL slug>`.
 
 ## Citing
 

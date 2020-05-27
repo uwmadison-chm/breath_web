@@ -44,8 +44,8 @@ and reference the project [on Zenodo](https://doi.org/10.5281/zenodo.3236445).
 
 This project is completely unmaintained, and provided for historical and open science purposes only. There are currently no plans to maintain it again. To make changes, please fork this repository and edit in your fork.
 
-Future iterations of this task would probably be more appropriately developed to run on [Pavlovia](https://pavlovia.org/) or [Gorilla](https://gorilla.sc/).
+Future iterations of this task would probably be more appropriately developed to run using [Pavlovia](https://pavlovia.org/), [Gorilla](https://gorilla.sc/), [lab.js](https://lab.js.org/) or something similar.
 
 ## Credits
 
-This app was developed at the Waisman Center for Brain Imaging, for a study run by [Daniel Levinson](mailto:danlevinson@gmail.com). Web code was written by [Nate Vack](mailto:njvack@wisc.edu) and Flash code was written by [David Gagnon](mailto:djgagnon@wisc.edu) and Nathan Mckenzie (mailto:nathan@icecreambreakfast.com). Art is from [morguefile.com](https://morguefile.com/) and sound is from [freesound.org](https://freesound.org/).
+This app was developed at the Waisman Center for Brain Imaging, for a study run by [Daniel Levinson](mailto:danlevinson@gmail.com). Web code was written by [Nate Vack](mailto:njvack@wisc.edu) and Flash code was written by [David Gagnon](mailto:djgagnon@wisc.edu) and [Nathan Mckenzie](mailto:nathan@icecreambreakfast.com). Art is from [morguefile.com](https://morguefile.com/) and sound is from [freesound.org](https://freesound.org/).
